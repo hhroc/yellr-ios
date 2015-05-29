@@ -27,7 +27,9 @@
                             <outlet property="delegate" destination="Mjb-ic-aYh" id="yiA-c0-Vu6"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Assignments" id="MNg-UH-XGZ"/>
+                    <navigationItem key="navigationItem" title="Assignments" id="MNg-UH-XGZ">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Pd9-rG-Ceb"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZpS-qY-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -55,7 +57,13 @@
                             <outlet property="delegate" destination="bDy-gK-xSL" id="NZo-Up-E1h"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Local Posts" id="fTV-js-dtP"/>
+                    <toolbarItems>
+                        <barButtonItem systemItem="compose" id="lSu-8l-7Xb"/>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" title="Local Posts" id="fTV-js-dtP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH"/>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="01w-pt-uSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -122,7 +130,9 @@
                             <outlet property="delegate" destination="R5t-p8-Wc0" id="Z87-RM-XaV"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Stories" id="PDr-Pc-d6K"/>
+                    <navigationItem key="navigationItem" title="Stories" id="PDr-Pc-d6K">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="HJI-7W-1tn"/>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="up8-zU-fCR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
