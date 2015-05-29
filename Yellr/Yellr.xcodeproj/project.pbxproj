@@ -13,6 +13,9 @@
 		269249E61B14ECD6005CC052 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 269249E51B14ECD6005CC052 /* Images.xcassets */; };
 		269249E91B14ECD6005CC052 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 269249E71B14ECD6005CC052 /* LaunchScreen.xib */; };
 		269249F51B14ECD7005CC052 /* YellrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269249F41B14ECD7005CC052 /* YellrTests.swift */; };
+		269249FF1B180B50005CC052 /* profile-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 269249FE1B180B50005CC052 /* profile-icon.png */; };
+		26924A011B1815FC005CC052 /* note-paper.png in Resources */ = {isa = PBXBuildFile; fileRef = 26924A001B1815FC005CC052 /* note-paper.png */; };
+		26924A031B181675005CC052 /* ikona_bar-155-155.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 26924A021B181675005CC052 /* ikona_bar-155-155.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -36,6 +39,9 @@
 		269249EE1B14ECD7005CC052 /* YellrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YellrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		269249F31B14ECD7005CC052 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		269249F41B14ECD7005CC052 /* YellrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YellrTests.swift; sourceTree = "<group>"; };
+		269249FE1B180B50005CC052 /* profile-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-icon.png"; sourceTree = "<group>"; };
+		26924A001B1815FC005CC052 /* note-paper.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "note-paper.png"; sourceTree = "<group>"; };
+		26924A021B181675005CC052 /* ikona_bar-155-155.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "ikona_bar-155-155.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,9 @@
 				269249E21B14ECD6005CC052 /* Main.storyboard */,
 				269249E51B14ECD6005CC052 /* Images.xcassets */,
 				269249E71B14ECD6005CC052 /* LaunchScreen.xib */,
+				26924A021B181675005CC052 /* ikona_bar-155-155.jpg */,
+				269249FE1B180B50005CC052 /* profile-icon.png */,
+				26924A001B1815FC005CC052 /* note-paper.png */,
 				269249DC1B14ECD6005CC052 /* Supporting Files */,
 			);
 			path = Yellr;
@@ -192,8 +201,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26924A031B181675005CC052 /* ikona_bar-155-155.jpg in Resources */,
+				26924A011B1815FC005CC052 /* note-paper.png in Resources */,
 				269249E41B14ECD6005CC052 /* Main.storyboard in Resources */,
 				269249E91B14ECD6005CC052 /* LaunchScreen.xib in Resources */,
+				269249FF1B180B50005CC052 /* profile-icon.png in Resources */,
 				269249E61B14ECD6005CC052 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -339,7 +351,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Yellr/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -350,7 +362,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = Yellr/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -409,6 +421,7 @@
 				269249FA1B14ECD7005CC052 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		269249FB1B14ECD7005CC052 /* Build configuration list for PBXNativeTarget "YellrTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +430,7 @@
 				269249FD1B14ECD7005CC052 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
