@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */; };
-		263E1B6D1B18D36A0063E9C6 /* FirstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B6C1B18D36A0063E9C6 /* FirstViewController.swift */; };
-		263E1B6F1B18D36A0063E9C6 /* SecondViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B6E1B18D36A0063E9C6 /* SecondViewController.swift */; };
 		263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B701B18D36A0063E9C6 /* Main.storyboard */; };
 		263E1B741B18D36A0063E9C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B731B18D36A0063E9C6 /* Images.xcassets */; };
 		263E1B771B18D36A0063E9C6 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B751B18D36A0063E9C6 /* LaunchScreen.xib */; };
 		263E1B831B18D36A0063E9C6 /* YellrTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B821B18D36A0063E9C6 /* YellrTests.swift */; };
+		263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */; };
+		263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */; };
+		263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */; };
+		263E1B951B18EDCA0063E9C6 /* LocalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B941B18EDCA0063E9C6 /* LocalTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,14 +32,16 @@
 		263E1B651B18D36A0063E9C6 /* Yellr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yellr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		263E1B691B18D36A0063E9C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		263E1B6C1B18D36A0063E9C6 /* FirstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstViewController.swift; sourceTree = "<group>"; };
-		263E1B6E1B18D36A0063E9C6 /* SecondViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondViewController.swift; sourceTree = "<group>"; };
 		263E1B711B18D36A0063E9C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		263E1B731B18D36A0063E9C6 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		263E1B761B18D36A0063E9C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		263E1B7C1B18D36A0063E9C6 /* YellrTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YellrTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		263E1B811B18D36A0063E9C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		263E1B821B18D36A0063E9C6 /* YellrTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YellrTests.swift; sourceTree = "<group>"; };
+		263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
+		263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewController.swift; sourceTree = "<group>"; };
+		263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTableViewController.swift; sourceTree = "<group>"; };
+		263E1B941B18EDCA0063E9C6 /* LocalTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,12 +84,14 @@
 			isa = PBXGroup;
 			children = (
 				263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */,
-				263E1B6C1B18D36A0063E9C6 /* FirstViewController.swift */,
-				263E1B6E1B18D36A0063E9C6 /* SecondViewController.swift */,
+				263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */,
+				263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */,
+				263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */,
 				263E1B701B18D36A0063E9C6 /* Main.storyboard */,
 				263E1B731B18D36A0063E9C6 /* Images.xcassets */,
 				263E1B751B18D36A0063E9C6 /* LaunchScreen.xib */,
 				263E1B681B18D36A0063E9C6 /* Supporting Files */,
+				263E1B941B18EDCA0063E9C6 /* LocalTableViewCell.swift */,
 			);
 			path = Yellr;
 			sourceTree = "<group>";
@@ -215,9 +221,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				263E1B6F1B18D36A0063E9C6 /* SecondViewController.swift in Sources */,
 				263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */,
-				263E1B6D1B18D36A0063E9C6 /* FirstViewController.swift in Sources */,
+				263E1B951B18EDCA0063E9C6 /* LocalTableViewCell.swift in Sources */,
+				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
+				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
+				263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -411,6 +419,7 @@
 				263E1B881B18D36A0063E9C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		263E1B891B18D36A0063E9C6 /* Build configuration list for PBXNativeTarget "YellrTests" */ = {
 			isa = XCConfigurationList;
@@ -419,6 +428,7 @@
 				263E1B8B1B18D36A0063E9C6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
