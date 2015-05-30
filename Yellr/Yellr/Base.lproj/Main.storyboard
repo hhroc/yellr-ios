@@ -45,7 +45,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocalTVCIdentifier" rowHeight="166" id="BSR-NS-GG5">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocalTVCIdentifier" rowHeight="166" id="BSR-NS-GG5" customClass="LocalTableViewCell" customModule="Yellr" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BSR-NS-GG5" id="rkL-B0-gyW">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -108,7 +108,7 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="Edb-hU-m0P" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" constant="12" id="32R-AT-cRv"/>
-                                        <constraint firstItem="qmR-va-wk4" firstAttribute="leading" secondItem="dK7-1n-ply" secondAttribute="trailing" constant="250" id="8Mb-JH-SbM"/>
+                                        <constraint firstItem="qmR-va-wk4" firstAttribute="leading" secondItem="dK7-1n-ply" secondAttribute="trailing" constant="249" id="8Mb-JH-SbM"/>
                                         <constraint firstItem="Edb-hU-m0P" firstAttribute="top" secondItem="t1N-cJ-aOy" secondAttribute="bottom" constant="33" id="8dg-l1-u2m"/>
                                         <constraint firstItem="WkV-bv-psG" firstAttribute="leading" secondItem="Edb-hU-m0P" secondAttribute="trailing" constant="90" id="8hY-bu-Nhb"/>
                                         <constraint firstItem="8jg-n5-v7j" firstAttribute="top" secondItem="Edb-hU-m0P" secondAttribute="bottom" constant="2" id="97k-uy-tS9"/>
@@ -128,11 +128,21 @@
                                         <constraint firstItem="dK7-1n-ply" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="10" id="mjG-I0-9Cg"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="top" secondItem="dK7-1n-ply" secondAttribute="bottom" constant="8" id="nPD-pq-sO8"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leading" constant="139" id="ol0-Wk-TJ1"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" constant="1" id="rlA-HV-i13"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" constant="8" id="rlA-HV-i13"/>
                                         <constraint firstItem="t1N-cJ-aOy" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="2" id="u74-El-LiH"/>
                                         <constraint firstItem="8jg-n5-v7j" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" constant="12" id="vbn-c5-UEf"/>
                                     </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="downVoteBtn" destination="8jg-n5-v7j" id="4E6-G5-XnD"/>
+                                    <outlet property="downVoteCount" destination="Edb-hU-m0P" id="SL7-FU-sge"/>
+                                    <outlet property="mediaContainer" destination="WkV-bv-psG" id="pnH-NW-h6M"/>
+                                    <outlet property="postTitle" destination="y9c-94-IG5" id="hPm-EK-hsj"/>
+                                    <outlet property="postedBy" destination="dK7-1n-ply" id="KtG-eP-g0X"/>
+                                    <outlet property="postedOn" destination="qmR-va-wk4" id="mTS-yB-mac"/>
+                                    <outlet property="upVoteBtn" destination="t1N-cJ-aOy" id="MTi-hv-qHT"/>
+                                    <outlet property="upVoteCount" destination="qk7-Qo-deb" id="Clz-dy-Zyj"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>

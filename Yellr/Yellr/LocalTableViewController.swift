@@ -26,8 +26,15 @@ class LocalTableViewController: UITableViewController {
     
     //Update the cell object to show labels
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("LocalTVCIdentifier", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = data[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("LocalTVCIdentifier", forIndexPath: indexPath) as! LocalTableViewCell
+        //cell.textLabel?.text = data[indexPath.row]
+        cell.postTitle?.text = data[indexPath.row]
+        cell.postedBy?.text = "Anonymous"
+        cell.postedOn?.text = "\((indexPath.row + 1) * 3)m ago"
+        cell.upVoteCount?.text = "\((indexPath.row + 1) * 5)"
+        cell.downVoteCount?.text = "-\((indexPath.row + 1) * 3)"
+        cell.mediaContainer?.hidden = true
+        
         return cell
     }
     
