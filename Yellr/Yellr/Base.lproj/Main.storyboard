@@ -20,6 +20,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Aln-hG-aGe" id="Kfy-DX-Qo2">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="gPg-E3-5BT" kind="show" identifier="AssignmentDetailSegue" id="IQa-5b-hyx"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>
@@ -35,6 +38,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZpS-qY-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1645" y="-678"/>
+        </scene>
+        <!--Assignments Detail View Controller-->
+        <scene sceneID="rYL-7h-YU3">
+            <objects>
+                <viewController title="Assignments Detail View Controller" id="gPg-E3-5BT" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QEY-AU-o2z"/>
+                        <viewControllerLayoutGuide type="bottom" id="ayg-Ae-idV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="gOW-nk-c9L">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="AkW-qe-LTg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2366" y="-678"/>
         </scene>
         <!--Local TVC-->
         <scene sceneID="K2p-oy-U7E">
@@ -151,6 +172,7 @@
                                     <outlet property="postedOn" destination="qmR-va-wk4" id="mTS-yB-mac"/>
                                     <outlet property="upVoteBtn" destination="t1N-cJ-aOy" id="MTi-hv-qHT"/>
                                     <outlet property="upVoteCount" destination="qk7-Qo-deb" id="Clz-dy-Zyj"/>
+                                    <segue destination="mQn-Hs-FTV" kind="show" identifier="LocalPostDetailSegue" id="Bdo-fX-30G"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -169,6 +191,57 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="01w-pt-uSm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1645" y="134"/>
+        </scene>
+        <!--Local Post Detail View Controller-->
+        <scene sceneID="KMg-UG-1Pq">
+            <objects>
+                <viewController title="Local Post Detail View Controller" id="mQn-Hs-FTV" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Wdx-YS-fTv"/>
+                        <viewControllerLayoutGuide type="bottom" id="6sy-XB-JCk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="6dz-TE-VP0">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="aRc-Gm-Kkm" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2366" y="134"/>
+        </scene>
+        <!--Story Detail View Controller-->
+        <scene sceneID="cNH-sz-Yje">
+            <objects>
+                <viewController title="Story Detail View Controller" id="cUv-Sq-0aP" customClass="StoryDetailViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4fW-yS-AzJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Xwt-Gx-nDQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NFZ-iZ-gNY">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vt1-CU-9DY">
+                                <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </webView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="vt1-CU-9DY" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" constant="-16" id="7ie-Fg-GBz"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vt1-CU-9DY" secondAttribute="trailing" constant="-16" id="JZd-Nw-rkz"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="vt1-CU-9DY" secondAttribute="bottom" constant="-64" id="cNI-vm-beu"/>
+                            <constraint firstItem="vt1-CU-9DY" firstAttribute="top" secondItem="4fW-yS-AzJ" secondAttribute="bottom" id="vWK-0L-B4B"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="myWebView" destination="vt1-CU-9DY" id="VwD-2k-t7f"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k0x-XP-r7d" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2366" y="942"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -223,6 +296,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nwX-du-yBb" id="444-cz-BIo">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="cUv-Sq-0aP" kind="show" identifier="StoryDetailSegue" id="d3v-gg-Zkx"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <sections/>

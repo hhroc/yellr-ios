@@ -36,6 +36,8 @@ class LocalTableViewController: UITableViewController {
         cell.downVoteCount?.text = "-\((indexPath.row + 1) * 3)"
         cell.mediaContainer?.hidden = true
         
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        
         return cell
     }
     
