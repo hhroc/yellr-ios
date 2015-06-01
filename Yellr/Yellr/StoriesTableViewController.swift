@@ -14,6 +14,7 @@ class StoriesTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString(YellrConstants.Stories.Title, comment: "Stories Screen title")
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

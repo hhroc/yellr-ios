@@ -15,6 +15,7 @@ class AssignmentsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString(YellrConstants.Assignments.Title, comment: "Assignments Screen title")
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

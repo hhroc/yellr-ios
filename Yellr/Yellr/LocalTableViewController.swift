@@ -16,6 +16,7 @@ class LocalTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
     }
     
     //Determine the number of rows to show
@@ -37,6 +38,14 @@ class LocalTableViewController: UITableViewController {
         
         return cell
     }
+    
+//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return 60.0
+//    }
+    
+//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        
+//    }
     
     
 }
