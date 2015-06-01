@@ -30,7 +30,7 @@ class LocalTableViewController: UITableViewController {
         //cell.textLabel?.text = data[indexPath.row]
         cell.postTitle?.text = data[indexPath.row]
         cell.postedBy?.text = "Anonymous"
-        cell.postedOn?.text = "\((indexPath.row + 1) * 3)m ago"
+        cell.postedOn?.text = "\((indexPath.row + 1) * 3)m"
         cell.upVoteCount?.text = "\((indexPath.row + 1) * 5)"
         cell.downVoteCount?.text = "-\((indexPath.row + 1) * 3)"
         cell.mediaContainer?.hidden = true
