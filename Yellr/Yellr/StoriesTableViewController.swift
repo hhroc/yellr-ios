@@ -10,7 +10,9 @@ import UIKit
 
 class StoriesTableViewController: UITableViewController {
     
-    var data = ["It is a long established", "fact that a reader", "will be distracted", "by the readable content", "of a page when looking", "at its layout. The point", "of using Lorem Ipsum", "is that it has", "a more-or-less normal", "distribution of letters", "as opposed to using", "'Content here, content here'", "making it look like", "readable English", "Many desktop publishing", "packages and web page", "editors now use Lorem", "Ipsum as their default", "model text", "and a search"]
+    var data = ["google.com", "http://www.facebook.com", "http://www.yahoo.com", "http://www.rit.edu", "http://www.About.com", "http://www.Bartleby.com", "http://www.Download.com", "http://www.Craigslist.org", "http://www.Reference.com", "http://www.Wikipedia.org", "http://www.Beliefnet.com", "http://www.Weather.com", "http://www.Search.com", "http://www.Hotmail.com", "http://www.NIH.gov", "http://www.CNET.com", "http://www.Refdesk.com", "http://www.MayoClinic.com", "http://www.GuideStar.org", "http://www.FirstGov.gov", "http://www.BBC.com", "http://www.IMDB.com", "http://www.Expedia.com", "http://www.Slate.com", "http://www.Nutrition.gov", "http://www.Altmedicine.com", "http://www.Citysearch.com", "http://www.Monster.com", "http://www.Vote-Smart.org", "http://www.Sciam.com", "http://www.ESPN.com", "http://www.Encarta.com", "http://www.Findlaw.com", "http://www.Nature.com", "http://www.Time.com"]
+    
+    var selectedStory: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +27,23 @@ class StoriesTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("StoriesTVCIdentifier", forIndexPath: indexPath) as! UITableViewCell
         cell.textLabel?.text = data[indexPath.row]
         return cell
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+        if (segue.identifier == "StoryDetailSegue") {
+            
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            var dataToSend:NSString = self.data[indexPath.row] as String
+            
+            //initialise the destination VC
+            var viewController = segue.destinationViewController as! StoryDetailViewController
+            // pass in the value to be sent
+            viewController.story = dataToSend as String;
+        }
     }
     
     
