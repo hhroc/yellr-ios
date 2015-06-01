@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  Yellr
+
+  Created by Debjit Saha on 6/1/15.
+  Copyright (c) 2015 wxxi. All rights reserved.
+*/
+
+local_post_title="Local Posts";
+assignments_title="Assignments";
+stories_title="Stories";
+profile_title="Profile";
+new_post_title="Add New Post";
