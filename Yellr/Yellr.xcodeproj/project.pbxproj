@@ -19,6 +19,8 @@
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
+		26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */; };
+		26CA8D451B1D05980094BFC3 /* YellrTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +56,8 @@
 		269A10E01B1CCAC50001577D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		26CA8D3F1B1CCB110094BFC3 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoryDetailViewController.swift; sourceTree = "<group>"; };
+		26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrHelperFunc.swift; sourceTree = "<group>"; };
+		26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrTabBarController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,8 @@
 				263E1B681B18D36A0063E9C6 /* Supporting Files */,
 				269A10D31B1CC4360001577D /* YellrConstants.swift */,
 				269A10DD1B1CCAB90001577D /* Localizable.strings */,
+				26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */,
+				26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */,
 			);
 			path = Yellr;
 			sourceTree = "<group>";
@@ -239,10 +245,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				26CA8D451B1D05980094BFC3 /* YellrTabBarController.swift in Sources */,
 				263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */,
 				26157ECA1B1A245700615428 /* LocalTableViewCell.swift in Sources */,
 				26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */,
 				269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */,
+				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
 				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
 				263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */,

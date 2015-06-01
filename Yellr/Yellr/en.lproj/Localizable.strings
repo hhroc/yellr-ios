@@ -6,7 +6,7 @@
   Copyright (c) 2015 wxxi. All rights reserved.
 */
 
-local_post_title="Local Posts";
+local_post_title="Local";
 assignments_title="Assignments";
 stories_title="Stories";
 profile_title="Profile";

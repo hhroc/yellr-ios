@@ -17,6 +17,7 @@ class LocalTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
+
     }
     
     //Determine the number of rows to show

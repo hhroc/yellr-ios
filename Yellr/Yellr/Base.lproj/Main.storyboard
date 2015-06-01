@@ -37,7 +37,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZpS-qY-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1645" y="-678"/>
+            <point key="canvasLocation" x="1605" y="-686"/>
         </scene>
         <!--Assignments Detail View Controller-->
         <scene sceneID="rYL-7h-YU3">
@@ -183,7 +183,7 @@
                         </connections>
                     </tableView>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" title="Local Posts" id="fTV-js-dtP">
+                    <navigationItem key="navigationItem" title="Local" id="fTV-js-dtP">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -243,10 +243,10 @@
             </objects>
             <point key="canvasLocation" x="2366" y="942"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Yellr Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" sceneMemberID="viewController">
+                <tabBarController id="49e-Tb-3d3" customClass="YellrTabBarController" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -267,7 +267,7 @@
         <scene sceneID="Bk2-ko-G05">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hxW-Xm-wkJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Local" image="first" id="5kF-ID-dbc"/>
+                    <tabBarItem key="tabBarItem" title="Local" id="5kF-ID-dbc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MhN-83-vd0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -319,7 +319,7 @@
         <scene sceneID="tkB-Hz-56m">
             <objects>
                 <navigationController title="Assignments" automaticallyAdjustsScrollViewInsets="NO" id="iwE-6g-Ev5" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Assignments" image="first" id="svu-f9-X2L"/>
+                    <tabBarItem key="tabBarItem" title="Assignments" id="svu-f9-X2L"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="22M-Tz-4Wg">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -338,7 +338,7 @@
         <scene sceneID="LvO-wT-iEg">
             <objects>
                 <navigationController title="Stories" automaticallyAdjustsScrollViewInsets="NO" id="Ua6-Sx-Bsb" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Stories" image="second" id="94r-L8-mLJ"/>
+                    <tabBarItem key="tabBarItem" title="Stories" id="94r-L8-mLJ"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="ifs-Pt-Xff">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -356,8 +356,6 @@
     </scenes>
     <resources>
         <image name="down" width="30" height="15"/>
-        <image name="first" width="30" height="30"/>
-        <image name="second" width="30" height="30"/>
         <image name="up" width="30" height="15"/>
     </resources>
 </document>
