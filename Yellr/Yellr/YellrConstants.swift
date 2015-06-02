@@ -25,7 +25,7 @@ struct YellrConstants {
         static let Title = "profile_title"
     }
     
-    struct NewPost {
+    struct AddPost {
         static let Title = "new_post_title"
     }
     
