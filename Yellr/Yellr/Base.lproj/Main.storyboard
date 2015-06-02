@@ -31,13 +31,44 @@
                             <outlet property="delegate" destination="Mjb-ic-aYh" id="yiA-c0-Vu6"/>
                         </connections>
                     </tableView>
+                    <toolbarItems>
+                        <barButtonItem title="y" id="hBL-Ph-4Jk"/>
+                    </toolbarItems>
                     <navigationItem key="navigationItem" title="Assignments" id="MNg-UH-XGZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Pd9-rG-Ceb"/>
+                        <barButtonItem key="leftBarButtonItem" title="y" id="sQt-Xl-zPa"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Pd9-rG-Ceb">
+                            <connections>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentToPost" modalTransitionStyle="flipHorizontal" id="KPH-S2-Dmj"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZpS-qY-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1605" y="-686"/>
+        </scene>
+        <!--Add New Post-->
+        <scene sceneID="9DE-XD-wMk">
+            <objects>
+                <viewController title="Add New Post" modalPresentationStyle="currentContext" id="f3Q-QL-uDs" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="w5c-Wp-z0h"/>
+                        <viewControllerLayoutGuide type="bottom" id="Cfa-Lf-Ej5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ufs-3r-FkX">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="JNF-t2-YyK">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="vhZ-6t-qSf"/>
+                        <barButtonItem key="rightBarButtonItem" title="Post" id="Xak-oG-xvX"/>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="KO9-ZE-W0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3823" y="-686"/>
         </scene>
         <!--Assignments Detail View Controller-->
         <scene sceneID="rYL-7h-YU3">
@@ -55,7 +86,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AkW-qe-LTg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2366" y="-678"/>
+            <point key="canvasLocation" x="2366" y="-628"/>
         </scene>
         <!--Local TVC-->
         <scene sceneID="K2p-oy-U7E">
@@ -184,8 +215,12 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Local" id="fTV-js-dtP">
-                        <barButtonItem key="leftBarButtonItem" title="Y" id="Tfe-6G-riS"/>
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH"/>
+                        <barButtonItem key="leftBarButtonItem" title="y" id="Tfe-6G-riS"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH">
+                            <connections>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="LocalToPost" modalTransitionStyle="flipHorizontal" id="n71-Tf-hsK"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </tableViewController>
@@ -309,7 +344,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Stories" id="PDr-Pc-d6K">
-                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="HJI-7W-1tn"/>
+                        <barButtonItem key="leftBarButtonItem" title="y" id="0yS-u0-nGp"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="HJI-7W-1tn">
+                            <connections>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="StoryToPost" modalTransitionStyle="flipHorizontal" id="zFr-lT-UsD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="up8-zU-fCR" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -354,9 +394,33 @@
             </objects>
             <point key="canvasLocation" x="873" y="942"/>
         </scene>
+        <!--Add New Post Nav Ctrl-->
+        <scene sceneID="ad1-wf-YL8">
+            <objects>
+                <navigationController title="Add New Post Nav Ctrl" automaticallyAdjustsScrollViewInsets="NO" id="xzy-qb-zDw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="zEt-R7-zZA">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="zva-Th-y45">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="f3Q-QL-uDs" kind="relationship" relationship="rootViewController" id="wI4-lf-xKz"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9HA-tw-LBe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3131" y="-686"/>
+        </scene>
     </scenes>
     <resources>
         <image name="down" width="30" height="15"/>
         <image name="up" width="30" height="15"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="zFr-lT-UsD"/>
+    </inferredMetricsTieBreakers>
 </document>
