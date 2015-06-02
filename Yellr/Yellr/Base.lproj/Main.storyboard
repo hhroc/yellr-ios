@@ -5,6 +5,12 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <mutableArray key="FontAwesome.ttf">
+            <string>FontAwesome</string>
+            <string>FontAwesome</string>
+        </mutableArray>
+    </customFonts>
     <scenes>
         <!--Assignments TVC-->
         <scene sceneID="KbC-8g-wg4">
@@ -51,7 +57,7 @@
         <!--Add New Post-->
         <scene sceneID="9DE-XD-wMk">
             <objects>
-                <viewController title="Add New Post" modalPresentationStyle="currentContext" id="f3Q-QL-uDs" sceneMemberID="viewController">
+                <viewController title="Add New Post" modalPresentationStyle="currentContext" id="f3Q-QL-uDs" customClass="AddPostViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="w5c-Wp-z0h"/>
                         <viewControllerLayoutGuide type="bottom" id="Cfa-Lf-Ej5"/>
@@ -60,51 +66,83 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="All posts are anonymous" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2N6-ld-uy5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="All posts are anonymous" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2N6-ld-uy5">
                                 <rect key="frame" x="16" y="91" width="189" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djn-i7-LmC">
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djn-i7-LmC">
                                 <rect key="frame" x="16" y="129" width="41" height="30"/>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="15"/>
                                 <state key="normal" title="Photo">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Udz-kI-egq">
-                                <rect key="frame" x="277" y="129" width="39" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Udz-kI-egq">
+                                <rect key="frame" x="198" y="130" width="39" height="30"/>
                                 <state key="normal" title="Video">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="177" y="129" width="39" height="30"/>
+                                </variation>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PV-c2-dYD">
-                                <rect key="frame" x="538" y="129" width="40" height="30"/>
-                                <state key="normal" title="Audio">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tell us about your community" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rNw-1W-mHT">
-                                <rect key="frame" x="16" y="231" width="568" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xgD-6O-GOZ">
+                                <rect key="frame" x="275" y="345" width="42" height="21"/>
+                                <fontDescription key="fontDescription" name="FontAwesome" family="FontAwesome" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="You can tell us what you think on any topic!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpm-yQ-Cjg">
                                 <rect key="frame" x="132" y="181" width="336" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="32" y="178" width="336" height="21"/>
+                                </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0PV-c2-dYD">
+                                <rect key="frame" x="287" y="130" width="40" height="30"/>
+                                <state key="normal" title="Audio">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="344" y="129" width="40" height="30"/>
+                                </variation>
+                            </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tell us about your community" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rNw-1W-mHT">
+                                <rect key="frame" x="16" y="231" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <variation key="widthClass=compact" fixedFrame="YES">
+                                    <rect key="frame" x="16" y="235" width="368" height="30"/>
+                                </variation>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="djn-i7-LmC" firstAttribute="leading" secondItem="ufs-3r-FkX" secondAttribute="leadingMargin" id="6Mb-RL-qaA"/>
+                            <constraint firstItem="djn-i7-LmC" firstAttribute="top" secondItem="2N6-ld-uy5" secondAttribute="bottom" constant="17" id="xiy-DF-mJ6"/>
+                            <constraint firstAttribute="centerX" secondItem="Udz-kI-egq" secondAttribute="centerX" constant="3.5" id="yLp-ow-Ix1"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add a new post" id="JNF-t2-YyK">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="vhZ-6t-qSf"/>
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="Xak-oG-xvX"/>
                     </navigationItem>
+                    <connections>
+                        <outlet property="cancelBtn" destination="vhZ-6t-qSf" id="bnx-ZX-0Ht"/>
+                        <outlet property="photoBtn" destination="djn-i7-LmC" id="whE-RF-ATY"/>
+                        <outlet property="recordBtn" destination="0PV-c2-dYD" id="A6U-ew-NqC"/>
+                        <outlet property="submitBtn" destination="Xak-oG-xvX" id="Baj-gZ-Vgk"/>
+                        <outlet property="testLabel" destination="xgD-6O-GOZ" id="Hbo-h7-l0E"/>
+                        <outlet property="vdoBtn" destination="Udz-kI-egq" id="fMJ-ll-3Qn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KO9-ZE-W0F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3823" y="-686"/>
+            <point key="canvasLocation" x="3822" y="-686"/>
         </scene>
         <!--Assignments Detail View Controller-->
         <scene sceneID="rYL-7h-YU3">
