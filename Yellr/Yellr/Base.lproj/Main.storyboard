@@ -184,6 +184,7 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Local" id="fTV-js-dtP">
+                        <barButtonItem key="leftBarButtonItem" title="Y" id="Tfe-6G-riS"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH"/>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
@@ -246,7 +247,7 @@
         <!--Yellr Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController id="49e-Tb-3d3" customClass="YellrTabBarController" sceneMemberID="viewController">
+                <tabBarController modalTransitionStyle="partialCurl" id="49e-Tb-3d3" customClass="YellrTabBarController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>

@@ -16,6 +16,7 @@
 		263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */; };
 		263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */; };
 		263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */; };
+		265E21DD1B1D79A30026D252 /* Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 265E21DC1B1D79A30026D252 /* Selected.png */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -47,6 +48,7 @@
 		263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
 		263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewController.swift; sourceTree = "<group>"; };
 		263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTableViewController.swift; sourceTree = "<group>"; };
+		265E21DC1B1D79A30026D252 /* Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Selected.png; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		269A10D61B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 		263E1B671B18D36A0063E9C6 /* Yellr */ = {
 			isa = PBXGroup;
 			children = (
+				265E21DE1B1D79AB0026D252 /* Images */,
 				263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */,
 				263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */,
 				26157EC91B1A245700615428 /* LocalTableViewCell.swift */,
@@ -140,6 +143,14 @@
 				263E1B811B18D36A0063E9C6 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		265E21DE1B1D79AB0026D252 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				265E21DC1B1D79A30026D252 /* Selected.png */,
+			);
+			name = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,6 +238,7 @@
 				263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */,
 				269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */,
 				263E1B771B18D36A0063E9C6 /* LaunchScreen.xib in Resources */,
+				265E21DD1B1D79A30026D252 /* Selected.png in Resources */,
 				263E1B741B18D36A0063E9C6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

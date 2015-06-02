@@ -24,13 +24,32 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor {
 func initNavBarStyle() {
     //Nav bar color
     UINavigationBar.appearance().barTintColor = UIColorFromRGB(YellrConstants.Colors.yellow)
-    UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+    UINavigationBar.appearance().tintColor = UIColor.blackColor()
     
     //UINavbar title font
     //UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "IowanOldStyle", size: 20)!]
     
     //tab bar colors and styles
-    UITabBar.appearance().barTintColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
-    //UITabBar.appearance().translucent = true
-    UITabBar.appearance().translucent = false
+    //UITabBar.appearance().barTintColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+    //UITabBar.appearance().translucent = false
+    
+    //set the color for selected & unselected states
+    //UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.whiteColor()], forState:.Normal)
+    //UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.blackColor()], forState:.Selected)
+    
+    //set image for selected tab
+    //UITabBar.appearance().selectionIndicatorImage = UIImage(named: "Selected.png")
+    
+    //UITabBarItem.setTitlePositionAdjustment()
+    
+    //tabBarItem.titlePositionAdjustment = UIOffsetMake(-15, 0);
+
+    //UITabBar.appearance().selectedImageTintColor = UIColor.blackColor()
+    
+    //UITabBarItem.appearance().setTitleTextAttributes([NSFontAttributeName:UIFont(name: "American Typewriter", size: 20)], forState:.Normal)
+//    UITabBarItem.appearance().setTitleTextAttributes(
+//        [NSFontAttributeName: UIFont(name:"Ubuntu", size:11),
+//            NSForegroundColorAttributeName: UIColor(rgb: 0x929292)],
+//        forState: .Normal)
+    
 }
