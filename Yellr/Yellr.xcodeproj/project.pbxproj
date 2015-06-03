@@ -120,7 +120,6 @@
 				263E1B751B18D36A0063E9C6 /* LaunchScreen.xib */,
 				263E1B681B18D36A0063E9C6 /* Supporting Files */,
 				269A10D31B1CC4360001577D /* YellrConstants.swift */,
-				260488A31B1E71AA00D781FE /* FontAwesome.ttf */,
 				260488A41B1E71AA00D781FE /* iconfonts-fontawesome.swift */,
 				269A10DD1B1CCAB90001577D /* Localizable.strings */,
 				26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */,
@@ -132,6 +131,7 @@
 		263E1B681B18D36A0063E9C6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				260488A31B1E71AA00D781FE /* FontAwesome.ttf */,
 				263E1B691B18D36A0063E9C6 /* Info.plist */,
 			);
 			name = "Supporting Files";

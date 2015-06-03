@@ -23,7 +23,7 @@ class AddPostViewController: UIViewController {
         
         var buttonString = String.fontAwesomeString("fa-camera")
         var buttonStringAttributed = NSMutableAttributedString(string: buttonString, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 11.00)!])
-        buttonStringAttributed.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 50), range: NSRange(location: 0,length: 1))
+        buttonStringAttributed.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 20), range: NSRange(location: 0,length: 1))
         
         photoBtn.titleLabel?.textAlignment = .Center
         photoBtn.titleLabel?.numberOfLines = 2
