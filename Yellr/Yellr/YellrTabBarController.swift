@@ -44,6 +44,7 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
                 [
                     NSForegroundColorAttributeName:UIColorFromRGB(YellrConstants.Colors.yellow),
                     NSBackgroundColorDocumentAttribute:UIColor.blackColor()
+                    //NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleThick.rawValue
                 ],
                 forState: UIControlState.Selected
             )
@@ -66,7 +67,7 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         //left item in tab bar controller nav
         //self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStyleBordered target:self action:@selector(showall)];
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Test", style: UIBarButtonItemStyle.Bordered, target: self, action: "test:");
+        //self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Test", style: UIBarButtonItemStyle.Bordered, target: self, action: "test:");
         
     }
     
