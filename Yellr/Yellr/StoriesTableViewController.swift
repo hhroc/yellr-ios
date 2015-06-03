@@ -24,8 +24,10 @@ class StoriesTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("StoriesTVCIdentifier", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = data[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("StoriesTVCIdentifier", forIndexPath: indexPath) as! StoriesTableViewCell
+        cell.story?.text = data[indexPath.row]
+        cell.postedBy?.text = "Anonymous"
+        cell.postedOn?.text = "\((indexPath.row + 1) * 2)h"
         return cell
     }
     

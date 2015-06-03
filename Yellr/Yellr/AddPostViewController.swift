@@ -10,7 +10,6 @@ import UIKit
 
 class AddPostViewController: UIViewController {
     
-    @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var photoBtn: UIButton!
     @IBOutlet weak var vdoBtn: UIButton!
     @IBOutlet weak var recordBtn: UIButton!
@@ -29,6 +28,12 @@ class AddPostViewController: UIViewController {
         photoBtn.titleLabel?.numberOfLines = 2
         photoBtn.setAttributedTitle(buttonStringAttributed, forState: .Normal)
         
+    }
+    
+    //dismiss the addpostmodal on pressing cancel
+    @IBAction func cancelPressed(sender: AnyObject) {
+        self.dismissViewControllerAnimated(true, completion: nil);
+        println("dd")
     }
     
 }

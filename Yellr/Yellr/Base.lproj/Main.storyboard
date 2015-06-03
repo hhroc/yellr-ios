@@ -15,17 +15,59 @@
         <scene sceneID="KbC-8g-wg4">
             <objects>
                 <tableViewController title="Assignments TVC" id="Mjb-ic-aYh" customClass="AssignmentsTableViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Tf-p9-G0k">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="89" sectionHeaderHeight="22" sectionFooterHeight="22" id="5Tf-p9-G0k">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssignmentsTVCIdentifier" id="Aln-hG-aGe">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="AssignmentsTVCIdentifier" rowHeight="89" id="Aln-hG-aGe" customClass="AssignmentsTableViewCell" customModule="Yellr" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Aln-hG-aGe" id="Kfy-DX-Qo2">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JfK-FM-U8e">
+                                            <rect key="frame" x="8" y="8" width="70" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="70" id="1RX-bl-Jcg"/>
+                                                <constraint firstAttribute="height" constant="21" id="LDg-Kl-OOj"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AX-RF-XTb">
+                                            <rect key="frame" x="550" y="8" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="42" id="7D1-CL-tsj"/>
+                                                <constraint firstAttribute="height" constant="21" id="yho-v3-EVx"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gm-3W-kp0">
+                                            <rect key="frame" x="8" y="37" width="350" height="26"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="350" id="DCs-wi-hm9"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="19"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="6AX-RF-XTb" firstAttribute="trailing" secondItem="Kfy-DX-Qo2" secondAttribute="trailingMargin" id="Fjy-53-0Yt"/>
+                                        <constraint firstItem="JfK-FM-U8e" firstAttribute="top" secondItem="Kfy-DX-Qo2" secondAttribute="topMargin" id="Vkf-Rk-am9"/>
+                                        <constraint firstItem="6AX-RF-XTb" firstAttribute="top" secondItem="Kfy-DX-Qo2" secondAttribute="topMargin" id="XOF-Ve-W0P"/>
+                                        <constraint firstItem="8gm-3W-kp0" firstAttribute="leading" secondItem="Kfy-DX-Qo2" secondAttribute="leadingMargin" id="XcJ-dw-CwR"/>
+                                        <constraint firstItem="JfK-FM-U8e" firstAttribute="leading" secondItem="Kfy-DX-Qo2" secondAttribute="leadingMargin" id="sxI-lz-RA0"/>
+                                        <constraint firstItem="8gm-3W-kp0" firstAttribute="top" secondItem="JfK-FM-U8e" secondAttribute="bottom" constant="8" id="tkd-1F-Oqz"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="assgnTitle" destination="8gm-3W-kp0" id="o6s-R3-YAj"/>
+                                    <outlet property="postedBy" destination="JfK-FM-U8e" id="vxI-e9-mer"/>
+                                    <outlet property="postedOn" destination="6AX-RF-XTb" id="kuh-NJ-FkG"/>
                                     <segue destination="gPg-E3-5BT" kind="show" identifier="AssignmentDetailSegue" id="IQa-5b-hyx"/>
                                 </connections>
                             </tableViewCell>
@@ -36,14 +78,11 @@
                             <outlet property="delegate" destination="Mjb-ic-aYh" id="yiA-c0-Vu6"/>
                         </connections>
                     </tableView>
-                    <toolbarItems>
-                        <barButtonItem title="y" id="hBL-Ph-4Jk"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <navigationItem key="navigationItem" title="Assignments" id="MNg-UH-XGZ">
-                        <barButtonItem key="leftBarButtonItem" title="y" id="sQt-Xl-zPa"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Pd9-rG-Ceb">
                             <connections>
-                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentToPost" modalTransitionStyle="flipHorizontal" id="KPH-S2-Dmj"/>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="KPH-S2-Dmj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -150,7 +189,12 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Add a new post" id="JNF-t2-YyK">
-                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="vhZ-6t-qSf"/>
+                        <barButtonItem key="backBarButtonItem" title="test" id="hn3-Dg-TAF"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="vhZ-6t-qSf">
+                            <connections>
+                                <action selector="cancelPressed:" destination="f3Q-QL-uDs" id="1x8-43-b4I"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Submit" id="Xak-oG-xvX"/>
                     </navigationItem>
                     <connections>
@@ -310,10 +354,9 @@
                     </tableView>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Local" id="fTV-js-dtP">
-                        <barButtonItem key="leftBarButtonItem" title="y" id="Tfe-6G-riS"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH">
                             <connections>
-                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="LocalToPost" modalTransitionStyle="flipHorizontal" id="n71-Tf-hsK"/>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="LocalToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="n71-Tf-hsK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -417,17 +460,60 @@
         <scene sceneID="eXX-dd-Xxo">
             <objects>
                 <tableViewController title="Stories TVC" id="R5t-p8-Wc0" customClass="StoriesTableViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jYA-vb-dz4">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="108" sectionHeaderHeight="22" sectionFooterHeight="22" id="jYA-vb-dz4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoriesTVCIdentifier" id="nwX-du-yBb">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="StoriesTVCIdentifier" rowHeight="108" id="nwX-du-yBb" customClass="StoriesTableViewCell" customModule="Yellr">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nwX-du-yBb" id="444-cz-BIo">
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bst-57-MoW">
+                                            <rect key="frame" x="8" y="8" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="42" id="7UH-7k-OWP"/>
+                                                <constraint firstAttribute="height" constant="21" id="p67-D3-iPx"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxx-JF-xnz">
+                                            <rect key="frame" x="550" y="8" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="2YF-1p-UDu"/>
+                                                <constraint firstAttribute="width" constant="42" id="9HA-1h-C4U"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUi-Ir-Dde">
+                                            <rect key="frame" x="8" y="43" width="350" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="g5c-JF-qIs"/>
+                                                <constraint firstAttribute="width" constant="350" id="spU-7G-D85"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="18"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="bst-57-MoW" firstAttribute="top" secondItem="444-cz-BIo" secondAttribute="topMargin" id="HVT-pU-aPz"/>
+                                        <constraint firstItem="zxx-JF-xnz" firstAttribute="top" secondItem="444-cz-BIo" secondAttribute="topMargin" id="IE7-Tv-Hdk"/>
+                                        <constraint firstItem="nUi-Ir-Dde" firstAttribute="top" secondItem="bst-57-MoW" secondAttribute="bottom" constant="14" id="ItX-xB-266"/>
+                                        <constraint firstItem="zxx-JF-xnz" firstAttribute="trailing" secondItem="444-cz-BIo" secondAttribute="trailingMargin" id="Kat-0n-Pde"/>
+                                        <constraint firstItem="bst-57-MoW" firstAttribute="leading" secondItem="444-cz-BIo" secondAttribute="leadingMargin" id="P2i-lC-a9I"/>
+                                        <constraint firstItem="nUi-Ir-Dde" firstAttribute="leading" secondItem="444-cz-BIo" secondAttribute="leadingMargin" id="Qdp-Eh-9LE"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="postedBy" destination="bst-57-MoW" id="uUu-Kj-4xk"/>
+                                    <outlet property="postedOn" destination="zxx-JF-xnz" id="EUO-g5-V0L"/>
+                                    <outlet property="story" destination="nUi-Ir-Dde" id="vPJ-Ns-Bsl"/>
                                     <segue destination="cUv-Sq-0aP" kind="show" identifier="StoryDetailSegue" id="d3v-gg-Zkx"/>
                                 </connections>
                             </tableViewCell>
@@ -439,10 +525,9 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Stories" id="PDr-Pc-d6K">
-                        <barButtonItem key="leftBarButtonItem" title="y" id="0yS-u0-nGp"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="HJI-7W-1tn">
                             <connections>
-                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="StoryToPost" modalTransitionStyle="flipHorizontal" id="zFr-lT-UsD"/>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="StoryToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="zFr-lT-UsD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

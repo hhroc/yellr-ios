@@ -23,10 +23,11 @@ class AssignmentsTableViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentsTVCIdentifier", forIndexPath: indexPath) as! UITableViewCell
-        cell.textLabel?.text = data[indexPath.row]
+        let cell = tableView.dequeueReusableCellWithIdentifier("AssignmentsTVCIdentifier", forIndexPath: indexPath) as! AssignmentsTableViewCell
+        cell.assgnTitle?.text = data[indexPath.row]
+        cell.postedBy?.text = "Anonymous"
+        cell.postedOn?.text = "\((indexPath.row + 1) * 2)"
         return cell
     }
-    
     
 }
