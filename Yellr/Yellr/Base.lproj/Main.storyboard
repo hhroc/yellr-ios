@@ -35,22 +35,22 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AX-RF-XTb">
-                                            <rect key="frame" x="550" y="8" width="42" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="42" id="7D1-CL-tsj"/>
-                                                <constraint firstAttribute="height" constant="21" id="yho-v3-EVx"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8gm-3W-kp0">
                                             <rect key="frame" x="8" y="37" width="350" height="26"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="350" id="DCs-wi-hm9"/>
                                             </constraints>
                                             <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="19"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AX-RF-XTb">
+                                            <rect key="frame" x="550" y="8" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="42" id="7D1-CL-tsj"/>
+                                                <constraint firstAttribute="height" constant="21" id="yho-v3-EVx"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -254,16 +254,6 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmR-va-wk4">
-                                            <rect key="frame" x="544" y="18" width="48" height="22"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="48" id="VgF-uz-wmS"/>
-                                                <constraint firstAttribute="height" constant="22" id="Y6T-PQ-GTa"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="16"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WkV-bv-psG">
                                             <rect key="frame" x="90" y="80" width="300" height="77"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -274,7 +264,7 @@
                                                 <constraint firstAttribute="height" constant="22" id="0mi-00-Dew"/>
                                                 <constraint firstAttribute="width" constant="30" id="fFr-fN-ihv"/>
                                             </constraints>
-                                            <state key="normal" image="up">
+                                            <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
@@ -284,7 +274,7 @@
                                                 <constraint firstAttribute="width" constant="30" id="Y2L-ts-Qcj"/>
                                                 <constraint firstAttribute="height" constant="22" id="vxu-aE-GWv"/>
                                             </constraints>
-                                            <state key="normal" image="down">
+                                            <state key="normal">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
@@ -318,6 +308,16 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmR-va-wk4">
+                                            <rect key="frame" x="552" y="18" width="48" height="22"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="48" id="VgF-uz-wmS"/>
+                                                <constraint firstAttribute="height" constant="22" id="Y6T-PQ-GTa"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="qk7-Qo-deb" firstAttribute="top" secondItem="Edb-hU-m0P" secondAttribute="bottom" constant="10" id="26o-5Q-PCU"/>
@@ -330,7 +330,7 @@
                                         <constraint firstItem="Edb-hU-m0P" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" id="SL6-Ul-tyx"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="top" secondItem="dK7-1n-ply" secondAttribute="bottom" constant="2" id="aQ0-ia-JHv"/>
                                         <constraint firstItem="qmR-va-wk4" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="10" id="qW5-rF-1gO"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" id="tcQ-2t-365"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" constant="-8" id="tcQ-2t-365"/>
                                         <constraint firstItem="dK7-1n-ply" firstAttribute="leading" secondItem="t1N-cJ-aOy" secondAttribute="trailing" constant="18" id="wfN-Vs-P5A"/>
                                         <constraint firstItem="qk7-Qo-deb" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" id="yHl-fI-EC3"/>
                                         <constraint firstItem="t1N-cJ-aOy" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="10" id="zJC-5p-kbL"/>
@@ -483,16 +483,6 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxx-JF-xnz">
-                                            <rect key="frame" x="550" y="8" width="42" height="21"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="21" id="2YF-1p-UDu"/>
-                                                <constraint firstAttribute="width" constant="42" id="9HA-1h-C4U"/>
-                                            </constraints>
-                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nUi-Ir-Dde">
                                             <rect key="frame" x="8" y="43" width="350" height="21"/>
                                             <constraints>
@@ -503,12 +493,22 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxx-JF-xnz">
+                                            <rect key="frame" x="558" y="7" width="42" height="21"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="21" id="2YF-1p-UDu"/>
+                                                <constraint firstAttribute="width" constant="42" id="9HA-1h-C4U"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="bst-57-MoW" firstAttribute="top" secondItem="444-cz-BIo" secondAttribute="topMargin" id="HVT-pU-aPz"/>
-                                        <constraint firstItem="zxx-JF-xnz" firstAttribute="top" secondItem="444-cz-BIo" secondAttribute="topMargin" id="IE7-Tv-Hdk"/>
+                                        <constraint firstItem="zxx-JF-xnz" firstAttribute="top" secondItem="444-cz-BIo" secondAttribute="topMargin" constant="-1" id="IE7-Tv-Hdk"/>
                                         <constraint firstItem="nUi-Ir-Dde" firstAttribute="top" secondItem="bst-57-MoW" secondAttribute="bottom" constant="14" id="ItX-xB-266"/>
-                                        <constraint firstItem="zxx-JF-xnz" firstAttribute="trailing" secondItem="444-cz-BIo" secondAttribute="trailingMargin" id="Kat-0n-Pde"/>
+                                        <constraint firstItem="zxx-JF-xnz" firstAttribute="trailing" secondItem="444-cz-BIo" secondAttribute="trailingMargin" constant="8" id="Kat-0n-Pde"/>
                                         <constraint firstItem="bst-57-MoW" firstAttribute="leading" secondItem="444-cz-BIo" secondAttribute="leadingMargin" id="P2i-lC-a9I"/>
                                         <constraint firstItem="nUi-Ir-Dde" firstAttribute="leading" secondItem="444-cz-BIo" secondAttribute="leadingMargin" id="Qdp-Eh-9LE"/>
                                     </constraints>
@@ -599,10 +599,6 @@
             <point key="canvasLocation" x="3131" y="-686"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="down" width="30" height="15"/>
-        <image name="up" width="30" height="15"/>
-    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="zFr-lT-UsD"/>
     </inferredMetricsTieBreakers>

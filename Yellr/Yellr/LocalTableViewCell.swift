@@ -23,6 +23,22 @@ class LocalTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        var buttonStringDn = String.fontAwesomeString("fa-sort-down")
+        var buttonStringAttributedDn = NSMutableAttributedString(string: buttonStringDn, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 11.00)!])
+        buttonStringAttributedDn.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 20), range: NSRange(location: 0,length: 1))
+        
+        downVoteBtn.titleLabel?.textAlignment = .Center
+        downVoteBtn.titleLabel?.numberOfLines = 1
+        downVoteBtn.setAttributedTitle(buttonStringAttributedDn, forState: .Normal)
+        
+        var buttonStringUp = String.fontAwesomeString("fa-sort-up")
+        var buttonStringAttributedUp = NSMutableAttributedString(string: buttonStringUp, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 11.00)!])
+        buttonStringAttributedUp.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 20), range: NSRange(location: 0,length: 1))
+        
+        upVoteBtn.titleLabel?.textAlignment = .Center
+        upVoteBtn.titleLabel?.numberOfLines = 1
+        upVoteBtn.setAttributedTitle(buttonStringAttributedUp, forState: .Normal)
+        
     }
     
     override func setSelected(selected: Bool, animated: Bool) {
