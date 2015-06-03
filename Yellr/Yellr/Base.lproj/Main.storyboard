@@ -82,7 +82,7 @@
                     <navigationItem key="navigationItem" title="Assignments" id="MNg-UH-XGZ">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Pd9-rG-Ceb">
                             <connections>
-                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="KPH-S2-Dmj"/>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="KPH-S2-Dmj"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -265,6 +265,7 @@
                                                 <constraint firstAttribute="width" constant="30" id="fFr-fN-ihv"/>
                                             </constraints>
                                             <state key="normal">
+                                                <color key="titleColor" red="0.10196078431372549" green="0.73725490196078436" blue="0.61176470588235299" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
@@ -275,6 +276,7 @@
                                                 <constraint firstAttribute="height" constant="22" id="vxu-aE-GWv"/>
                                             </constraints>
                                             <state key="normal">
+                                                <color key="titleColor" red="1" green="0.38823529411764707" blue="0.27843137254901962" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
@@ -359,7 +361,7 @@
                     <navigationItem key="navigationItem" title="Local" id="fTV-js-dtP">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xjh-9j-xlH">
                             <connections>
-                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="LocalToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="n71-Tf-hsK"/>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="LocalToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="n71-Tf-hsK"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -530,7 +532,7 @@
                     <navigationItem key="navigationItem" title="Stories" id="PDr-Pc-d6K">
                         <barButtonItem key="rightBarButtonItem" systemItem="compose" id="HJI-7W-1tn">
                             <connections>
-                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="StoryToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="zFr-lT-UsD"/>
+                                <segue destination="xzy-qb-zDw" kind="presentation" identifier="StoryToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="zFr-lT-UsD"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -600,6 +602,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zFr-lT-UsD"/>
+        <segue reference="n71-Tf-hsK"/>
     </inferredMetricsTieBreakers>
 </document>

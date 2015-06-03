@@ -29,6 +29,14 @@ struct YellrConstants {
         static let Title = "new_post_title"
     }
     
+    struct API {
+        static let endPoint = ""
+    }
+    
+    struct ApiMethods {
+        static let get = ""
+    }
+    
     struct Colors {
         static let blue:UInt = 0x2980b9;
         static let dark_blue:UInt = 0x2c3e50;
