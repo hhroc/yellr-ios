@@ -9,6 +9,11 @@
 import Foundation
 
 struct YellrConstants {
+    
+    struct AppInfo {
+        static let version = "0.1"
+    }
+    
     struct LocalPosts {
         static let Title = "local_post_title"
     }
@@ -30,7 +35,7 @@ struct YellrConstants {
     }
     
     struct API {
-        static let endPoint = ""
+        static let endPoint = "http://yellr.mycodespace.net"
     }
     
     struct ApiMethods {
