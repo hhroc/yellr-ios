@@ -53,3 +53,55 @@ func initNavBarStyle() {
 //        forState: .Normal)
     
 }
+
+/**
+ * generate the API endpoint
+ */
+func buildUrl(method: String ) -> String {
+    
+    let lat:Double = 43.161030000000000000
+    let long:Double = -77.610921900000000000
+    var lang:String = NSLocale.preferredLanguages()[0] as! String
+        
+    var url = YellrConstants.API.endPoint + "/" + method
+    url = url + "?cuid=" + getCUID()
+    url = url + "&language_code=" + lang
+    url = url + "&lat=" + String(format:"%f", lat)
+    url = url + "&lng=" + String(format:"%f", long)
+    url = url + "&platform=" + "iOS"
+    url = url + "&app_version=" + YellrConstants.AppInfo.version
+    
+    return url;
+}
+
+/**
+ * return the CUID
+ */
+func getCUID() -> String {
+    let preferences = NSUserDefaults.standardUserDefaults()
+    var cuid = ""
+    let cuidKey = "ycuid"
+    if preferences.objectForKey(cuidKey) == nil {
+        cuid = NSUUID().UUIDString
+        preferences.setValue(cuid, forKey: cuidKey)
+        //  Save to disk
+        let didSave = preferences.synchronize()
+        if !didSave {}
+    } else {
+        cuid = preferences.stringForKey(cuidKey)!
+    }
+    return cuid
+}
+
+/**
+ * reset the CUID
+ */
+func resetCUID() {
+    let preferences = NSUserDefaults.standardUserDefaults()
+    var cuid = NSUUID().UUIDString
+    let cuidKey = "ycuid"
+    preferences.setValue(cuid, forKey: cuidKey)
+    //  Save to disk
+    let didSave = preferences.synchronize()
+    if !didSave {}
+}
