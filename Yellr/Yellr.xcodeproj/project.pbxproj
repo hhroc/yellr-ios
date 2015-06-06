@@ -24,7 +24,7 @@
 		264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645436F1B2230AE00B8EA79 /* AssignmentsViewModel.swift */; };
 		264543721B2230DA00B8EA79 /* StoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543711B2230DA00B8EA79 /* StoriesViewModel.swift */; };
 		264543791B22BFB100B8EA79 /* Font-Awesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543781B22BFB100B8EA79 /* Font-Awesome.swift */; };
-		265E21DD1B1D79A30026D252 /* Selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 265E21DC1B1D79A30026D252 /* Selected.png */; };
+		2645437B1B23256800B8EA79 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2645437A1B23244A00B8EA79 /* FontAwesome.otf */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -63,8 +63,8 @@
 		264543681B21F51500B8EA79 /* LocalPostDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPostDataModel.swift; sourceTree = "<group>"; };
 		2645436F1B2230AE00B8EA79 /* AssignmentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsViewModel.swift; sourceTree = "<group>"; };
 		264543711B2230DA00B8EA79 /* StoriesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesViewModel.swift; sourceTree = "<group>"; };
-		264543751B22BB4000B8EA79 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		264543781B22BFB100B8EA79 /* Font-Awesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font-Awesome.swift"; sourceTree = "<group>"; };
+		2645437A1B23244A00B8EA79 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		265E21DC1B1D79A30026D252 /* Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Selected.png; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -126,9 +126,7 @@
 				26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */,
 				26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */,
 				2604889D1B1E541900D781FE /* AddPostViewController.swift */,
-				264543751B22BB4000B8EA79 /* FontAwesome.otf */,
 				263E1B701B18D36A0063E9C6 /* Main.storyboard */,
-				264543781B22BFB100B8EA79 /* Font-Awesome.swift */,
 				263E1B731B18D36A0063E9C6 /* Images.xcassets */,
 				263E1B751B18D36A0063E9C6 /* LaunchScreen.xib */,
 				263E1B681B18D36A0063E9C6 /* Supporting Files */,
@@ -141,6 +139,8 @@
 		263E1B681B18D36A0063E9C6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				2645437A1B23244A00B8EA79 /* FontAwesome.otf */,
+				264543781B22BFB100B8EA79 /* Font-Awesome.swift */,
 				269A10D31B1CC4360001577D /* YellrConstants.swift */,
 				26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */,
 				263E1B691B18D36A0063E9C6 /* Info.plist */,
@@ -293,10 +293,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2645437B1B23256800B8EA79 /* FontAwesome.otf in Resources */,
 				263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */,
 				269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */,
 				263E1B771B18D36A0063E9C6 /* LaunchScreen.xib in Resources */,
-				265E21DD1B1D79A30026D252 /* Selected.png in Resources */,
 				263E1B741B18D36A0063E9C6 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

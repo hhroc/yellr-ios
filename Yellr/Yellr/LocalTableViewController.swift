@@ -59,8 +59,8 @@ class LocalTableViewController: UITableViewController {
         if let author = localPostItem.lp_first_name as? String {
             cell.postedBy?.text = author
         } else {
-            cell.postedBy?.font = UIFont.fontAwesome(size: 10)
-            cell.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) Anonymous"
+            cell.postedBy?.font = UIFont.fontAwesome(size: 13)
+            cell.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) " + NSLocalizedString(YellrConstants.LocalPosts.AnonymousUser, comment: "Anonymous User")
         }
         cell.postedOn?.text = localPostItem.lp_post_datetime as? String
         cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
@@ -130,7 +130,7 @@ class LocalTableViewController: UITableViewController {
                 lpmtname = itemDictMedia["media_type_name"]!
                 lppfname = itemDictMedia["preview_file_name"]!
             }
-            
+            println(lpmtname)
             var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
                 lp_language_code : itemDict["last_name"],
                 lp_post_id : itemDict["post_id"],
