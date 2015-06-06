@@ -12,8 +12,6 @@ class LocalTableViewController: UITableViewController {
     
     let localViewModel = LocalViewModel()
     
-    var data = ["Contrary to popular belief", "Lorem Ipsum is not", "simply random text", "It has roots", "in a piece of", "classical Latin", "literature from", "45 BC, making it", "over 2000 years old", "Richard McClintock", "a Latin professor", "at Hampden-Sydney College", "in Virginia, looked up", "one of the more obscure", "Latin words, consectetur", "from a Lorem Ipsum", "passage, and going", "through the cites", "of the word in", "classical literature", "discovered the", "undoubtable source"]
-    
     var localPostsUrlEndpoint: String = buildUrl("get_local_posts.json")
     var dataSource : Array<LocalPostDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -24,7 +22,9 @@ class LocalTableViewController: UITableViewController {
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
         initWebActivityIndicator()
         self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
-            // present processed url session response results to the user –- update UI code //
+            //TODO: update UI code here
+            println("1")
+            
         })
 
     }
@@ -52,18 +52,30 @@ class LocalTableViewController: UITableViewController {
     }
     
     func configureCell(cell:LocalTableViewCell, atIndexPath indexPath:NSIndexPath) {
-        //cell.textLabel?.text = data[indexPath.row]
+        
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
-        //cell.textLabel.text = supplyItem.bsn_name;
         
         cell.postTitle?.text = localPostItem.lp_question_text as? String
-        cell.postedBy?.text = localPostItem.lp_first_name as? String
+        if let author = localPostItem.lp_first_name as? String {
+            cell.postedBy?.text = author
+        } else {
+            cell.postedBy?.font = UIFont.fontAwesome(size: 10)
+            cell.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) Anonymous"
+        }
         cell.postedOn?.text = localPostItem.lp_post_datetime as? String
-        cell.upVoteCount?.text = localPostItem.lp_up_vote_count as? String
-        cell.downVoteCount?.text = localPostItem.lp_down_vote_count as? String
+        cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
+        cell.downVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_down_vote_count as? Int)!)) as String
+        
+//        if let postType = localPostItem.lp_media_type_name as! String {
+//
+//        } else {
+//
+//        }
+        
         cell.mediaContainer?.hidden = true
         
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+    
     }
     
     func initWebActivityIndicator() {
@@ -102,16 +114,34 @@ class LocalTableViewController: UITableViewController {
     func localPostItems(data: NSData) -> (Array<LocalPostDataModel>) {
         var jsonParseError: NSError?
         var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as! NSDictionary
-
         var rawLocalPostItems = jsonResult["posts"] as! Array<Dictionary<String,AnyObject>>
+
         var refinedLocalPostItems : Array<LocalPostDataModel> = []
         for itemDict in rawLocalPostItems {
+            var lpfname : String = ""
+            var lpmtext : String = ""
+            var lpmtname : String = ""
+            var lppfname : String = ""
+            var mediaItems = itemDict["media_objects"] as! Array<Dictionary<String,String>>
+            
+            for itemDictMedia in mediaItems {
+                lpfname = itemDictMedia["file_name"]!
+                lpmtext = itemDictMedia["media_text"]!
+                lpmtname = itemDictMedia["media_type_name"]!
+                lppfname = itemDictMedia["preview_file_name"]!
+            }
+            
             var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
                 lp_language_code : itemDict["last_name"],
                 lp_post_id : itemDict["post_id"],
                 lp_verified_user : itemDict["verified_user"],
-                lp_post_datetime : itemDict["post_datetime"],
-                lp_media_objects : "", //itemDict["media_objects"],
+                lp_post_datetime : itemDict["post_datetime_ago"],
+                
+                lp_file_name : lpfname,
+                lp_media_text : lpmtext,
+                lp_media_type_name : lpmtname,
+                lp_preview_file_name : lppfname,
+                
                 lp_first_name : itemDict["first_name"],
                 lp_question_text : itemDict["question_text"],
                 lp_is_up_vote : itemDict["is_up_vote"],
@@ -119,8 +149,8 @@ class LocalTableViewController: UITableViewController {
                 lp_has_voted : itemDict["has_voted"],
                 lp_language_name : itemDict["language_name"],
                 lp_up_vote_count : itemDict["up_vote_count"] )
+            
             refinedLocalPostItems.append(item)
-            //println(itemDict)
         }
         return refinedLocalPostItems
     }

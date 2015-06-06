@@ -290,8 +290,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qk7-Qo-deb">
-                                            <rect key="frame" x="8" y="84" width="30" height="22"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="-5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qk7-Qo-deb">
+                                            <rect key="frame" x="8" y="84" width="66" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="22" id="DpN-1t-ior"/>
                                                 <constraint firstAttribute="width" constant="30" id="bC9-BK-yuk"/>
@@ -310,8 +310,8 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Posted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmR-va-wk4">
-                                            <rect key="frame" x="552" y="18" width="48" height="22"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Posted" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qmR-va-wk4">
+                                            <rect key="frame" x="449" y="18" width="151" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="48" id="VgF-uz-wmS"/>
                                                 <constraint firstAttribute="height" constant="22" id="Y6T-PQ-GTa"/>

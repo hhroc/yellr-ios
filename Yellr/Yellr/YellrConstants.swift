@@ -35,7 +35,7 @@ struct YellrConstants {
     }
     
     struct API {
-        static let endPoint = "http://yellr.mycodespace.net"
+        static let endPoint = "https://yellr.net"
     }
     
     struct ApiMethods {

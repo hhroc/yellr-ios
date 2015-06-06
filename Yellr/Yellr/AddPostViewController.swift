@@ -20,31 +20,22 @@ class AddPostViewController: UIViewController {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.AddPost.Title, comment: "Add Post Screen title")
         
-        var buttonString = String.fontAwesomeString("fa-camera")
-        var buttonStringAttributed = NSMutableAttributedString(string: buttonString, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 11.00)!])
-        buttonStringAttributed.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 20), range: NSRange(location: 0,length: 1))
+        photoBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
+        photoBtn.setFontAwesome(fontAwesome: "f030", forState: .Normal)
         
         photoBtn.titleLabel?.textAlignment = .Center
-        photoBtn.titleLabel?.numberOfLines = 2
-        photoBtn.setAttributedTitle(buttonStringAttributed, forState: .Normal)
         photoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
-        buttonString = String.fontAwesomeString("fa-video-camera")
-        buttonStringAttributed = NSMutableAttributedString(string: buttonString, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 11.00)!])
-        buttonStringAttributed.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 20), range: NSRange(location: 0,length: 1))
+        vdoBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
+        vdoBtn.setFontAwesome(fontAwesome: "f03d", forState: .Normal)
         
         vdoBtn.titleLabel?.textAlignment = .Center
-        vdoBtn.titleLabel?.numberOfLines = 2
-        vdoBtn.setAttributedTitle(buttonStringAttributed, forState: .Normal)
         vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
-        buttonString = String.fontAwesomeString("fa-microphone")
-        buttonStringAttributed = NSMutableAttributedString(string: buttonString, attributes: [NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 11.00)!])
-        buttonStringAttributed.addAttribute(NSFontAttributeName, value: UIFont.iconFontOfSize("FontAwesome", fontSize: 20), range: NSRange(location: 0,length: 1))
+        recordBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
+        recordBtn.setFontAwesome(fontAwesome: "f130", forState: .Normal)
         
         recordBtn.titleLabel?.textAlignment = .Center
-        recordBtn.titleLabel?.numberOfLines = 2
-        recordBtn.setAttributedTitle(buttonStringAttributed, forState: .Normal)
         recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
     }

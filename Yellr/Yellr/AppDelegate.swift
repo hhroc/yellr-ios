@@ -5,6 +5,7 @@
 //  Created by Debjit Saha on 5/29/15.
 //  Copyright (c) 2015 wxxi. All rights reserved.
 //
+//  https://github.com/hirohisa/Font-Awesome
 
 import UIKit
 
