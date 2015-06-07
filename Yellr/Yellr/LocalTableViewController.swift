@@ -71,6 +71,7 @@ class LocalTableViewController: UITableViewController {
         }
         
         var postedOn:String = (localPostItem.lp_post_datetime as? String)!
+        cell.postedOn?.font = UIFont.fontAwesome(size: 13)
         cell.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
         
         cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
@@ -109,6 +110,14 @@ class LocalTableViewController: UITableViewController {
                     cell.setNeedsLayout()
                 }
                 else {
+                    
+                    //start a loader animation
+                    var loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+                    loadIndicator.color = UIColor.lightGrayColor()
+                    loadIndicator.startAnimating()
+                    cell.mediaContainer.addSubview(loadIndicator)
+                    
+                    //start the image load process
                     weak var weakSelf : LocalTableViewController? = self
         
                     dispatch_async(self.backgroundQueue, { () -> Void in
@@ -130,8 +139,13 @@ class LocalTableViewController: UITableViewController {
                                     let imageView = UIImageView(image: itemImage!)
                                     imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
                                     imageView.hidden = false
+                                    
+                                    //add the image view
                                     cell.mediaContainer.addSubview(imageView)
                                     cell.setNeedsLayout()
+                                    
+                                    //remove the activity indicator
+                                    loadIndicator.removeFromSuperview()
                                     
                                     //cell.imageView.image = itemImage
                                     //cell.setNeedsLayout()
