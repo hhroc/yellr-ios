@@ -10,24 +10,32 @@ import UIKit
 
 class StoriesTableViewController: UITableViewController {
     
-    var data = ["google.com", "http://www.facebook.com", "http://www.yahoo.com", "http://www.rit.edu", "http://www.About.com", "http://www.Bartleby.com", "http://www.Download.com", "http://www.Craigslist.org", "http://www.Reference.com", "http://www.Wikipedia.org", "http://www.Beliefnet.com", "http://www.Weather.com", "http://www.Search.com", "http://www.Hotmail.com", "http://www.NIH.gov", "http://www.CNET.com", "http://www.Refdesk.com", "http://www.MayoClinic.com", "http://www.GuideStar.org", "http://www.FirstGov.gov", "http://www.BBC.com", "http://www.IMDB.com", "http://www.Expedia.com", "http://www.Slate.com", "http://www.Nutrition.gov", "http://www.Altmedicine.com", "http://www.Citysearch.com", "http://www.Monster.com", "http://www.Vote-Smart.org", "http://www.Sciam.com", "http://www.ESPN.com", "http://www.Encarta.com", "http://www.Findlaw.com", "http://www.Nature.com", "http://www.Time.com"]
+    let assgnViewModel = AssignmentsViewModel()
     
+    var assignmentsUrlEndpoint: String = buildUrl("get_stories.json")
+    var dataSource : Array<StoriesDataModel> = []
+    var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+    var urlSession = NSURLSession.sharedSession()
     var selectedStory: String!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.Stories.Title, comment: "Stories Screen title")
+        //initWebActivityIndicator()
+        self.requestStories(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
+            //TODO: update UI code here
+            println("1")
+            
+        })
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        return self.dataSource.count
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("StoriesTVCIdentifier", forIndexPath: indexPath) as! StoriesTableViewCell
-        cell.story?.text = data[indexPath.row]
-        cell.postedBy?.text = "Anonymous"
-        cell.postedOn?.text = "\((indexPath.row + 1) * 2)h"
+        configureCell(cell, atIndexPath:indexPath)
         return cell
     }
     
@@ -39,13 +47,70 @@ class StoriesTableViewController: UITableViewController {
         if (segue.identifier == "StoryDetailSegue") {
             
             var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
-            var dataToSend:NSString = self.data[indexPath.row] as String
-            
-            //initialise the destination VC
             var viewController = segue.destinationViewController as! StoryDetailViewController
-            // pass in the value to be sent
-            viewController.story = dataToSend as String;
+            viewController.story = self.dataSource[indexPath.row].stitle;
+            viewController.lname = self.dataSource[indexPath.row].lname;
+            viewController.fname = self.dataSource[indexPath.row].fname;
+            viewController.content = self.dataSource[indexPath.row].content;
+            viewController.publishedOn = self.dataSource[indexPath.row].publish;
+            
         }
+    }
+    
+    func configureCell(cell:StoriesTableViewCell, atIndexPath indexPath:NSIndexPath) {
+        
+        var storyItem : StoriesDataModel = self.dataSource[indexPath.row]
+        
+        cell.story.text = storyItem.st_title as? String
+        
+        var postedByF:String = (storyItem.st_author_first_name as? String)!
+        var postedByL:String = (storyItem.st_author_last_name as? String)!
+        cell.postedBy?.font = UIFont.fontAwesome(size: 13)
+        cell.postedBy?.text =  "\(String.fontAwesome(unicode: 0xf007)) " + postedByF + " " + postedByL
+        
+        //number of comments - variable name is bad, i know
+        var postedOn:String = (storyItem.st_publish_datetime_ago as? String)!
+        cell.postedOn?.font = UIFont.fontAwesome(size: 13)
+        cell.postedOn?.text =  "\(String.fontAwesome(unicode: 0xf086)) " + postedOn
+        
+    }
+    
+    // MARK: - Networking
+    func requestStories(endPointURL : String, responseHandler : (error : NSError? , items : Array<StoriesDataModel>?) -> () ) -> () {
+        println(endPointURL)
+        let url:NSURL = NSURL(string: endPointURL)!
+        let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            
+            self.dataSource = self.storyItems(data)
+            
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                self.tableView.reloadData()
+                self.webActivityIndicator.hidden = true
+            })
+            
+            responseHandler( error: nil, items: nil)
+        })
+        task.resume()
+    }
+    
+    func storyItems(data: NSData) -> (Array<StoriesDataModel>) {
+        var jsonParseError: NSError?
+        var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as! NSDictionary
+        var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
+        
+        var refinedStoryItems : Array<StoriesDataModel> = []
+        for itemDict in rawStoryItems {
+            
+            var item : StoriesDataModel = StoriesDataModel(st_author_first_name: itemDict["author_first_name"],
+                st_title : itemDict["title"],
+                st_publish_datetime_ago : itemDict["publish_datetime_ago"],
+                st_author_last_name : itemDict["author_last_name"],
+                st_contents_rendered : itemDict["contents_rendered"]
+            )
+            
+            refinedStoryItems.append(item)
+        }
+        return refinedStoryItems
     }
     
     

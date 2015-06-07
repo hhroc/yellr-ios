@@ -11,15 +11,23 @@ import UIKit
 
 class StoryDetailViewController: UIViewController {
     var story: String!
+    var lname: String!
+    var fname: String!
+    var publishedOn: String!
+    var content: String!
     
+    @IBOutlet weak var stitle: UILabel!
     @IBOutlet weak var myWebView: UIWebView!
+    @IBOutlet weak var postedBy: UILabel!
+    @IBOutlet weak var postedOn: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        println(story)
-        let url = NSURL (string: story);
-        let requestObj = NSURLRequest(URL: url!);
-        myWebView.loadRequest(requestObj);
+        stitle.text = story
+        postedBy.text = lname + " " + fname
+        postedOn.text = publishedOn
+        myWebView.loadHTMLString(content, baseURL: nil)
         
     }
 }

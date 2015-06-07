@@ -407,21 +407,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d35-Gh-vm8">
+                                <rect key="frame" x="26" y="72" width="568" height="24"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W6U-tM-Qio">
+                                <rect key="frame" x="542" y="106" width="42" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="J9r-ge-jcY"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="21" id="bg5-Zv-pse"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SY0-QW-59Y">
+                                <rect key="frame" x="26" y="101" width="138" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="138" id="B30-W3-NuX"/>
+                                    <constraint firstAttribute="height" constant="21" id="HkY-RS-jUN"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vt1-CU-9DY">
-                                <rect key="frame" x="0.0" y="64" width="600" height="600"/>
+                                <rect key="frame" x="16" y="130" width="568" height="406"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="600" id="4Zo-hi-duh"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="568" id="IbQ-hk-a2Z"/>
+                                    <constraint firstAttribute="height" constant="406" id="X9D-ca-Mgf"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="398" id="bSq-VU-Lr7"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="4Zo-hi-duh"/>
+                                    </mask>
+                                </variation>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="vt1-CU-9DY" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" constant="-16" id="7ie-Fg-GBz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="vt1-CU-9DY" secondAttribute="trailing" constant="-16" id="JZd-Nw-rkz"/>
-                            <constraint firstAttribute="bottomMargin" secondItem="vt1-CU-9DY" secondAttribute="bottom" constant="-64" id="cNI-vm-beu"/>
-                            <constraint firstItem="vt1-CU-9DY" firstAttribute="top" secondItem="4fW-yS-AzJ" secondAttribute="bottom" id="vWK-0L-B4B"/>
+                            <constraint firstItem="vt1-CU-9DY" firstAttribute="trailing" secondItem="NFZ-iZ-gNY" secondAttribute="trailingMargin" id="5vP-QK-pMW"/>
+                            <constraint firstItem="SY0-QW-59Y" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" constant="10" id="6Cy-xX-fgU"/>
+                            <constraint firstItem="d35-Gh-vm8" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" constant="10" id="XXf-zN-hKb"/>
+                            <constraint firstItem="vt1-CU-9DY" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" id="ZVo-mY-z4K"/>
+                            <constraint firstItem="SY0-QW-59Y" firstAttribute="top" secondItem="d35-Gh-vm8" secondAttribute="bottom" constant="5" id="f0W-F8-Jwv"/>
+                            <constraint firstItem="d35-Gh-vm8" firstAttribute="top" secondItem="4fW-yS-AzJ" secondAttribute="bottom" constant="8" id="oub-Vf-1VA"/>
+                            <constraint firstAttribute="centerX" secondItem="vt1-CU-9DY" secondAttribute="centerX" id="rN6-GC-IJx"/>
+                            <constraint firstItem="vt1-CU-9DY" firstAttribute="top" secondItem="W6U-tM-Qio" secondAttribute="bottom" constant="18" id="sne-hq-oIj"/>
+                            <constraint firstItem="vt1-CU-9DY" firstAttribute="top" secondItem="4fW-yS-AzJ" secondAttribute="bottom" constant="66" id="vWK-0L-B4B"/>
+                            <constraint firstItem="W6U-tM-Qio" firstAttribute="top" secondItem="d35-Gh-vm8" secondAttribute="bottom" constant="10" id="wKF-u2-9go"/>
+                            <constraint firstItem="W6U-tM-Qio" firstAttribute="trailing" secondItem="NFZ-iZ-gNY" secondAttribute="trailingMargin" id="x7k-ZP-DvJ"/>
+                            <constraint firstItem="d35-Gh-vm8" firstAttribute="trailing" secondItem="NFZ-iZ-gNY" secondAttribute="trailingMargin" constant="10" id="zu7-4Q-bXz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="sne-hq-oIj"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="myWebView" destination="vt1-CU-9DY" id="VwD-2k-t7f"/>
+                        <outlet property="postedBy" destination="SY0-QW-59Y" id="kPy-kR-C8X"/>
+                        <outlet property="postedOn" destination="W6U-tM-Qio" id="51g-hx-yN7"/>
+                        <outlet property="stitle" destination="d35-Gh-vm8" id="Avk-Dp-enV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k0x-XP-r7d" userLabel="First Responder" sceneMemberID="firstResponder"/>
