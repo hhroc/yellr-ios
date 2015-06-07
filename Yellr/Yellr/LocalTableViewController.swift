@@ -11,7 +11,9 @@ import UIKit
 class LocalTableViewController: UITableViewController {
     
     let localViewModel = LocalViewModel()
+    let backgroundQueue : dispatch_queue_t = dispatch_queue_create("yellr.net.yellr-ios.backgroundQueue", nil)
     
+    var im:Int = 0;
     var localPostsUrlEndpoint: String = buildUrl("get_local_posts.json")
     var dataSource : Array<LocalPostDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -55,7 +57,12 @@ class LocalTableViewController: UITableViewController {
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         
+        for view in cell.mediaContainer.subviews{
+            view.removeFromSuperview()
+        }
+        
         cell.postTitle?.text = localPostItem.lp_question_text as? String
+        
         if let author = localPostItem.lp_first_name as? String {
             cell.postedBy?.text = author
         } else {
@@ -66,13 +73,67 @@ class LocalTableViewController: UITableViewController {
         cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
         cell.downVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_down_vote_count as? Int)!)) as String
         
-//        if let postType = localPostItem.lp_media_type_name as! String {
-//
-//        } else {
-//
-//        }
-        
-        cell.mediaContainer?.hidden = true
+        if let postType = localPostItem.lp_media_type_name as? String {
+            if (postType == "text") {
+                
+                var label = UILabel(frame: CGRectMake(0, 0, 300, 21))
+                label.textAlignment = NSTextAlignment.Left
+                label.lineBreakMode = .ByWordWrapping // or NSLineBreakMode.ByWordWrapping
+                label.numberOfLines = 0
+                label.text = localPostItem.lp_media_text as? String
+                label.hidden = false
+                cell.mediaContainer.addSubview(label)
+                cell.mediaContainer.hidden = false
+                
+            }
+            
+            if (postType == "image") {
+                
+                cell.mediaContainer.hidden = false
+                
+                //url of image
+                var urlString : String = localPostItem.lp_file_name as! String
+                urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                
+                // MARK: Version One (Download Image Asset)
+                dispatch_async(self.backgroundQueue, { () -> Void in
+                    
+                    /* capture the index of the cell that is requesting this image download operation */
+                    var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                    
+                    var err : NSError?
+                    /* get url for image and download raw data */
+                    let url = NSURL(string: urlString)!
+                    var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+                    
+                    if err == nil {
+                        
+                        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                            
+                            /* create a UIImage object from the downloaded data */
+                            let itemImage = UIImage(data:imageData!)
+                            /* get the index of one of the cells that is currently being displayed */
+                            let currentIndex = self.tableView.indexPathForCell(cell)
+                            
+                            // compare the captured cell index to some current cell index       //
+                            // if the captured cell index is equal to some current cell index   //
+                            // then the cell that requested the image is still on the screen so //
+                            // we present the downloaded image else we do nothing               //
+                            if currentIndex?.item == capturedIndex!.item {
+                                let imageView = UIImageView(image: itemImage!)
+                                imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+                                imageView.hidden = false
+                                cell.mediaContainer.addSubview(imageView)
+                                cell.setNeedsLayout()
+                            }
+                        })
+                    }
+                })
+                
+            }
+        } else {
+            
+        }
         
         cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
     
@@ -95,10 +156,10 @@ class LocalTableViewController: UITableViewController {
     
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
+        println(endPointURL)
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            //println(response)
             self.dataSource = self.localPostItems(data)
             
             dispatch_async(dispatch_get_main_queue()!, { () -> Void in
@@ -130,7 +191,7 @@ class LocalTableViewController: UITableViewController {
                 lpmtname = itemDictMedia["media_type_name"]!
                 lppfname = itemDictMedia["preview_file_name"]!
             }
-            println(lpmtname)
+
             var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
                 lp_language_code : itemDict["last_name"],
                 lp_post_id : itemDict["post_id"],

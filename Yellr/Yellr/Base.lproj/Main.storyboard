@@ -254,10 +254,6 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WkV-bv-psG">
-                                            <rect key="frame" x="90" y="80" width="300" height="77"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </view>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1N-cJ-aOy">
                                             <rect key="frame" x="8" y="18" width="30" height="22"/>
                                             <constraints>
@@ -300,13 +296,13 @@
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Post" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9c-94-IG5">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Post" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9c-94-IG5">
                                             <rect key="frame" x="56" y="42" width="350" height="22"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="350" id="6ve-WO-DT9"/>
                                                 <constraint firstAttribute="height" constant="22" id="Vnf-vj-XkL"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="18"/>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="16"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -316,10 +312,18 @@
                                                 <constraint firstAttribute="width" constant="48" id="VgF-uz-wmS"/>
                                                 <constraint firstAttribute="height" constant="22" id="Y6T-PQ-GTa"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="16"/>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="13"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qen-yb-Roq">
+                                            <rect key="frame" x="56" y="72" width="300" height="83"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="83" id="eLU-5V-cao"/>
+                                                <constraint firstAttribute="width" constant="300" id="xLH-uA-QDU"/>
+                                            </constraints>
+                                        </view>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="qk7-Qo-deb" firstAttribute="top" secondItem="Edb-hU-m0P" secondAttribute="bottom" constant="10" id="26o-5Q-PCU"/>
@@ -330,7 +334,9 @@
                                         <constraint firstItem="Edb-hU-m0P" firstAttribute="top" secondItem="t1N-cJ-aOy" secondAttribute="bottom" constant="10" id="P5d-EM-WGD"/>
                                         <constraint firstItem="8jg-n5-v7j" firstAttribute="top" secondItem="qk7-Qo-deb" secondAttribute="bottom" constant="10" id="Q8o-3Z-h38"/>
                                         <constraint firstItem="Edb-hU-m0P" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" id="SL6-Ul-tyx"/>
+                                        <constraint firstItem="qen-yb-Roq" firstAttribute="leading" secondItem="qk7-Qo-deb" secondAttribute="trailing" constant="18" id="YUZ-KC-0gq"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="top" secondItem="dK7-1n-ply" secondAttribute="bottom" constant="2" id="aQ0-ia-JHv"/>
+                                        <constraint firstItem="qen-yb-Roq" firstAttribute="top" secondItem="y9c-94-IG5" secondAttribute="bottom" constant="8" id="fZj-sa-gm5"/>
                                         <constraint firstItem="qmR-va-wk4" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="10" id="qW5-rF-1gO"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" constant="-8" id="tcQ-2t-365"/>
                                         <constraint firstItem="dK7-1n-ply" firstAttribute="leading" secondItem="t1N-cJ-aOy" secondAttribute="trailing" constant="18" id="wfN-Vs-P5A"/>
@@ -341,7 +347,7 @@
                                 <connections>
                                     <outlet property="downVoteBtn" destination="8jg-n5-v7j" id="4E6-G5-XnD"/>
                                     <outlet property="downVoteCount" destination="qk7-Qo-deb" id="11C-Pt-lMZ"/>
-                                    <outlet property="mediaContainer" destination="WkV-bv-psG" id="pnH-NW-h6M"/>
+                                    <outlet property="mediaContainer" destination="qen-yb-Roq" id="NRz-w1-pfM"/>
                                     <outlet property="postTitle" destination="y9c-94-IG5" id="hPm-EK-hsj"/>
                                     <outlet property="postedBy" destination="dK7-1n-ply" id="KtG-eP-g0X"/>
                                     <outlet property="postedOn" destination="qmR-va-wk4" id="mTS-yB-mac"/>
