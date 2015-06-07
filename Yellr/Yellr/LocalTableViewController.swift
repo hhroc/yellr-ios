@@ -12,6 +12,7 @@ class LocalTableViewController: UITableViewController {
     
     let localViewModel = LocalViewModel()
     let backgroundQueue : dispatch_queue_t = dispatch_queue_create("yellr.net.yellr-ios.backgroundQueue", nil)
+    let imageCache : NSCache = NSCache()
     
     var im:Int = 0;
     var localPostsUrlEndpoint: String = buildUrl("get_local_posts.json")
@@ -95,40 +96,84 @@ class LocalTableViewController: UITableViewController {
                 var urlString : String = localPostItem.lp_file_name as! String
                 urlString = YellrConstants.API.endPoint + "/media/" + urlString
                 
-                // MARK: Version One (Download Image Asset)
-                dispatch_async(self.backgroundQueue, { () -> Void in
-                    
-                    /* capture the index of the cell that is requesting this image download operation */
-                    var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
-                    
-                    var err : NSError?
-                    /* get url for image and download raw data */
-                    let url = NSURL(string: urlString)!
-                    var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
-                    
-                    if err == nil {
-                        
-                        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                            
-                            /* create a UIImage object from the downloaded data */
-                            let itemImage = UIImage(data:imageData!)
-                            /* get the index of one of the cells that is currently being displayed */
-                            let currentIndex = self.tableView.indexPathForCell(cell)
-                            
-                            // compare the captured cell index to some current cell index       //
-                            // if the captured cell index is equal to some current cell index   //
-                            // then the cell that requested the image is still on the screen so //
-                            // we present the downloaded image else we do nothing               //
-                            if currentIndex?.item == capturedIndex!.item {
-                                let imageView = UIImageView(image: itemImage!)
-                                imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
-                                imageView.hidden = false
-                                cell.mediaContainer.addSubview(imageView)
-                                cell.setNeedsLayout()
-                            }
-                        })
-                    }
-                })
+                //MARK: Version 2 - With Image Cache
+        
+                if self.imageCache.objectForKey(urlString) != nil {
+                    let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
+                    let imageView = UIImageView(image: itemImage!)
+                    imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+                    imageView.hidden = false
+                    cell.mediaContainer.addSubview(imageView)
+                    cell.setNeedsLayout()
+                }
+                else {
+                    weak var weakSelf : LocalTableViewController? = self
+        
+                    dispatch_async(self.backgroundQueue, { () -> Void in
+        
+                        let url = NSURL(string: urlString)!
+                        var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                        var err : NSError?
+                        var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+        
+                        if err == nil {
+        
+                            dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+        
+                                let itemImage = UIImage(data:imageData!)
+                                let currentIndex = self.tableView.indexPathForCell(cell)
+        
+                                if currentIndex?.item == capturedIndex!.item {
+                                    
+                                    let imageView = UIImageView(image: itemImage!)
+                                    imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+                                    imageView.hidden = false
+                                    cell.mediaContainer.addSubview(imageView)
+                                    cell.setNeedsLayout()
+                                    
+                                    //cell.imageView.image = itemImage
+                                    //cell.setNeedsLayout()
+                                }
+                                weakSelf!.imageCache.setObject(itemImage!, forKey: urlString)
+                            })
+                        }
+                    })
+                }
+                
+//MARK: Version 1 - Download Image, No Cache
+//                dispatch_async(self.backgroundQueue, { () -> Void in
+//                    
+//                    /* capture the index of the cell that is requesting this image download operation */
+//                    var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+//                    
+//                    var err : NSError?
+//                    /* get url for image and download raw data */
+//                    let url = NSURL(string: urlString)!
+//                    var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+//                    
+//                    if err == nil {
+//                        
+//                        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+//                            
+//                            /* create a UIImage object from the downloaded data */
+//                            let itemImage = UIImage(data:imageData!)
+//                            /* get the index of one of the cells that is currently being displayed */
+//                            let currentIndex = self.tableView.indexPathForCell(cell)
+//                            
+//                            // compare the captured cell index to some current cell index       //
+//                            // if the captured cell index is equal to some current cell index   //
+//                            // then the cell that requested the image is still on the screen so //
+//                            // we present the downloaded image else we do nothing               //
+//                            if currentIndex?.item == capturedIndex!.item {
+//                                let imageView = UIImageView(image: itemImage!)
+//                                imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+//                                imageView.hidden = false
+//                                cell.mediaContainer.addSubview(imageView)
+//                                cell.setNeedsLayout()
+//                            }
+//                        })
+//                    }
+//                })
                 
             }
         } else {
