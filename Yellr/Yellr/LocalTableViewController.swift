@@ -14,7 +14,6 @@ class LocalTableViewController: UITableViewController {
     let backgroundQueue : dispatch_queue_t = dispatch_queue_create("yellr.net.yellr-ios.backgroundQueue", nil)
     let imageCache : NSCache = NSCache()
     
-    var im:Int = 0;
     var localPostsUrlEndpoint: String = buildUrl("get_local_posts.json")
     var dataSource : Array<LocalPostDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -70,7 +69,10 @@ class LocalTableViewController: UITableViewController {
             cell.postedBy?.font = UIFont.fontAwesome(size: 13)
             cell.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) " + NSLocalizedString(YellrConstants.LocalPosts.AnonymousUser, comment: "Anonymous User")
         }
-        cell.postedOn?.text = localPostItem.lp_post_datetime as? String
+        
+        var postedOn:String = (localPostItem.lp_post_datetime as? String)!
+        cell.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
+        
         cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
         cell.downVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_down_vote_count as? Int)!)) as String
         
