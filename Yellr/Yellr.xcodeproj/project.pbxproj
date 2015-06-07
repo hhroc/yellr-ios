@@ -25,6 +25,8 @@
 		264543721B2230DA00B8EA79 /* StoriesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543711B2230DA00B8EA79 /* StoriesViewModel.swift */; };
 		264543791B22BFB100B8EA79 /* Font-Awesome.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543781B22BFB100B8EA79 /* Font-Awesome.swift */; };
 		2645437B1B23256800B8EA79 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2645437A1B23244A00B8EA79 /* FontAwesome.otf */; };
+		2645437D1B24CC4D00B8EA79 /* AssignmentsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645437C1B24CC4D00B8EA79 /* AssignmentsDataModel.swift */; };
+		2645437F1B24CC7200B8EA79 /* StoriesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -65,6 +67,8 @@
 		264543711B2230DA00B8EA79 /* StoriesViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesViewModel.swift; sourceTree = "<group>"; };
 		264543781B22BFB100B8EA79 /* Font-Awesome.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Font-Awesome.swift"; sourceTree = "<group>"; };
 		2645437A1B23244A00B8EA79 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
+		2645437C1B24CC4D00B8EA79 /* AssignmentsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsDataModel.swift; sourceTree = "<group>"; };
+		2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesDataModel.swift; sourceTree = "<group>"; };
 		265E21DC1B1D79A30026D252 /* Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Selected.png; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -121,10 +125,10 @@
 				2645436D1B221CFF00B8EA79 /* DataModels */,
 				2645436C1B221CEF00B8EA79 /* ViewModels */,
 				2645436B1B221CB200B8EA79 /* TableViewControllers */,
+				264543801B24CD0D00B8EA79 /* DetailViewControllers */,
 				2645436E1B221D0E00B8EA79 /* TableViewCells */,
 				263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */,
 				26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */,
-				26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */,
 				2604889D1B1E541900D781FE /* AddPostViewController.swift */,
 				263E1B701B18D36A0063E9C6 /* Main.storyboard */,
 				263E1B731B18D36A0063E9C6 /* Images.xcassets */,
@@ -189,6 +193,8 @@
 			isa = PBXGroup;
 			children = (
 				264543681B21F51500B8EA79 /* LocalPostDataModel.swift */,
+				2645437C1B24CC4D00B8EA79 /* AssignmentsDataModel.swift */,
+				2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */,
 			);
 			name = DataModels;
 			sourceTree = "<group>";
@@ -201,6 +207,14 @@
 				260488AB1B1EF0D800D781FE /* StoriesTableViewCell.swift */,
 			);
 			name = TableViewCells;
+			sourceTree = "<group>";
+		};
+		264543801B24CD0D00B8EA79 /* DetailViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */,
+			);
+			name = DetailViewControllers;
 			sourceTree = "<group>";
 		};
 		265E21DE1B1D79AB0026D252 /* Images */ = {
@@ -320,9 +334,11 @@
 				26157ECA1B1A245700615428 /* LocalTableViewCell.swift in Sources */,
 				26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */,
 				264543691B21F51500B8EA79 /* LocalPostDataModel.swift in Sources */,
+				2645437F1B24CC7200B8EA79 /* StoriesDataModel.swift in Sources */,
 				260488A81B1EE73B00D781FE /* AssignmentsTableViewCell.swift in Sources */,
 				264543671B21E5C500B8EA79 /* LocalViewModel.swift in Sources */,
 				264543721B2230DA00B8EA79 /* StoriesViewModel.swift in Sources */,
+				2645437D1B24CC4D00B8EA79 /* AssignmentsDataModel.swift in Sources */,
 				269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */,
 				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				2604889E1B1E541900D781FE /* AddPostViewController.swift in Sources */,
