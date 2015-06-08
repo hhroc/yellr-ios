@@ -27,6 +27,7 @@
 		2645437B1B23256800B8EA79 /* FontAwesome.otf in Resources */ = {isa = PBXBuildFile; fileRef = 2645437A1B23244A00B8EA79 /* FontAwesome.otf */; };
 		2645437D1B24CC4D00B8EA79 /* AssignmentsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645437C1B24CC4D00B8EA79 /* AssignmentsDataModel.swift */; };
 		2645437F1B24CC7200B8EA79 /* StoriesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */; };
+		264543821B24FA3000B8EA79 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 264543811B24FA3000B8EA79 /* default.gpx */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -69,6 +70,7 @@
 		2645437A1B23244A00B8EA79 /* FontAwesome.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = FontAwesome.otf; sourceTree = "<group>"; };
 		2645437C1B24CC4D00B8EA79 /* AssignmentsDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsDataModel.swift; sourceTree = "<group>"; };
 		2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesDataModel.swift; sourceTree = "<group>"; };
+		264543811B24FA3000B8EA79 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		265E21DC1B1D79A30026D252 /* Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Selected.png; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 		263E1B5C1B18D36A0063E9C6 = {
 			isa = PBXGroup;
 			children = (
+				264543811B24FA3000B8EA79 /* default.gpx */,
 				263E1B671B18D36A0063E9C6 /* Yellr */,
 				263E1B7F1B18D36A0063E9C6 /* YellrTests */,
 				263E1B661B18D36A0063E9C6 /* Products */,
@@ -312,6 +315,7 @@
 				269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */,
 				263E1B771B18D36A0063E9C6 /* LaunchScreen.xib in Resources */,
 				263E1B741B18D36A0063E9C6 /* Images.xcassets in Resources */,
+				264543821B24FA3000B8EA79 /* default.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

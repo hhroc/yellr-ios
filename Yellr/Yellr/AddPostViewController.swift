@@ -16,6 +16,13 @@ class AddPostViewController: UIViewController {
     @IBOutlet weak var submitBtn: UIBarButtonItem!
     @IBOutlet weak var cancelBtn: UIBarButtonItem!
     
+    @IBOutlet weak var addPostTitle: UILabel!
+    @IBOutlet weak var addPostDesc: UILabel!
+    
+    var postTitle: String!
+    var postDesc: String!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.AddPost.Title, comment: "Add Post Screen title")
@@ -38,12 +45,20 @@ class AddPostViewController: UIViewController {
         recordBtn.titleLabel?.textAlignment = .Center
         recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
+        if (postTitle != nil) {
+            addPostTitle.text = postTitle
+        }
+        
+        if (postDesc != nil) {
+            addPostDesc.text = postDesc
+        }
+        
     }
     
     //dismiss the addpostmodal on pressing cancel
     @IBAction func cancelPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil);
-        println("dd")
+        //println("dd")
     }
     
 }

@@ -38,6 +38,22 @@ class AssignmentsTableViewController: UITableViewController {
         configureCell(cell, atIndexPath: indexPath)
         return cell
     }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+        if (segue.identifier == "AssignmentDetail") {
+            
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            
+            //silly mistake that I was making- http://stackoverflow.com/questions/28573635/
+            let nav = segue.destinationViewController as! UINavigationController
+            let addPostViewController = nav.topViewController as! AddPostViewController
+            
+            addPostViewController.postTitle = self.dataSource[indexPath.row].postTitle;
+            addPostViewController.postDesc = self.dataSource[indexPath.row].postDesc;
+            //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
+            
+        }
+    }
 
     func configureCell(cell:AssignmentsTableViewCell, atIndexPath indexPath:NSIndexPath) {
         

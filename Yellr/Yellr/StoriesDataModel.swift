@@ -16,6 +16,7 @@ class StoriesDataModel: NSObject {
     var st_author_last_name : AnyObject?
     var st_contents_rendered : AnyObject?
     
+    //getters
     var fname:String {
         get {
             return st_author_first_name as! String

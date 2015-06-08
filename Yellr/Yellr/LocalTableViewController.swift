@@ -217,18 +217,26 @@ class LocalTableViewController: UITableViewController {
     
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
-        println(endPointURL)
+        //println(endPointURL)
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            self.dataSource = self.localPostItems(data)
+            //println(response)
+            //println(error)
             
-            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                self.tableView.reloadData()
-                self.webActivityIndicator.hidden = true
-            })
-            
-            responseHandler( error: nil, items: nil)
+            if (error == nil) {
+                self.dataSource = self.localPostItems(data)
+                
+                dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                    self.tableView.reloadData()
+                    self.webActivityIndicator.hidden = true
+                })
+                
+                responseHandler( error: nil, items: nil)
+            } else {
+                println(error)
+            }
+
         })
         task.resume()
     }
