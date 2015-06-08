@@ -20,6 +20,35 @@ class LocalTableViewCell: UITableViewCell {
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var mediaContainer: UIView!
     
+    var localPostsUrlEndpoint: String = buildUrl("register_vote.json")
+
+    @IBAction func upVoteClicked(sender: AnyObject) {
+        
+        // Correct url and username/password
+        post(["post_id":"3", "is_up_vote":"1"], localPostsUrlEndpoint) { (succeeded: Bool, msg: String) -> () in
+            var alert = UIAlertView(title: "Success!", message: msg, delegate: nil, cancelButtonTitle: "Okay.")
+            if(succeeded) {
+                alert.title = "Success!"
+                alert.message = msg
+            }
+            else {
+                alert.title = "Failed : ("
+                alert.message = msg
+            }
+            
+            // Move to the UI thread
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                // Show the alert
+                alert.show()
+            })
+        }
+        
+    }
+    
+    @IBAction func downVoteClicked(sender: AnyObject) {
+        
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

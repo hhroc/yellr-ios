@@ -22,7 +22,6 @@ class LocalTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
-        initWebActivityIndicator()
         self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
             println("1")
@@ -217,7 +216,8 @@ class LocalTableViewController: UITableViewController {
     
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
-        //println(endPointURL)
+
+        initWebActivityIndicator()
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             

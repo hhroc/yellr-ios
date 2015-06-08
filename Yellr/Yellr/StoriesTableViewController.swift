@@ -77,7 +77,7 @@ class StoriesTableViewController: UITableViewController {
     
     // MARK: - Networking
     func requestStories(endPointURL : String, responseHandler : (error : NSError? , items : Array<StoriesDataModel>?) -> () ) -> () {
-        println(endPointURL)
+        initWebActivityIndicator()
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
@@ -113,5 +113,11 @@ class StoriesTableViewController: UITableViewController {
         return refinedStoryItems
     }
     
+    func initWebActivityIndicator() {
+        self.webActivityIndicator.color = UIColor.lightGrayColor()
+        self.webActivityIndicator.startAnimating()
+        self.webActivityIndicator.center = self.view.center
+        self.view.addSubview(self.webActivityIndicator)
+    }
     
 }

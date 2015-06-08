@@ -19,6 +19,7 @@ class AssignmentsTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.webActivityIndicator.hidden = true
         self.title = NSLocalizedString(YellrConstants.Assignments.Title, comment: "Assignments Screen title")
         //initWebActivityIndicator()
         self.requestAssignments(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
@@ -74,7 +75,7 @@ class AssignmentsTableViewController: UITableViewController {
     
     // MARK: - Networking
     func requestAssignments(endPointURL : String, responseHandler : (error : NSError? , items : Array<AssignmentsDataModel>?) -> () ) -> () {
-        println(endPointURL)
+        initWebActivityIndicator()
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
@@ -106,6 +107,14 @@ class AssignmentsTableViewController: UITableViewController {
             refinedAssignmentItems.append(item)
         }
         return refinedAssignmentItems
+    }
+    
+    func initWebActivityIndicator() {
+
+        self.webActivityIndicator.color = UIColor.lightGrayColor()
+        self.webActivityIndicator.startAnimating()
+        self.webActivityIndicator.center = self.view.center
+        self.view.addSubview(self.webActivityIndicator)
     }
     
 }
