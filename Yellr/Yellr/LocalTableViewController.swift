@@ -52,6 +52,33 @@ class LocalTableViewController: UITableViewController {
         return cell
     }
     
+    func upVoteClicked(sender: UIButton?) {
+        
+        let indexPath = NSIndexPath(forRow: sender!.tag, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        
+        println(indexPath.row)
+        
+        post(["post_id":"5", "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+            
+        }
+    }
+    
+    func downVoteClicked(sender: UIButton?) {
+        let indexPath = NSIndexPath(forRow: sender!.tag, inSection: 0)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        
+        var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        
+        println(indexPath.row)
+        
+        post(["post_id":"5", "is_up_vote":"0"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+            
+        }
+    }
+    
     func configureCell(cell:LocalTableViewCell, atIndexPath indexPath:NSIndexPath) {
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
@@ -61,8 +88,11 @@ class LocalTableViewController: UITableViewController {
         }
         
         //set the button tags for upvote and downvote buttons
-        cell.upVoteBtn.tag = (localPostItem.lp_post_id as? Int)!
-        cell.downVoteBtn.tag = (localPostItem.lp_post_id as? Int)!
+        cell.upVoteBtn.tag = indexPath.row
+        cell.downVoteBtn.tag = indexPath.row
+        
+        cell.upVoteBtn.addTarget(self, action: "upVoteClicked:", forControlEvents: .TouchUpInside)
+        cell.downVoteBtn.addTarget(self, action: "downVoteClicked:", forControlEvents: .TouchUpInside)
         
         cell.postTitle?.text = localPostItem.lp_question_text as? String
         

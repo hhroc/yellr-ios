@@ -28,6 +28,7 @@
 		2645437D1B24CC4D00B8EA79 /* AssignmentsDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645437C1B24CC4D00B8EA79 /* AssignmentsDataModel.swift */; };
 		2645437F1B24CC7200B8EA79 /* StoriesDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */; };
 		264543821B24FA3000B8EA79 /* default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 264543811B24FA3000B8EA79 /* default.gpx */; };
+		2661C87F1B27530500CC681F /* VoteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2661C87E1B27530500CC681F /* VoteButton.swift */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -72,6 +73,7 @@
 		2645437E1B24CC7200B8EA79 /* StoriesDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesDataModel.swift; sourceTree = "<group>"; };
 		264543811B24FA3000B8EA79 /* default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = default.gpx; sourceTree = "<group>"; };
 		265E21DC1B1D79A30026D252 /* Selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Selected.png; sourceTree = "<group>"; };
+		2661C87E1B27530500CC681F /* VoteButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VoteButton.swift; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		269A10D61B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -208,6 +210,7 @@
 				26157EC91B1A245700615428 /* LocalTableViewCell.swift */,
 				260488A71B1EE73B00D781FE /* AssignmentsTableViewCell.swift */,
 				260488AB1B1EF0D800D781FE /* StoriesTableViewCell.swift */,
+				2661C87E1B27530500CC681F /* VoteButton.swift */,
 			);
 			name = TableViewCells;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */,
 				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				2604889E1B1E541900D781FE /* AddPostViewController.swift in Sources */,
+				2661C87F1B27530500CC681F /* VoteButton.swift in Sources */,
 				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
 				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
 				264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */,
