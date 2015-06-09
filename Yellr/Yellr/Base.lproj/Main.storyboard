@@ -249,7 +249,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="upVoteClicked:" destination="BSR-NS-GG5" eventType="touchUpInside" id="r6Q-J2-Fhy"/>
+                                                <action selector="upVoteClicked:" destination="BSR-NS-GG5" eventType="touchUpInside" id="xZR-Lz-s7Q"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8jg-n5-v7j">
@@ -263,7 +263,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="downVoteClicked:" destination="BSR-NS-GG5" eventType="touchUpInside" id="7JE-mw-Q3C"/>
+                                                <action selector="downVoteCLicked:" destination="BSR-NS-GG5" eventType="touchUpInside" id="uSr-1j-hOF"/>
                                             </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Edb-hU-m0P">

@@ -57,7 +57,7 @@ func initNavBarStyle() {
 /**
  * Post method for sending API adds
  */
-func post(params : Dictionary<String, AnyObject>, method : String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
+func post(params : Dictionary<String, String>, method : String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
     var url: String = buildUrl(method + ".json")
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
@@ -65,20 +65,27 @@ func post(params : Dictionary<String, AnyObject>, method : String, postCompleted
     request.HTTPMethod = "POST"
     
     var err: NSError?
-    request.HTTPBody = NSJSONSerialization.dataWithJSONObject(params, options: nil, error: &err)
-    request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-    request.addValue("application/json", forHTTPHeaderField: "Accept")
+    var requestData : String = ""
     
-    println(request)
+    //build the request data string
+    for (key, value) in params {
+        requestData += key + "=" + value + "&"
+    }
+    requestData = dropLast(requestData)
+    
+    request.HTTPBody = (requestData as NSString).dataUsingEncoding(NSUTF8StringEncoding)
+    request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+    
+    //println(request)
     
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-        println("Response: \(response)")
+        //println("Response: \(response)")
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        println("Body: \(strData)")
+        //println("Body: \(strData)")
         var err: NSError?
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
         
-        var msg = "No message"
+        var msg = "NOTHING"
         
         if(err != nil) {
             println(err!.localizedDescription)
@@ -88,17 +95,16 @@ func post(params : Dictionary<String, AnyObject>, method : String, postCompleted
         }
         else {
             if let parseJSON = json {
-                // Okay, the parsedJSON is here, let's get the value for 'success' out of it
+                // check if successful
                 if let success = parseJSON["success"] as? Bool {
                     
                     if (success) {
-                        
+
                         if (method == "publish_post") {
                             
                         } else if (method == "register_vote") {
-                            
-                            if let voteId = parseJSON["vote_id"] as? String {
-                                msg = voteId
+                            if let voteId = parseJSON["vote_id"] as? Int {
+                                msg =  NSString(format:"%d", (stringInterpolationSegment: voteId)) as String
                             }
                             
                         } else if (method == "create_response_message") {
@@ -108,12 +114,7 @@ func post(params : Dictionary<String, AnyObject>, method : String, postCompleted
                         }
                         
                     } else {
-                        
-                        
-                        
                     }
-                    
-                    println("Succes: \(success)")
                     postCompleted(succeeded: success, msg: msg)
                 }
                 return

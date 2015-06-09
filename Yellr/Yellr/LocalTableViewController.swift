@@ -60,6 +60,10 @@ class LocalTableViewController: UITableViewController {
             view.removeFromSuperview()
         }
         
+        //set the button tags for upvote and downvote buttons
+        cell.upVoteBtn.tag = (localPostItem.lp_post_id as? Int)!
+        cell.downVoteBtn.tag = (localPostItem.lp_post_id as? Int)!
+        
         cell.postTitle?.text = localPostItem.lp_question_text as? String
         
         if let author = localPostItem.lp_first_name as? String {
