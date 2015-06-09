@@ -44,7 +44,7 @@ class LocalTableViewController: UITableViewController {
         return self.dataSource.count
     }
     
-    //Update the cell object to show labels
+    //Update the cell object to show labels/ buttons/ content
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("LocalTVCIdentifier", forIndexPath: indexPath) as! LocalTableViewCell
         
@@ -54,16 +54,74 @@ class LocalTableViewController: UITableViewController {
     
     func upVoteClicked(sender: UIButton?) {
         
+        //get the cell in which the button was clicked
         let indexPath = NSIndexPath(forRow: sender!.tag, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocalTableViewCell
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        //api needs string postID
+        var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
+        //send to api
+        post(["post_id":postId, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+            //println(msg)
+        }
         
-        println(indexPath.row)
-        
-        post(["post_id":"5", "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+        if let hasVoted = localPostItem.lp_has_voted as? Bool {
+            
+            if (hasVoted) {
+                
+                var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                
+                if (isUpVote) {
+                    
+                    //upvote being removed
+                    cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    
+                    //remove vote
+                    localPostItem.lp_has_voted = 0
+                    
+                    //update vote count
+                    var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                    cell.upVoteCount?.text = String(getCurrentUpvoteCount! - 1)
+                    
+                } else {
+                    
+                    //changing down vote to up vote
+                    cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                    cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    
+                    //register the up vote
+                    localPostItem.lp_is_up_vote = 1
+                    
+                    // update up vote count
+                    //int upCount = Integer.valueOf(String.valueOf(localPostViewHolder.textViewPostUpVoteCount.getText()));
+                    //localPostViewHolder.textViewPostUpVoteCount.setText(String.valueOf(upCount + 1));
+                    
+                    // update down vote count
+                    //String downCountString = String.valueOf(localPostViewHolder.textViewPostDownVoteCount.getText());
+                    //localPostViewHolder.textViewPostDownVoteCount.setText(YellrUtils.lessDownVote(downCountString));
+                    
+                }
+                
+            } else {
+                
+                //first time voting
+                cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                localPostItem.lp_has_voted = 1
+                localPostItem.lp_is_up_vote = 1
+                
+                //update vote count
+                var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                cell.upVoteCount?.text = String(getCurrentUpvoteCount! + 1)
+                
+            }
+            
+        } else {
             
         }
+        
     }
     
     func downVoteClicked(sender: UIButton?) {
@@ -108,7 +166,32 @@ class LocalTableViewController: UITableViewController {
         cell.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
         
         cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
-        cell.downVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_down_vote_count as? Int)!)) as String
+        //add - (negative to downvote counts)
+        var downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
+        var downVoteCountString = NSString(format:"%d", (stringInterpolationSegment: downVoteCount)) as String
+        if (downVoteCount != 0) {
+            downVoteCountString = "-" + downVoteCountString
+        }
+        cell.downVoteCount?.text = downVoteCountString
+        
+        //set vote count colors based on whether or not user has voted
+        if let hasVoted = localPostItem.lp_has_voted as? Bool {
+            if (hasVoted) {
+                var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                if (isUpVote) {
+                    cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                    cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                } else {
+                    cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                }
+            } else {
+                cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+            }
+        } else {
+            
+        }
         
         if let postType = localPostItem.lp_media_type_name as? String {
             if (postType == "text") {
@@ -251,6 +334,7 @@ class LocalTableViewController: UITableViewController {
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
 
+        println(endPointURL)
         initWebActivityIndicator()
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
