@@ -63,7 +63,10 @@ class LocalTableViewController: UITableViewController {
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
         post(["post_id":postId, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
-            //println(msg)
+            println(msg)
+            //TODO: apply response results to button pressess
+            //currently we are changing UI feedback assuming that
+            //request will always succeed
         }
         
         if let hasVoted = localPostItem.lp_has_voted as? Bool {
@@ -95,12 +98,12 @@ class LocalTableViewController: UITableViewController {
                     localPostItem.lp_is_up_vote = 1
                     
                     // update up vote count
-                    //int upCount = Integer.valueOf(String.valueOf(localPostViewHolder.textViewPostUpVoteCount.getText()));
-                    //localPostViewHolder.textViewPostUpVoteCount.setText(String.valueOf(upCount + 1));
+                    var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                    cell.upVoteCount?.text = String(getCurrentUpvoteCount! + 1)
                     
                     // update down vote count
-                    //String downCountString = String.valueOf(localPostViewHolder.textViewPostDownVoteCount.getText());
-                    //localPostViewHolder.textViewPostDownVoteCount.setText(YellrUtils.lessDownVote(downCountString));
+                    var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                    cell.downVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                     
                 }
                 
@@ -125,16 +128,74 @@ class LocalTableViewController: UITableViewController {
     }
     
     func downVoteClicked(sender: UIButton?) {
+        //get the cell in which the button was clicked
         let indexPath = NSIndexPath(forRow: sender!.tag, inSection: 0)
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! LocalTableViewCell
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        //api needs string postID
+        var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
+        //send to api
+        post(["post_id":postId, "is_up_vote":"0"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+            println(msg)
+        }
         
-        println(indexPath.row)
-        
-        post(["post_id":"5", "is_up_vote":"0"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+        if let hasVoted = localPostItem.lp_has_voted as? Bool {
+            
+            if (hasVoted) {
+                
+                var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                
+                if (isUpVote) {
+                    
+                    //downvote being removed
+                    cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    
+                    //remove vote
+                    localPostItem.lp_has_voted = 0
+                    
+                    //update downvote count
+                    var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                    cell.upVoteCount?.text = String(getCurrentDownvoteCount! - 1)
+                    
+                } else {
+                    
+                    //changing up vote to down vote
+                    cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                    
+                    //register the up vote
+                    localPostItem.lp_is_up_vote = 0
+                    
+                    // update up vote count
+                    var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                    cell.upVoteCount?.text = String(getCurrentUpvoteCount! - 1)
+                    
+                    // update down vote count
+                    var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                    cell.downVoteCount?.text = String(getCurrentDownvoteCount! + 1)
+                    
+                }
+                
+            } else {
+                
+                //first time down voting
+                cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                localPostItem.lp_has_voted = 1
+                localPostItem.lp_is_up_vote = 0
+                
+                //update down vote count
+                var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                cell.downVoteCount?.text = String(getCurrentDownvoteCount! - 1)
+                
+            }
+            
+        } else {
             
         }
+        
     }
     
     func configureCell(cell:LocalTableViewCell, atIndexPath indexPath:NSIndexPath) {
