@@ -9,6 +9,12 @@
 import Foundation
 import UIKit
 
+let Device = UIDevice.currentDevice()
+
+let iosVersion = NSString(string: Device.systemVersion).doubleValue
+let iOS8 = iosVersion >= 8
+let iOS7 = iosVersion >= 7 && iosVersion < 8
+
 /**
  * create UIColor object from HExvalues
  */
@@ -25,7 +31,7 @@ func initNavBarStyle() {
     //Nav bar color
     UINavigationBar.appearance().barTintColor = UIColorFromRGB(YellrConstants.Colors.yellow)
     UINavigationBar.appearance().tintColor = UIColor.blackColor()
-    
+
     //UINavbar title font
     //UINavigationBar.appearance().titleTextAttributes = [ NSFontAttributeName: UIFont(name: "IowanOldStyle", size: 20)!]
     

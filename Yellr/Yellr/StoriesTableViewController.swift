@@ -110,21 +110,28 @@ class StoriesTableViewController: UITableViewController {
     
     func storyItems(data: NSData) -> (Array<StoriesDataModel>) {
         var jsonParseError: NSError?
-        var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as! NSDictionary
-        var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
-        
         var refinedStoryItems : Array<StoriesDataModel> = []
-        for itemDict in rawStoryItems {
+        
+        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
+
+            var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
             
-            var item : StoriesDataModel = StoriesDataModel(st_author_first_name: itemDict["author_first_name"],
-                st_title : itemDict["title"],
-                st_publish_datetime_ago : itemDict["publish_datetime_ago"],
-                st_author_last_name : itemDict["author_last_name"],
-                st_contents_rendered : itemDict["contents_rendered"]
-            )
+            for itemDict in rawStoryItems {
+                
+                var item : StoriesDataModel = StoriesDataModel(st_author_first_name: itemDict["author_first_name"],
+                    st_title : itemDict["title"],
+                    st_publish_datetime_ago : itemDict["publish_datetime_ago"],
+                    st_author_last_name : itemDict["author_last_name"],
+                    st_contents_rendered : itemDict["contents_rendered"]
+                )
+                
+                refinedStoryItems.append(item)
+            }
             
-            refinedStoryItems.append(item)
+        } else {
+            
         }
+
         return refinedStoryItems
     }
     

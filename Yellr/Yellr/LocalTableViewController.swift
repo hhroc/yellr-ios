@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class LocalTableViewController: UITableViewController, CLLocationManagerDelegate {
+class LocalTableViewController: UITableViewController {
     
     let localViewModel = LocalViewModel()
     let backgroundQueue : dispatch_queue_t = dispatch_queue_create("yellr.net.yellr-ios.backgroundQueue", nil)
@@ -29,13 +29,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             
         })
         //println(self.tabBarController?.selectedIndex)
-        
-        //location
-        let manager = CLLocationManager()
-        manager.delegate = self
-        manager.desiredAccuracy = kCLLocationAccuracyBest
-        manager.requestWhenInUseAuthorization()
-        manager.startUpdatingLocation()
 
     }
     
@@ -66,6 +59,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     //in the tableview
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return localViewModel.numberOfRowsInSection(section)
+        println(self.dataSource.count)
         return self.dataSource.count
     }
     
@@ -447,86 +441,52 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func localPostItems(data: NSData) -> (Array<LocalPostDataModel>) {
         var jsonParseError: NSError?
-        var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as! NSDictionary
-        var rawLocalPostItems = jsonResult["posts"] as! Array<Dictionary<String,AnyObject>>
-
         var refinedLocalPostItems : Array<LocalPostDataModel> = []
-        for itemDict in rawLocalPostItems {
-            var lpfname : String = ""
-            var lpmtext : String = ""
-            var lpmtname : String = ""
-            var lppfname : String = ""
-            var mediaItems = itemDict["media_objects"] as! Array<Dictionary<String,String>>
+        
+        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
+         
+            var rawLocalPostItems = jsonResult["posts"] as! Array<Dictionary<String,AnyObject>>
             
-            for itemDictMedia in mediaItems {
-                lpfname = itemDictMedia["file_name"]!
-                lpmtext = itemDictMedia["media_text"]!
-                lpmtname = itemDictMedia["media_type_name"]!
-                lppfname = itemDictMedia["preview_file_name"]!
+            for itemDict in rawLocalPostItems {
+                var lpfname : String = ""
+                var lpmtext : String = ""
+                var lpmtname : String = ""
+                var lppfname : String = ""
+                var mediaItems = itemDict["media_objects"] as! Array<Dictionary<String,String>>
+                
+                for itemDictMedia in mediaItems {
+                    lpfname = itemDictMedia["file_name"]!
+                    lpmtext = itemDictMedia["media_text"]!
+                    lpmtname = itemDictMedia["media_type_name"]!
+                    lppfname = itemDictMedia["preview_file_name"]!
+                }
+                
+                var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
+                    lp_language_code : itemDict["last_name"],
+                    lp_post_id : itemDict["post_id"],
+                    lp_verified_user : itemDict["verified_user"],
+                    lp_post_datetime : itemDict["post_datetime_ago"],
+                    
+                    lp_file_name : lpfname,
+                    lp_media_text : lpmtext,
+                    lp_media_type_name : lpmtname,
+                    lp_preview_file_name : lppfname,
+                    
+                    lp_first_name : itemDict["first_name"],
+                    lp_question_text : itemDict["question_text"],
+                    lp_is_up_vote : itemDict["is_up_vote"],
+                    lp_down_vote_count : itemDict["down_vote_count"],
+                    lp_has_voted : itemDict["has_voted"],
+                    lp_language_name : itemDict["language_name"],
+                    lp_up_vote_count : itemDict["up_vote_count"] )
+                
+                refinedLocalPostItems.append(item)
             }
-
-            var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
-                lp_language_code : itemDict["last_name"],
-                lp_post_id : itemDict["post_id"],
-                lp_verified_user : itemDict["verified_user"],
-                lp_post_datetime : itemDict["post_datetime_ago"],
-                
-                lp_file_name : lpfname,
-                lp_media_text : lpmtext,
-                lp_media_type_name : lpmtname,
-                lp_preview_file_name : lppfname,
-                
-                lp_first_name : itemDict["first_name"],
-                lp_question_text : itemDict["question_text"],
-                lp_is_up_vote : itemDict["is_up_vote"],
-                lp_down_vote_count : itemDict["down_vote_count"],
-                lp_has_voted : itemDict["has_voted"],
-                lp_language_name : itemDict["language_name"],
-                lp_up_vote_count : itemDict["up_vote_count"] )
             
-            refinedLocalPostItems.append(item)
+        } else {
+            
         }
         return refinedLocalPostItems
-    }
-    
-    
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
-    {
-        
-        CLGeocoder().reverseGeocodeLocation(manager.location, completionHandler: {(placemarks, error)->Void in
-            
-            if (error != nil)
-            {
-                println("Error: " + error.localizedDescription)
-                return
-            }
-            
-            if placemarks.count > 0
-            {
-                let pm = placemarks[0] as! CLPlacemark
-                self.displayLocationInfo(pm)
-            }
-            else
-            {
-                println("Error with the data.")
-            }
-        })
-    }
-    
-    func displayLocationInfo(placemark: CLPlacemark)
-    {
-        
-        //self.locationManager.stopUpdatingLocation()
-        println(placemark.locality)
-        println(placemark.postalCode)
-        println(placemark.administrativeArea)
-        println(placemark.country)
-        
-    }
-    
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!)
-    {
-        println("Error: " + error.localizedDescription)
     }
     
 }

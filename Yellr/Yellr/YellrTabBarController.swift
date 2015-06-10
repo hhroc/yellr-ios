@@ -10,7 +10,10 @@ import UIKit
 import Swift
 import CoreLocation
 
-class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
+class YellrTabBarController: UITabBarController, UITabBarControllerDelegate, CLLocationManagerDelegate {
+    
+    var locationManager: CLLocationManager = CLLocationManager()
+    var startLocation: CLLocation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -99,12 +102,51 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         
     }
     
-    override func viewWillLayoutSubviews()
-    {
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        //location
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        
+        //this check is needed to add the additional
+        //location methods for ios8
+        if iOS8 {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            
+        }
+        
+        locationManager.startUpdatingLocation()
+        startLocation = nil
+        
+    }
+    
+    override func viewWillLayoutSubviews() {
         var tabFrame = self.tabBar.frame
         tabFrame.size.height = 60
         tabFrame.origin.y = self.view.frame.size.height - 60
         self.tabBar.frame = tabFrame
+    }
+    
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var latestLocation: AnyObject = locations[locations.count - 1]
+        
+        println(String(format: "%.2f",
+            latestLocation.coordinate.latitude))
+        println(String(format: "%.2f",
+            latestLocation.coordinate.longitude))
+        println(self.tabBarController?.selectedIndex)
+        //locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println(error)
+        let alert = UIAlertView()
+        alert.title = "Location Error"
+        alert.message = "Could not get your current location. Yellr needs your current location to show stories."
+        alert.addButtonWithTitle("Okay")
+        alert.show()
     }
     
 }

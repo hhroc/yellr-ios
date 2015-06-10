@@ -107,18 +107,24 @@ class AssignmentsTableViewController: UITableViewController {
     
     func assignmentItems(data: NSData) -> (Array<AssignmentsDataModel>) {
         var jsonParseError: NSError?
-        var jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as! NSDictionary
-        var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
-        
         var refinedAssignmentItems : Array<AssignmentsDataModel> = []
-        for itemDict in rawAssignmentItems {
+        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
+         
+            var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
             
-            var item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
-                as_description : itemDict["description"],
-                as_organization : itemDict["organization"],
-                as_post_count : itemDict["post_count"] )
             
-            refinedAssignmentItems.append(item)
+            for itemDict in rawAssignmentItems {
+                
+                var item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
+                    as_description : itemDict["description"],
+                    as_organization : itemDict["organization"],
+                    as_post_count : itemDict["post_count"] )
+                
+                refinedAssignmentItems.append(item)
+            }
+            
+        } else {
+            
         }
         return refinedAssignmentItems
     }
