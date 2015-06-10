@@ -485,11 +485,11 @@
             </objects>
             <point key="canvasLocation" x="72" y="-686"/>
         </scene>
-        <!--Local-->
+        <!--LOCAL-->
         <scene sceneID="Bk2-ko-G05">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hxW-Xm-wkJ" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Local" id="5kF-ID-dbc"/>
+                    <tabBarItem key="tabBarItem" title="LOCAL" id="5kF-ID-dbc"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="MhN-83-vd0">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

@@ -24,9 +24,24 @@ class StoriesTableViewController: UITableViewController {
         //initWebActivityIndicator()
         self.requestStories(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
-            println("1")
+            //println("1")
             
         })
+    
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        let subViews = self.tabBarController!.tabBar.subviews
+        for subview in subViews{
+            if (subview.tag == 1201) {
+                (subview as? UIView)!.hidden = true
+            } else if (subview.tag == 1202) {
+                (subview as? UIView)!.hidden = true
+            } else if (subview.tag == 1203) {
+                (subview as? UIView)!.hidden = false
+            }
+        }
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
