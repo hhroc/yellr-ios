@@ -81,7 +81,7 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
         //println("Response: \(response)")
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        //println("Body: \(strData)")
+        println("Body: \(strData)")
         var err: NSError?
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
         
@@ -101,7 +101,9 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
                     if (success) {
 
                         if (method == "publish_post") {
-                            
+                            if let postId = parseJSON["post_id"] as? String {
+                                msg =  postId
+                            }
                         } else if (method == "register_vote") {
                             if let voteId = parseJSON["vote_id"] as? Int {
                                 msg =  NSString(format:"%d", (stringInterpolationSegment: voteId)) as String
@@ -111,6 +113,10 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
                             
                         } else if (method == "verify_user") {
                             
+                        } else if (method == "upload_media") {
+                            if let mediaId = parseJSON["media_id"] as? String {
+                                msg =  mediaId
+                            }
                         }
                         
                     } else {

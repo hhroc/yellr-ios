@@ -18,6 +18,7 @@ class AddPostViewController: UIViewController {
     
     @IBOutlet weak var addPostTitle: UILabel!
     @IBOutlet weak var addPostDesc: UILabel!
+    @IBOutlet weak var postContent: UITextField!
     
     var postTitle: String!
     var postDesc: String!
@@ -53,6 +54,23 @@ class AddPostViewController: UIViewController {
             addPostDesc.text = postDesc
         }
         
+    }
+    
+    
+    @IBAction func submitPost(sender: UIBarButtonItem) {
+        var postCont = postContent.text
+        post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
+            println(msg)
+            if (msg != "NOTHING") {
+                post(["assignment_id":"0", "media_objects":"['"+msg+"']"], "publish_post") { (succeeded: Bool, msg: String) -> () in
+                    println(msg)
+                    if (msg != "NOTHING") {
+                        println(msg)
+                        self.dismissViewControllerAnimated(true, completion: nil);
+                    }
+                }
+            }
+        }
     }
     
     //dismiss the addpostmodal on pressing cancel

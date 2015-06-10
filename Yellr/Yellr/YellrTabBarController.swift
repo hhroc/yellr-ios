@@ -8,6 +8,7 @@
 
 import UIKit
 import Swift
+import CoreLocation
 
 class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
     
@@ -21,10 +22,8 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         //tabBar.items
         self.delegate = self
         
-        //tabBar.selectionIndicatorImage = UIImage(named: "ab_transparent_yellr.9.png")
-        
         let topSeparator = UIView(frame: CGRectMake(0, 0, tabBar.frame.width, 2))
-        topSeparator.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
+        topSeparator.backgroundColor = UIColorFromRGB(YellrConstants.Colors.grey)
         
         //tabBar.addSubview(topSeparator)
         

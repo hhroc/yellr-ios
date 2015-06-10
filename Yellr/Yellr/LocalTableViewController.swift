@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class LocalTableViewController: UITableViewController {
+class LocalTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     let localViewModel = LocalViewModel()
     let backgroundQueue : dispatch_queue_t = dispatch_queue_create("yellr.net.yellr-ios.backgroundQueue", nil)
@@ -28,6 +29,13 @@ class LocalTableViewController: UITableViewController {
             
         })
         //println(self.tabBarController?.selectedIndex)
+        
+        //location
+        let manager = CLLocationManager()
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyBest
+        manager.requestWhenInUseAuthorization()
+        manager.startUpdatingLocation()
 
     }
     
@@ -481,6 +489,45 @@ class LocalTableViewController: UITableViewController {
         return refinedLocalPostItems
     }
     
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!)
+    {
+        
+        CLGeocoder().reverseGeocodeLocation(manager.location, completionHandler: {(placemarks, error)->Void in
+            
+            if (error != nil)
+            {
+                println("Error: " + error.localizedDescription)
+                return
+            }
+            
+            if placemarks.count > 0
+            {
+                let pm = placemarks[0] as! CLPlacemark
+                self.displayLocationInfo(pm)
+            }
+            else
+            {
+                println("Error with the data.")
+            }
+        })
+    }
+    
+    func displayLocationInfo(placemark: CLPlacemark)
+    {
+        
+        //self.locationManager.stopUpdatingLocation()
+        println(placemark.locality)
+        println(placemark.postalCode)
+        println(placemark.administrativeArea)
+        println(placemark.country)
+        
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!)
+    {
+        println("Error: " + error.localizedDescription)
+    }
     
 }
 

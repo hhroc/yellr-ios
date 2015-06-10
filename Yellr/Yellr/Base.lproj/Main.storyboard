@@ -198,13 +198,18 @@
                                 <action selector="cancelPressed:" destination="f3Q-QL-uDs" id="1x8-43-b4I"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="Submit" id="Xak-oG-xvX"/>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="Xak-oG-xvX">
+                            <connections>
+                                <action selector="submitPost:" destination="f3Q-QL-uDs" id="q6m-tk-mda"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="addPostDesc" destination="kpm-yQ-Cjg" id="kfD-2g-TlN"/>
                         <outlet property="addPostTitle" destination="2N6-ld-uy5" id="0f4-UK-c9M"/>
                         <outlet property="cancelBtn" destination="vhZ-6t-qSf" id="bnx-ZX-0Ht"/>
                         <outlet property="photoBtn" destination="djn-i7-LmC" id="whE-RF-ATY"/>
+                        <outlet property="postContent" destination="rNw-1W-mHT" id="q1l-oH-aDA"/>
                         <outlet property="recordBtn" destination="0PV-c2-dYD" id="A6U-ew-NqC"/>
                         <outlet property="submitBtn" destination="Xak-oG-xvX" id="Baj-gZ-Vgk"/>
                         <outlet property="vdoBtn" destination="Udz-kI-egq" id="fMJ-ll-3Qn"/>
