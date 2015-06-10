@@ -7,26 +7,25 @@
 //
 
 import UIKit
+import CoreLocation
 
-class StoriesTableViewController: UITableViewController {
+class StoriesTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     let assgnViewModel = AssignmentsViewModel()
     
-    var assignmentsUrlEndpoint: String = buildUrl("get_stories.json")
+    var assignmentsUrlEndpoint: String = ""
     var dataSource : Array<StoriesDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     var urlSession = NSURLSession.sharedSession()
     var selectedStory: String!
+    var locationManager: CLLocationManager = CLLocationManager()
+    var startLocation: CLLocation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.Stories.Title, comment: "Stories Screen title")
-        //initWebActivityIndicator()
-        self.requestStories(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //println("1")
-            
-        })
+        self.initWebActivityIndicator()
+        //self.loadStoriesTableView()
     
     }
     
@@ -42,6 +41,21 @@ class StoriesTableViewController: UITableViewController {
                 (subview as? UIView)!.hidden = false
             }
         }
+        
+        //location
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        
+        //this check is needed to add the additional
+        //location methods for ios8
+        if iOS8 {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            
+        }
+        
+        locationManager.startUpdatingLocation()
+        startLocation = nil
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -70,6 +84,18 @@ class StoriesTableViewController: UITableViewController {
             viewController.publishedOn = self.dataSource[indexPath.row].publish;
             
         }
+    }
+    
+    //starts the tableviewload process
+    //api call and then populate
+    func loadStoriesTableView(latitude : String, longitude : String) {
+        
+        self.assignmentsUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
+        self.requestStories(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
+            //TODO: update UI code here
+            //println("1")
+            
+        })
     }
     
     func configureCell(cell:StoriesTableViewCell, atIndexPath indexPath:NSIndexPath) {
@@ -140,6 +166,24 @@ class StoriesTableViewController: UITableViewController {
         self.webActivityIndicator.startAnimating()
         self.webActivityIndicator.center = self.view.center
         self.view.addSubview(self.webActivityIndicator)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var latestLocation: AnyObject = locations[locations.count - 1]
+        
+        var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
+        var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        self.loadStoriesTableView(latitude, longitude: longitude)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println(error)
+        let alert = UIAlertView()
+        alert.title = "Location Error"
+        alert.message = "Could not get your current location. Yellr needs your current location to show stories."
+        alert.addButtonWithTitle("Okay")
+        alert.show()
     }
     
 }

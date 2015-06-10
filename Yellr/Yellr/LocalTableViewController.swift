@@ -9,26 +9,23 @@
 import UIKit
 import CoreLocation
 
-class LocalTableViewController: UITableViewController {
+class LocalTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     let localViewModel = LocalViewModel()
     let backgroundQueue : dispatch_queue_t = dispatch_queue_create("yellr.net.yellr-ios.backgroundQueue", nil)
     let imageCache : NSCache = NSCache()
     
-    var localPostsUrlEndpoint: String = buildUrl("get_local_posts.json")
+    var localPostsUrlEndpoint: String = ""
     var dataSource : Array<LocalPostDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     var urlSession = NSURLSession.sharedSession()
+    var locationManager: CLLocationManager = CLLocationManager()
+    var startLocation: CLLocation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
-        self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            println("1")
-            
-        })
-        //println(self.tabBarController?.selectedIndex)
+        self.initWebActivityIndicator()
 
     }
     
@@ -46,9 +43,24 @@ class LocalTableViewController: UITableViewController {
             }
         }
         
+        //location
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        
+        //this check is needed to add the additional
+        //location methods for ios8
+        if iOS8 {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            
+        }
+        
+        locationManager.startUpdatingLocation()
+        startLocation = nil
+        
     }
     
-    //We need sections in order to load the 
+    //We need sections in order to load the
     //newly fetched data in the table view 
     //(data that is fetched on pulldown or new refresh)
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -59,7 +71,6 @@ class LocalTableViewController: UITableViewController {
     //in the tableview
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         //return localViewModel.numberOfRowsInSection(section)
-        println(self.dataSource.count)
         return self.dataSource.count
     }
     
@@ -69,6 +80,18 @@ class LocalTableViewController: UITableViewController {
         
         configureCell(cell, atIndexPath: indexPath)
         return cell
+    }
+    
+    //starts the tableviewload process
+    //api call and then populate
+    func loadLocalPostsTableView(latitude : String, longitude : String) {
+        
+        self.localPostsUrlEndpoint = buildUrl("get_local_posts.json", latitude, longitude)
+        self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
+            //TODO: update UI code here
+            //println("1")
+            
+        })
     }
     
     func configureCell(cell:LocalTableViewCell, atIndexPath indexPath:NSIndexPath) {
@@ -414,8 +437,7 @@ class LocalTableViewController: UITableViewController {
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
 
-        //println(endPointURL)
-        initWebActivityIndicator()
+        println(endPointURL)
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
@@ -487,6 +509,26 @@ class LocalTableViewController: UITableViewController {
             
         }
         return refinedLocalPostItems
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var latestLocation: AnyObject = locations[locations.count - 1]
+        
+        var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
+        var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        self.loadLocalPostsTableView(latitude, longitude: longitude)
+        locationManager.stopUpdatingLocation()
+        
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println(error)
+        let alert = UIAlertView()
+        alert.title = "Location Error"
+        alert.message = "Could not get your current location. Yellr needs your current location to show stories."
+        alert.addButtonWithTitle("Okay")
+        alert.show()
     }
     
 }

@@ -65,7 +65,7 @@ func initNavBarStyle() {
  */
 func post(params : Dictionary<String, String>, method : String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
-    var url: String = buildUrl(method + ".json")
+    var url: String = buildUrl(method + ".json", "", "")
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
     var session = NSURLSession.sharedSession()
     request.HTTPMethod = "POST"
@@ -145,17 +145,26 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
 /**
  * generate the API endpoint
  */
-func buildUrl(method: String ) -> String {
+func buildUrl(method: String , latitude: String, longitude: String) -> String {
     
-    let lat:Double = 43.161030000000000000
-    let long:Double = -77.610921900000000000
+    
+    if (latitude == "" && longitude == "") {
+        
+        //rochester
+        let latitude = "43.16"
+        let longitude = "-77.61"
+        
+    } else {
+        
+    }
+    
     var lang:String = NSLocale.preferredLanguages()[0] as! String
         
     var url = YellrConstants.API.endPoint + "/" + method
     url = url + "?cuid=" + getCUID()
     url = url + "&language_code=" + lang
-    url = url + "&lat=" + String(format:"%f", lat)
-    url = url + "&lng=" + String(format:"%f", long)
+    url = url + "&lat=" + latitude
+    url = url + "&lng=" + longitude
     url = url + "&platform=" + "iOS"
     url = url + "&app_version=" + YellrConstants.AppInfo.version
     

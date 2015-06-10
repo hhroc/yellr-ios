@@ -7,26 +7,24 @@
 //
 
 import UIKit
+import CoreLocation
 
-class AssignmentsTableViewController: UITableViewController {
+class AssignmentsTableViewController: UITableViewController, CLLocationManagerDelegate {
     
     let assgnViewModel = AssignmentsViewModel()
     
-    var assignmentsUrlEndpoint: String = buildUrl("get_assignments.json")
+    var assignmentsUrlEndpoint: String = ""
     var dataSource : Array<AssignmentsDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     var urlSession = NSURLSession.sharedSession()
+    var locationManager: CLLocationManager = CLLocationManager()
+    var startLocation: CLLocation!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webActivityIndicator.hidden = true
         self.title = NSLocalizedString(YellrConstants.Assignments.Title, comment: "Assignments Screen title")
-        //initWebActivityIndicator()
-        self.requestAssignments(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //println("1")
-            
-        })
+        self.initWebActivityIndicator()
         
     }
     
@@ -42,6 +40,21 @@ class AssignmentsTableViewController: UITableViewController {
                 (subview as? UIView)!.hidden = true
             }
         }
+        
+        //location
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        
+        //this check is needed to add the additional
+        //location methods for ios8
+        if iOS8 {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            
+        }
+        
+        locationManager.startUpdatingLocation()
+        startLocation = nil
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -69,6 +82,18 @@ class AssignmentsTableViewController: UITableViewController {
             
         }
     }
+    
+    //starts the tableviewload process
+    //api call and then populate
+    func loadAssignmentsTableView(latitude : String, longitude : String) {
+        
+        self.assignmentsUrlEndpoint = buildUrl("get_assignments.json", latitude, longitude)
+        self.requestAssignments(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
+            //TODO: update UI code here
+            //println("1")
+            
+        })
+    }
 
     func configureCell(cell:AssignmentsTableViewCell, atIndexPath indexPath:NSIndexPath) {
         
@@ -89,7 +114,7 @@ class AssignmentsTableViewController: UITableViewController {
     
     // MARK: - Networking
     func requestAssignments(endPointURL : String, responseHandler : (error : NSError? , items : Array<AssignmentsDataModel>?) -> () ) -> () {
-        initWebActivityIndicator()
+
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
@@ -135,6 +160,24 @@ class AssignmentsTableViewController: UITableViewController {
         self.webActivityIndicator.startAnimating()
         self.webActivityIndicator.center = self.view.center
         self.view.addSubview(self.webActivityIndicator)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var latestLocation: AnyObject = locations[locations.count - 1]
+        
+        var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
+        var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        self.loadAssignmentsTableView(latitude, longitude: longitude)
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println(error)
+        let alert = UIAlertView()
+        alert.title = "Location Error"
+        alert.message = "Could not get your current location. Yellr needs your current location to show stories."
+        alert.addButtonWithTitle("Okay")
+        alert.show()
     }
     
 }
