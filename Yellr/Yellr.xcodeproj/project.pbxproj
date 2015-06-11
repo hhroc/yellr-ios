@@ -31,6 +31,9 @@
 		2661C8831B27D45F00CC681F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2661C8821B27D45F00CC681F /* CoreLocation.framework */; };
 		2661C8851B2874FC00CC681F /* LocalPostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2661C8841B2874FC00CC681F /* LocalPostDetailViewController.swift */; };
 		2661C8871B28823300CC681F /* loc_rochester_default.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 2661C8861B28823300CC681F /* loc_rochester_default.gpx */; };
+		2661C8E91B2A353200CC681F /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 2661C8E81B2A353200CC681F /* MBProgressHUD.m */; };
+		2661C8ED1B2A3B3A00CC681F /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2661C8EB1B2A3B3A00CC681F /* 37x-Checkmark.png */; };
+		2661C8EE1B2A3B3A00CC681F /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2661C8EC1B2A3B3A00CC681F /* 37x-Checkmark@2x.png */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -78,6 +81,12 @@
 		2661C8821B27D45F00CC681F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		2661C8841B2874FC00CC681F /* LocalPostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPostDetailViewController.swift; sourceTree = "<group>"; };
 		2661C8861B28823300CC681F /* loc_rochester_default.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = loc_rochester_default.gpx; sourceTree = "<group>"; };
+		2661C88F1B2A337900CC681F /* Yellr-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Yellr-Bridging-Header.h"; sourceTree = "<group>"; };
+		2661C8E61B2A353200CC681F /* MBProgressHUD-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MBProgressHUD-Prefix.pch"; sourceTree = "<group>"; };
+		2661C8E71B2A353200CC681F /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		2661C8E81B2A353200CC681F /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		2661C8EB1B2A3B3A00CC681F /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
+		2661C8EC1B2A3B3A00CC681F /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		269A10D61B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -133,6 +142,7 @@
 		263E1B671B18D36A0063E9C6 /* Yellr */ = {
 			isa = PBXGroup;
 			children = (
+				2661C8EA1B2A353C00CC681F /* MBProgressHUD */,
 				2645436D1B221CFF00B8EA79 /* DataModels */,
 				2645436C1B221CEF00B8EA79 /* ViewModels */,
 				2645436B1B221CB200B8EA79 /* TableViewControllers */,
@@ -147,6 +157,7 @@
 				263E1B681B18D36A0063E9C6 /* Supporting Files */,
 				265E21DE1B1D79AB0026D252 /* Images */,
 				269A10DD1B1CCAB90001577D /* Localizable.strings */,
+				2661C88F1B2A337900CC681F /* Yellr-Bridging-Header.h */,
 			);
 			path = Yellr;
 			sourceTree = "<group>";
@@ -233,9 +244,21 @@
 		265E21DE1B1D79AB0026D252 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2661C8EB1B2A3B3A00CC681F /* 37x-Checkmark.png */,
+				2661C8EC1B2A3B3A00CC681F /* 37x-Checkmark@2x.png */,
 				265E21DC1B1D79A30026D252 /* Selected.png */,
 			);
 			name = Images;
+			sourceTree = "<group>";
+		};
+		2661C8EA1B2A353C00CC681F /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				2661C8E61B2A353200CC681F /* MBProgressHUD-Prefix.pch */,
+				2661C8E71B2A353200CC681F /* MBProgressHUD.h */,
+				2661C8E81B2A353200CC681F /* MBProgressHUD.m */,
+			);
+			name = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,7 +344,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				2661C8871B28823300CC681F /* loc_rochester_default.gpx in Resources */,
+				2661C8EE1B2A3B3A00CC681F /* 37x-Checkmark@2x.png in Resources */,
 				2645437B1B23256800B8EA79 /* FontAwesome.otf in Resources */,
+				2661C8ED1B2A3B3A00CC681F /* 37x-Checkmark.png in Resources */,
 				263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */,
 				269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */,
 				263E1B771B18D36A0063E9C6 /* LaunchScreen.xib in Resources */,
@@ -358,6 +383,7 @@
 				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				2604889E1B1E541900D781FE /* AddPostViewController.swift in Sources */,
 				2661C87F1B27530500CC681F /* VoteButton.swift in Sources */,
+				2661C8E91B2A353200CC681F /* MBProgressHUD.m in Sources */,
 				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
 				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
 				264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */,
@@ -500,10 +526,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Yellr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Yellr/Yellr-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -511,10 +540,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = Yellr/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "Yellr/Yellr-Bridging-Header.h";
 			};
 			name = Release;
 		};

@@ -535,5 +535,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         alert.show()
     }
     
+    func showcompletionhud() {
+        let spinningActivityDone = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivityDone.labelText = "Nono"
+        spinningActivityDone.userInteractionEnabled = false
+    }
+    
 }
 

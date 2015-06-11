@@ -60,6 +60,11 @@ class AddPostViewController: UIViewController {
     
     
     @IBAction func submitPost(sender: UIBarButtonItem) {
+        
+        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+        spinningActivity.labelText = "Posting"
+        spinningActivity.userInteractionEnabled = false
+        
         var postCont = postContent.text
         postingIndicator.hidden = false
         post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
@@ -68,11 +73,25 @@ class AddPostViewController: UIViewController {
                 post(["assignment_id":"0", "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
                     println("Post Added : " + msg)
                     if (msg != "NOTHING") {
+
                         self.dismissViewControllerAnimated(true, completion: nil);
                         self.postingIndicator.hidden = true
+                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        
+                        //show done hud on the source view controller
+                        dispatch_async(dispatch_get_main_queue()) {
+                            let spinningActivityDone = MBProgressHUD.showHUDAddedTo(self.presentingViewController?.view, animated: true)
+                            let checkImage = UIImage(named: "37x-Checkmark.png")
+                            spinningActivityDone.customView = UIImageView(image: checkImage)
+                            spinningActivityDone.mode = MBProgressHUDMode.CustomView
+                            spinningActivityDone.labelText = NSLocalizedString(YellrConstants.AddPost.SuccessMsg, comment: "Add Post Success")
+                            spinningActivityDone.hide(true, afterDelay: NSTimeInterval(1))
+                        }
+                        
                     } else {
                         //fail toast
                         self.postingIndicator.hidden = true
+                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                     }
                 }
             }
