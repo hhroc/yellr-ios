@@ -520,6 +520,10 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.loadLocalPostsTableView(latitude, longitude: longitude)
         locationManager.stopUpdatingLocation()
         
+        //TODO: Store Lat Long in userprefs
+        //TODO: stopUpdatingLocation should be called after a couple of seconds from
+        //receiving the first location
+        
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {

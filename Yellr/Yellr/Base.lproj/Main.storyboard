@@ -174,6 +174,9 @@
                                     <rect key="frame" x="16" y="235" width="368" height="30"/>
                                 </variation>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P6T-en-67U">
+                                <rect key="frame" x="463" y="241" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -210,6 +213,7 @@
                         <outlet property="cancelBtn" destination="vhZ-6t-qSf" id="bnx-ZX-0Ht"/>
                         <outlet property="photoBtn" destination="djn-i7-LmC" id="whE-RF-ATY"/>
                         <outlet property="postContent" destination="rNw-1W-mHT" id="q1l-oH-aDA"/>
+                        <outlet property="postingIndicator" destination="P6T-en-67U" id="7kT-qc-yt8"/>
                         <outlet property="recordBtn" destination="0PV-c2-dYD" id="A6U-ew-NqC"/>
                         <outlet property="submitBtn" destination="Xak-oG-xvX" id="Baj-gZ-Vgk"/>
                         <outlet property="vdoBtn" destination="Udz-kI-egq" id="fMJ-ll-3Qn"/>

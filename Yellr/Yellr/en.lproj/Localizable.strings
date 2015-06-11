@@ -12,3 +12,5 @@ stories_title="Stories";
 profile_title="Profile";
 new_post_title="Free Post";
 anonymous_user="Anonymous User";
+new_post_failed="Post failed. Please try again!";
+new_post_success="Succesfully posted!";

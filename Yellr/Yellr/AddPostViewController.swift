@@ -20,6 +20,8 @@ class AddPostViewController: UIViewController {
     @IBOutlet weak var addPostDesc: UILabel!
     @IBOutlet weak var postContent: UITextField!
     
+    @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
+    
     var postTitle: String!
     var postDesc: String!
     
@@ -59,14 +61,18 @@ class AddPostViewController: UIViewController {
     
     @IBAction func submitPost(sender: UIBarButtonItem) {
         var postCont = postContent.text
+        postingIndicator.hidden = false
         post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
-            println(msg)
+            println("Media Uploaded : " + msg)
             if (msg != "NOTHING") {
-                post(["assignment_id":"0", "media_objects":"['"+msg+"']"], "publish_post") { (succeeded: Bool, msg: String) -> () in
-                    println(msg)
+                post(["assignment_id":"0", "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
+                    println("Post Added : " + msg)
                     if (msg != "NOTHING") {
-                        println(msg)
                         self.dismissViewControllerAnimated(true, completion: nil);
+                        self.postingIndicator.hidden = true
+                    } else {
+                        //fail toast
+                        self.postingIndicator.hidden = true
                     }
                 }
             }

@@ -33,6 +33,8 @@ struct YellrConstants {
     
     struct AddPost {
         static let Title = "new_post_title"
+        static let FailMsg = "new_post_failed"
+        static let SuccessMsg = "new_post_success"
     }
     
     struct API {

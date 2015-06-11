@@ -65,7 +65,7 @@ func initNavBarStyle() {
  */
 func post(params : Dictionary<String, String>, method : String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
-    var url: String = buildUrl(method + ".json", "", "")
+    var url: String = buildUrl(method + ".json", "NIL", "NIL")
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
     var session = NSURLSession.sharedSession()
     request.HTTPMethod = "POST"
@@ -107,8 +107,8 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
                     if (success) {
 
                         if (method == "publish_post") {
-                            if let postId = parseJSON["post_id"] as? String {
-                                msg =  postId
+                            if let postId = parseJSON["post_id"] as? Int {
+                                msg =  NSString(format:"%d", (stringInterpolationSegment: postId)) as String
                             }
                         } else if (method == "register_vote") {
                             if let voteId = parseJSON["vote_id"] as? Int {
@@ -147,24 +147,21 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
  */
 func buildUrl(method: String , latitude: String, longitude: String) -> String {
     
-    
-    if (latitude == "" && longitude == "") {
-        
-        //rochester
-        let latitude = "43.16"
-        let longitude = "-77.61"
-        
-    } else {
-        
-    }
-    
     var lang:String = NSLocale.preferredLanguages()[0] as! String
-        
+    
     var url = YellrConstants.API.endPoint + "/" + method
     url = url + "?cuid=" + getCUID()
     url = url + "&language_code=" + lang
-    url = url + "&lat=" + latitude
-    url = url + "&lng=" + longitude
+    
+    if (latitude == "NIL" && longitude == "NIL") {
+        //rochester
+        url = url + "&lat=43.16"
+        url = url + "&lng=-77.61"
+    } else {
+        url = url + "&lat=" + latitude
+        url = url + "&lng=" + longitude
+    }
+
     url = url + "&platform=" + "iOS"
     url = url + "&app_version=" + YellrConstants.AppInfo.version
     
