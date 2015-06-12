@@ -35,6 +35,9 @@ struct YellrConstants {
         static let Title = "new_post_title"
         static let FailMsg = "new_post_failed"
         static let SuccessMsg = "new_post_success"
+        //to show the one time screen after free / assgn post
+        static let checkVersionOnce = "check_version"
+        static let checkVersionOnceAs = "check_version_as"
     }
     
     struct API {

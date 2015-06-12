@@ -24,6 +24,7 @@ class AddPostViewController: UIViewController {
     
     var postTitle: String!
     var postDesc: String!
+    var asgPost: String!
     
     
     override func viewDidLoad() {
@@ -74,7 +75,24 @@ class AddPostViewController: UIViewController {
                 post(["assignment_id":"0", "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
                     println("Post Added : " + msg)
                     if (msg != "NOTHING") {
-
+                        
+                        let defaults = NSUserDefaults.standardUserDefaults()
+                        if (self.asgPost != nil) {
+                            //first time assignment post
+                            if let name = defaults.stringForKey(YellrConstants.AddPost.checkVersionOnceAs) {
+                                
+                            } else {
+                                
+                            }
+                        } else {
+                            //first time free post
+                            if let name = defaults.stringForKey(YellrConstants.AddPost.checkVersionOnce) {
+                                
+                            } else {
+                                
+                            }
+                        }
+                        
                         self.dismissViewControllerAnimated(true, completion: nil);
                         MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
                         postFail = true
