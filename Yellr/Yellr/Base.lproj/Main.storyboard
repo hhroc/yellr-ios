@@ -124,6 +124,9 @@
                                     <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="takePhoto:" destination="f3Q-QL-uDs" eventType="touchUpInside" id="NS7-bo-BiY"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can tell us what you think on any topic!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kpm-yQ-Cjg">
                                 <rect key="frame" x="153" y="181" width="294" height="21"/>
@@ -161,6 +164,9 @@
                                 <variation key="widthClass=compact" ambiguous="YES" misplaced="YES">
                                     <rect key="frame" x="177" y="129" width="39" height="30"/>
                                 </variation>
+                                <connections>
+                                    <action selector="takeVideo:" destination="f3Q-QL-uDs" eventType="touchUpInside" id="68w-O8-Zah"/>
+                                </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Tell us about your community" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rNw-1W-mHT">
                                 <rect key="frame" x="153" y="236" width="294" height="30"/>
@@ -177,20 +183,35 @@
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="P6T-en-67U">
                                 <rect key="frame" x="463" y="241" width="20" height="20"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="mer-AJ-MCJ">
+                                <rect key="frame" x="167" y="326" width="267" height="173"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="173" id="MMm-7m-kco"/>
+                                    <constraint firstAttribute="width" constant="267" id="zaO-Xd-GyP"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="zaO-Xd-GyP"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="2N6-ld-uy5" firstAttribute="leading" secondItem="ufs-3r-FkX" secondAttribute="leadingMargin" id="3IS-aT-0rX"/>
                             <constraint firstItem="0PV-c2-dYD" firstAttribute="trailing" secondItem="ufs-3r-FkX" secondAttribute="trailingMargin" id="6lg-if-c2y"/>
                             <constraint firstAttribute="centerX" secondItem="kpm-yQ-Cjg" secondAttribute="centerX" id="7nn-Hu-cLj"/>
+                            <constraint firstItem="mer-AJ-MCJ" firstAttribute="top" secondItem="rNw-1W-mHT" secondAttribute="bottom" constant="60" id="FAl-k6-2Sk"/>
                             <constraint firstItem="djn-i7-LmC" firstAttribute="top" secondItem="2N6-ld-uy5" secondAttribute="bottom" constant="17" id="OD6-7G-8Fb"/>
                             <constraint firstItem="djn-i7-LmC" firstAttribute="leading" secondItem="ufs-3r-FkX" secondAttribute="leadingMargin" id="QSw-Kb-GSF"/>
                             <constraint firstItem="rNw-1W-mHT" firstAttribute="top" secondItem="kpm-yQ-Cjg" secondAttribute="bottom" constant="34" id="Ryr-cb-D67"/>
                             <constraint firstItem="2N6-ld-uy5" firstAttribute="top" secondItem="w5c-Wp-z0h" secondAttribute="bottom" constant="27" id="SCD-fD-erB"/>
                             <constraint firstItem="Udz-kI-egq" firstAttribute="top" secondItem="w5c-Wp-z0h" secondAttribute="bottom" constant="65" id="WGS-Zs-pgq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mer-AJ-MCJ" secondAttribute="trailing" constant="150" id="bKg-ya-Qa0"/>
                             <constraint firstItem="0PV-c2-dYD" firstAttribute="top" secondItem="w5c-Wp-z0h" secondAttribute="bottom" constant="65" id="dAc-PE-Xeu"/>
                             <constraint firstAttribute="centerX" secondItem="Udz-kI-egq" secondAttribute="centerX" id="ecv-l8-nLY"/>
                             <constraint firstAttribute="centerX" secondItem="rNw-1W-mHT" secondAttribute="centerX" id="qN6-Vn-Qfo"/>
+                            <constraint firstItem="mer-AJ-MCJ" firstAttribute="leading" secondItem="ufs-3r-FkX" secondAttribute="leadingMargin" constant="151" id="tog-GG-mV9"/>
                             <constraint firstItem="kpm-yQ-Cjg" firstAttribute="top" secondItem="Udz-kI-egq" secondAttribute="bottom" constant="22" id="uIt-H9-B3E"/>
                         </constraints>
                     </view>
@@ -212,6 +233,7 @@
                         <outlet property="addPostTitle" destination="2N6-ld-uy5" id="0f4-UK-c9M"/>
                         <outlet property="cancelBtn" destination="vhZ-6t-qSf" id="bnx-ZX-0Ht"/>
                         <outlet property="photoBtn" destination="djn-i7-LmC" id="whE-RF-ATY"/>
+                        <outlet property="pickedImage" destination="mer-AJ-MCJ" id="FJk-7r-dWt"/>
                         <outlet property="postContent" destination="rNw-1W-mHT" id="q1l-oH-aDA"/>
                         <outlet property="postingIndicator" destination="P6T-en-67U" id="7kT-qc-yt8"/>
                         <outlet property="recordBtn" destination="0PV-c2-dYD" id="A6U-ew-NqC"/>

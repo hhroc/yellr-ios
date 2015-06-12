@@ -35,6 +35,11 @@ struct YellrConstants {
         static let Title = "new_post_title"
         static let FailMsg = "new_post_failed"
         static let SuccessMsg = "new_post_success"
+        static let PopMenuTitle = "new_post_pop_menu_title"
+        static let PopMenuCamera = "new_post_pop_menu_camera"
+        static let PopMenuGallery = "new_post_pop_menu_gallery"
+        static let PopMenuCancel = "new_post_pop_menu_cancel"
+        
         //to show the one time screen after free / assgn post
         static let checkVersionOnce = "check_version"
         static let checkVersionOnceAs = "check_version_as"
