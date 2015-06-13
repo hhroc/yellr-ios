@@ -511,6 +511,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         return refinedLocalPostItems
     }
     
+    //MARK: Location Delegate functions
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         var latestLocation: AnyObject = locations[locations.count - 1]
         
@@ -529,16 +530,10 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println(error)
         let alert = UIAlertView()
-        alert.title = "Location Error"
-        alert.message = "Could not get your current location. Yellr needs your current location to show stories."
-        alert.addButtonWithTitle("Okay")
+        alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
+        alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
+        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
-    }
-    
-    func showcompletionhud() {
-        let spinningActivityDone = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        spinningActivityDone.labelText = "Nono"
-        spinningActivityDone.userInteractionEnabled = false
     }
     
 }

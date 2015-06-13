@@ -18,3 +18,6 @@ new_post_pop_menu_title="Choose Image";
 new_post_pop_menu_camera="Camera";
 new_post_pop_menu_gallery="Gallery";
 new_post_pop_menu_cancel="Cancel";
+location_error_title="Location Error"
+location_error_message="Could not get your current location. Yellr needs your current location to show stories."
+location_error_okay="Okay"

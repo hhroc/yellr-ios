@@ -142,6 +142,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             picker.allowsEditing = false
             if (videoCamera) {
                 picker.mediaTypes = [kUTTypeMovie!]
+                picker.videoQuality = UIImagePickerControllerQualityType.TypeLow
             }
             picker.showsCameraControls = true
             self.presentViewController(picker, animated: true, completion: nil)

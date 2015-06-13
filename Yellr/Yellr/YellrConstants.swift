@@ -45,6 +45,12 @@ struct YellrConstants {
         static let checkVersionOnceAs = "check_version_as"
     }
     
+    struct Location {
+        static let Title = "location_error_title"
+        static let Message = "location_error_message"
+        static let Okay = "location_error_okay"
+    }
+    
     struct API {
         //static let endPoint = "https://yellr.net"
         static let endPoint = "http://yellr.mycodespace.net"

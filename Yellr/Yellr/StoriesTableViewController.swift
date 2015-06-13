@@ -168,6 +168,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         self.view.addSubview(self.webActivityIndicator)
     }
     
+    //MARK: Location Delegate functions
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
         var latestLocation: AnyObject = locations[locations.count - 1]
         
@@ -175,14 +176,15 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
         
         self.loadStoriesTableView(latitude, longitude: longitude)
+        locationManager.stopUpdatingLocation()
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
         println(error)
         let alert = UIAlertView()
-        alert.title = "Location Error"
-        alert.message = "Could not get your current location. Yellr needs your current location to show stories."
-        alert.addButtonWithTitle("Okay")
+        alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
+        alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
+        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
     }
     
