@@ -226,46 +226,59 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     @IBAction func submitPost(sender: UIBarButtonItem) {
         
-        let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-        spinningActivity.labelText = "Posting"
-        spinningActivity.userInteractionEnabled = false
-        
         var postFail : Bool = false
         var postCont = postContent.text
 
-        post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
-            println("Media Uploaded : " + msg)
-            if (msg != "NOTHING" && msg != "Error") {
-                post(["assignment_id":"0", "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
-                    println("Post Added : " + msg)
-                    if (msg != "NOTHING") {
-                        
-                        if (self.asgPost != nil) {
-                            self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+        if (postCont != "") {
+            
+            let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            spinningActivity.labelText = "Posting"
+            spinningActivity.userInteractionEnabled = false
+            
+            post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
+                println("Media Uploaded : " + msg)
+                if (msg != "NOTHING" && msg != "Error") {
+                    post(["assignment_id":"0", "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
+                        println("Post Added : " + msg)
+                        if (msg != "NOTHING") {
+                            
+                            if (self.asgPost != nil) {
+                                self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+                            } else {
+                                self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                            }
+                            
                         } else {
-                            self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                            //fail toast
+                            postFail = true
                         }
-                        
-                    } else {
-                        //fail toast
-                        postFail = true
+                    }
+                } else {
+                    postFail = true
+                }
+                if (postFail) {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        let spinningActivityFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        spinningActivityFail.customView = UIView()
+                        spinningActivityFail.mode = MBProgressHUDMode.CustomView
+                        spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
+                        spinningActivityFail.yOffset = iOS8 ? 225 : 175
+                        spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
                     }
                 }
-            } else {
-                postFail = true
             }
-            if (postFail) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                    let spinningActivityFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    spinningActivityFail.customView = UIView()
-                    spinningActivityFail.mode = MBProgressHUDMode.CustomView
-                    spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
-                    spinningActivityFail.yOffset = iOS8 ? 225 : 175
-                    spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
-                }
-            }
+        } else {
+            //show text empty hud
+            let postAcFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            postAcFail.customView = UIView()
+            postAcFail.mode = MBProgressHUDMode.CustomView
+            postAcFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsgEmptyPost, comment: "Empty Post Text Fail")
+            postAcFail.yOffset = iOS8 ? 225 : 175
+            postAcFail.hide(true, afterDelay: NSTimeInterval(2.5))
         }
+        
+
     }
     
     func processSuccesfulPostResults(versionStringKey : String) {
