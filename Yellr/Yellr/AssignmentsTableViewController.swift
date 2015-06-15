@@ -78,6 +78,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             
             addPostViewController.postTitle = self.dataSource[indexPath.row].postTitle;
             addPostViewController.postDesc = self.dataSource[indexPath.row].postDesc;
+            addPostViewController.asgPost = "Yes";
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
         }

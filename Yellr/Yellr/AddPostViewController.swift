@@ -196,54 +196,10 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     println("Post Added : " + msg)
                     if (msg != "NOTHING") {
                         
-                        let defaults = NSUserDefaults.standardUserDefaults()
                         if (self.asgPost != nil) {
-                            if let name = defaults.stringForKey(YellrConstants.AddPost.checkVersionOnceAs) {
-                                
-                            } else {
-                                //first time assignment post - show one time popup
-                                //populate this NSDefault name
-                            }
+                            self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
                         } else {
-                            if let name = defaults.stringForKey(YellrConstants.AddPost.checkVersionOnce) {
-                                println("NOT First Time Free Post")
-                                //certain post completion tasks
-                                self.completionAddPostSuccess()
-                            } else {
-                                println("First Time Free Post")
-                                //first time free post  - show one time popup
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    
-                                    //hide the active HUDs
-                                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                                    
-                                    if(iOS8) {
-                                        
-                                        let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted"), message:
-                                            NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
-                                        alertController.addAction(UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"), style: UIAlertActionStyle.Default, handler: { (action) in
-                                                //dismiss the add post view on pressing okay
-                                                self.dismissViewControllerAnimated(true, completion: nil)
-                                            }
-                                        ))
-                                        
-                                        self.presentViewController(alertController, animated: true, completion: nil)
-                                        
-                                    } else {
-                                        
-                                        let alert = UIAlertView()
-                                        alert.delegate = self
-                                        alert.title = NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted")
-                                        alert.message = NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful")
-                                        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"))
-                                        alert.show()
-                                        
-                                    }
-                                    
-                                }
-                                //populate this NSDefault name
-                                //defaults.setObject(YellrConstants.AppInfo.version, forKey: YellrConstants.AddPost.checkVersionOnce)
-                            }
+                            self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
                         }
                         
                     } else {
@@ -266,6 +222,84 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 }
             }
         }
+    }
+    
+    func processSuccesfulPostResults(versionStringKey : String) {
+    
+        let defaults = NSUserDefaults.standardUserDefaults()
+    
+        if let name = defaults.stringForKey(versionStringKey) {
+        
+            //Not a first time user, but might be an user
+            //with an updated version of the app
+            
+            if (name == YellrConstants.AppInfo.version) {
+            
+                println("NOT First Time Free Post")
+                
+                //do not show first time popup
+                //certain post completion tasks
+                self.completionAddPostSuccess()
+            
+            } else {
+            
+                //show first time popup - user may have updated the app
+                
+                //call the completion tasks
+                self.completionAddPostSuccessForFirstTimeUser()
+                //populate this NSDefault name
+                defaults.setObject(YellrConstants.AppInfo.version, forKey: versionStringKey)
+            
+            }
+        
+        } else {
+        
+            //first time user of the app
+            
+            //call the completion tasks
+            self.completionAddPostSuccessForFirstTimeUser()
+            //populate this NSDefault name
+            defaults.setObject(YellrConstants.AppInfo.version, forKey: versionStringKey)
+        
+        }
+    }
+
+    //this function should be called when a post is succesful
+    //for a new user or an user with an updated app
+    func completionAddPostSuccessForFirstTimeUser() {
+     
+        println("First Time Free Post")
+        //first time free post  - show one time popup
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            //hide the active HUDs
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            
+            if(iOS8) {
+                
+                let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted"), message:
+                    NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"), style: UIAlertActionStyle.Default, handler: { (action) in
+                    //dismiss the add post view on pressing okay
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    ))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertView()
+                alert.delegate = self
+                alert.title = NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted")
+                alert.message = NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful")
+                alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"))
+                alert.show()
+                
+            }
+            
+        }
+        
     }
     
     //this function should be called when a post is succesful
