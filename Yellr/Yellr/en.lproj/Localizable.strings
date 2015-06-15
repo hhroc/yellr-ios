@@ -15,6 +15,7 @@ anonymous_user="Anonymous User";
 new_post_failed="Post failed. Please try again!";
 new_post_success="Posted!";
 new_post_pop_menu_title="Choose Image";
+new_post_pop_menu_title_video="Choose Video"
 new_post_pop_menu_camera="Camera";
 new_post_pop_menu_gallery="Gallery";
 new_post_pop_menu_cancel="Cancel";

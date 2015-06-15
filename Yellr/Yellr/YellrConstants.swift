@@ -36,6 +36,7 @@ struct YellrConstants {
         static let FailMsg = "new_post_failed"
         static let SuccessMsg = "new_post_success"
         static let PopMenuTitle = "new_post_pop_menu_title"
+        static let PopMenuTitleVideo = "new_post_pop_menu_title_video"
         static let PopMenuCamera = "new_post_pop_menu_camera"
         static let PopMenuGallery = "new_post_pop_menu_gallery"
         static let PopMenuCancel = "new_post_pop_menu_cancel"

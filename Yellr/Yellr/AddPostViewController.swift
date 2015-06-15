@@ -9,7 +9,7 @@
 import UIKit
 import MobileCoreServices
 
-class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
+class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate {
     
     @IBOutlet weak var photoBtn: UIButton!
     @IBOutlet weak var vdoBtn: UIButton!
@@ -31,7 +31,6 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     var popover:UIPopoverController? = nil
     
     let picker = UIImagePickerController()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,7 +71,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     @IBAction func takeVideo(sender: UIButton) {
         
         if (iOS8) {
-            var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitleVideo, comment: "Choose Video Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
             var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
                 UIAlertAction in
@@ -102,6 +101,27 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
             }
         } else {
+            
+            //for iOS7
+//            let videoActionSheet = UIActionSheet()
+//            videoActionSheet.addButtonWithTitle(YellrConstants.AddPost.PopMenuCamera)
+//            videoActionSheet.addButtonWithTitle(YellrConstants.AddPost.PopMenuGallery)
+//            videoActionSheet.cancelButtonIndex = 2
+//            videoActionSheet.tag = 0
+//            videoActionSheet.delegate = self
+//            videoActionSheet.showInView(self.view)
+            
+            //UIActionSheet is giving weird view errors, using alert view for now
+            
+            let alert = UIAlertView()
+            alert.delegate = self
+            alert.tag = 2
+            alert.title = NSLocalizedString(YellrConstants.AddPost.PopMenuTitleVideo, comment: "Choose Video Menu")
+            alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Camera"))
+            alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Gallery"))
+            alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"))
+            alert.cancelButtonIndex = 2
+            alert.show()
             
         }
         
@@ -143,10 +163,33 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             
         } else {
             
+            //for ios7
+//            let photoActionSheet = UIActionSheet()
+//            photoActionSheet.addButtonWithTitle(YellrConstants.AddPost.PopMenuCamera)
+//            photoActionSheet.addButtonWithTitle(YellrConstants.AddPost.PopMenuGallery)
+//            photoActionSheet.cancelButtonIndex = 2
+//            photoActionSheet.tag = 1
+//            photoActionSheet.delegate = self
+//            photoActionSheet.showInView(self.view)
+//            //photoActionSheet.showFromTabBar(self.tabBarController!.tabBar)
+            
+            //UIActionSheet is giving weird view errors, using alert view for now
+            
+            let alert = UIAlertView()
+            alert.delegate = self
+            alert.tag = 1
+            alert.title = NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu")
+            alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Camera"))
+            alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Gallery"))
+            alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"))
+            alert.cancelButtonIndex = 2
+            alert.show()
+            
         }
 
     }
     
+    //videoCamera - whether or not to open the photo cam or video cam
     func openCamera(videoCamera : Bool) {
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
             picker.sourceType = UIImagePickerControllerSourceType.Camera
@@ -163,6 +206,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         }
     }
     
+    //whether or not to show the videosor photos
     func openGallery(videoCamera : Bool) {
         picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
@@ -290,6 +334,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             } else {
                 
                 let alert = UIAlertView()
+                alert.tag = 0
                 alert.delegate = self
                 alert.title = NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted")
                 alert.message = NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful")
@@ -322,25 +367,96 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         self.dismissViewControllerAnimated(true, completion: nil);
     }
     
+    //MARK: ActionSheet Delegates for iOS7
+    func actionSheet(myActionSheet: UIActionSheet, clickedButtonAtIndex buttonIndex: Int){
+
+        if (myActionSheet.tag == 0) {
+            
+            //for video
+            switch buttonIndex{
+                
+                case 0:
+                    self.openCamera(true)
+                    break;
+                case 1:
+                    self.openGallery(true)
+                    break;
+                default:
+                    break;
+                
+            }
+            
+        } else if (myActionSheet.tag == 1) {
+            
+            //for photo
+            switch buttonIndex{
+                
+                case 0:
+                    self.openCamera(false)
+                    break;
+                case 1:
+                    self.openGallery(false)
+                    break;
+                default:
+                    break;
+                
+            }
+            
+        }
+        
+    }
+    
     //MARK: Alert View Delegates for iOS7
     func alertView(View: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
         
-        switch buttonIndex{
+        if (View.tag == 0) {
             
-        case 0:
-            //dismiss the add post view on pressing okay
-            println("Here1")
-            self.dismissViewControllerAnimated(true, completion: nil)
-            break;
-        case 1:
-            //dismiss the add post view on pressing okay
-            println("Here2")
-            self.dismissViewControllerAnimated(true, completion: nil)
-            break;
-        default:
-            break;
+            //first time post notify
+            switch buttonIndex{
+                
+                case 0:
+                    //dismiss the add post view on pressing okay
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    break;
+                default:
+                    break;
+                
+            }
+            
+        } else if (View.tag == 1) {
+            
+            //photo select cam / gallery
+            switch buttonIndex{
+                
+                case 0:
+                    self.openCamera(false)
+                    break;
+                case 1:
+                    self.openGallery(false)
+                    break;
+                default:
+                    break;
+                
+            }
+            
+        } else if (View.tag == 2) {
+            
+            //video select cam / gallery
+            switch buttonIndex{
+                
+                case 0:
+                    self.openCamera(true)
+                    break;
+                case 1:
+                    self.openGallery(true)
+                    break;
+                default:
+                    break;
+                
+            }
             
         }
+        
     }
     
     //MARK: Delegates
