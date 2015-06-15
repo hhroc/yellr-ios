@@ -53,7 +53,7 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.addSubview(selectedBar2)
         tabBar.addSubview(selectedBar3)
         
-        //println(tabBarController?.selectedIndex)
+        //debugPrint(tabBarController?.selectedIndex)
         
         for item in tabBar.items as! [UITabBarItem] {
             

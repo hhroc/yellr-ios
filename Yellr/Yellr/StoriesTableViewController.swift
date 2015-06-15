@@ -93,7 +93,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         self.assignmentsUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
         self.requestStories(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
-            //println("1")
+            //debugPrint("1")
             
         })
     }
@@ -180,7 +180,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        println(error)
+        debugPrint(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")

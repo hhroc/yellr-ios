@@ -238,16 +238,18 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             
             if (self.pickedImage != nil) {
                 
+                let imageData:NSData = NSData(data: UIImageJPEGRepresentation(self.pickedImage.image, 1.0))
+                
             } else {
                 
             }
             
             post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
-                println("Media Uploaded : " + msg)
+                debugPrint("Media Uploaded : " + msg)
                 if (msg != "NOTHING" && msg != "Error") {
 
                     post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
-                        println("Post Added : " + msg)
+                        debugPrint("Post Added : " + msg)
                         if (msg != "NOTHING") {
                             
                             if (self.asgPost != nil) {
@@ -300,7 +302,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             
             if (name == YellrConstants.AppInfo.version) {
             
-                println("NOT First Time Free Post")
+                debugPrint("NOT First Time Free Post")
                 
                 //do not show first time popup
                 //certain post completion tasks
@@ -333,7 +335,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     //for a new user or an user with an updated app
     func completionAddPostSuccessForFirstTimeUser() {
      
-        println("First Time Free Post")
+        debugPrint("First Time Free Post")
         //first time free post  - show one time popup
         dispatch_async(dispatch_get_main_queue()) {
             

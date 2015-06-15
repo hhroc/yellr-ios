@@ -85,7 +85,7 @@ class FontAwesome {
             if let font = CGFontCreateWithDataProvider(provider) {
                 var error: Unmanaged<CFError>?
                 if !CTFontManagerRegisterGraphicsFont(font, &error) {
-                    println(error)
+                    debugPrint(error)
                 }
             }
         }

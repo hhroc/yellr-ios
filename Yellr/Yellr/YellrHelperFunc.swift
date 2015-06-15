@@ -15,6 +15,8 @@ let iosVersion = NSString(string: Device.systemVersion).doubleValue
 let iOS8 = iosVersion >= 8
 let iOS7 = iosVersion >= 7 && iosVersion < 8
 
+let debugEnabled:Bool = true
+
 /**
  * create UIColor object from HExvalues
  */
@@ -25,6 +27,15 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor {
         blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
         alpha: CGFloat(1.0)
     )
+}
+
+/**
+ * Debug Function
+ */
+func debugPrint(input: AnyObject) {
+    if (debugEnabled) {
+        println(input)
+    }
 }
 
 func initNavBarStyle() {
@@ -61,6 +72,50 @@ func initNavBarStyle() {
 }
 
 /**
+ * Post method for uploading Images
+ */
+
+func postImage(params : Dictionary<String, String>, image:NSData, postCompleted : (succeeded: Bool, msg: String) -> ()) {
+    
+    var fieldName: String = "media_file"
+    var url: String = buildUrl("upload_media" + ".json", "NIL", "NIL")
+    var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    var session = NSURLSession.sharedSession()
+    
+    let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
+    
+    var postBody:NSMutableData = NSMutableData()
+    var postData:String = String()
+    var boundary:String = "------WebKitFormBoundary\(uniqueId)"
+    
+    request.HTTPMethod = "POST"
+    
+    request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField:"Content-Type")
+    
+    //add the caption text
+    postData += "--\(boundary)\r\n"
+    for (key, value : String) in params {
+        postData += "--\(boundary)\r\n"
+        postData += "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n"
+        postData += "\(value)\r\n"
+    }
+    
+    //add the image file
+    postData += "--\(boundary)\r\n"
+    postData += "Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(Int64(NSDate().timeIntervalSince1970*1000)).jpg\"\r\n"
+    postData += "Content-Type: image/jpeg\r\n\r\n"
+    postBody.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
+    postBody.appendData(image)
+    
+    postData = String()
+    postData += "\r\n"
+    postData += "\r\n--\(boundary)--\r\n"
+    
+    postBody.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
+    
+}
+
+/**
  * Post method for sending API adds
  */
 func post(params : Dictionary<String, String>, method : String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
@@ -82,21 +137,21 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
     request.HTTPBody = (requestData as NSString).dataUsingEncoding(NSUTF8StringEncoding)
     request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
-    //println(request)
+    //debugPrint(request)
     
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-        //println("Response: \(response)")
+        //debugPrint("Response: \(response)")
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        println("Body: \(strData)")
+        debugPrint("Body: \(strData)")
         var err: NSError?
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
         
         var msg = "NOTHING"
         
         if(err != nil) {
-            println(err!.localizedDescription)
+            debugPrint(err!.localizedDescription)
             let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-            println("Error could not parse JSON: '\(jsonStr)'")
+            debugPrint("Error could not parse JSON: '\(jsonStr)'")
             postCompleted(succeeded: false, msg: "Error")
         }
         else {
@@ -133,7 +188,7 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
             }
             else {
                 let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                println("Error could not parse JSON: \(jsonStr)")
+                debugPrint("Error could not parse JSON: \(jsonStr)")
                 postCompleted(succeeded: false, msg: "Error")
             }
         }
