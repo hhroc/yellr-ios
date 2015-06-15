@@ -79,6 +79,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             addPostViewController.postTitle = self.dataSource[indexPath.row].postTitle;
             addPostViewController.postDesc = self.dataSource[indexPath.row].postDesc;
             addPostViewController.asgPost = "Yes";
+            addPostViewController.postId = self.dataSource[indexPath.row].postID;
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
         }
@@ -144,7 +145,8 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
                 var item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
                     as_description : itemDict["description"],
                     as_organization : itemDict["organization"],
-                    as_post_count : itemDict["post_count"] )
+                    as_post_count : itemDict["post_count"],
+                    as_post_ID : itemDict["assignment_id"])
                 
                 refinedAssignmentItems.append(item)
             }

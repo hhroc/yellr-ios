@@ -14,6 +14,7 @@ class AssignmentsDataModel: NSObject {
     var as_description : AnyObject?
     var as_organization : AnyObject?
     var as_post_count : AnyObject?
+    var as_post_ID : AnyObject?
     
     //getters
     var postTitle:String {
@@ -28,6 +29,12 @@ class AssignmentsDataModel: NSObject {
         }
     }
     
+    var postID:Int {
+        get {
+            return as_post_ID as! Int
+        }
+    }
+    
     //TODO: Add this property to thi data model
 //    var postID:String {
 //        get {
@@ -36,11 +43,12 @@ class AssignmentsDataModel: NSObject {
 //    }
     
     
-    init( var as_question_text : AnyObject?, var as_description : AnyObject?, var as_organization : AnyObject?, var as_post_count : AnyObject?) {
+    init( var as_question_text : AnyObject?, var as_description : AnyObject?, var as_organization : AnyObject?, var as_post_count : AnyObject?, var as_post_ID : AnyObject?) {
         self.as_question_text = as_question_text
         self.as_description = as_description
         self.as_organization = as_organization
         self.as_post_count = as_post_count
+        self.as_post_ID = as_post_ID
         super.init();
     }
     

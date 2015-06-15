@@ -25,6 +25,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
+    var postId: Int = 0
     var postTitle: String!
     var postDesc: String!
     var asgPost: String!
@@ -235,10 +236,17 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             spinningActivity.labelText = "Posting"
             spinningActivity.userInteractionEnabled = false
             
+            if (self.pickedImage != nil) {
+                
+            } else {
+                
+            }
+            
             post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
                 println("Media Uploaded : " + msg)
                 if (msg != "NOTHING" && msg != "Error") {
-                    post(["assignment_id":"0", "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
+
+                    post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
                         println("Post Added : " + msg)
                         if (msg != "NOTHING") {
                             
