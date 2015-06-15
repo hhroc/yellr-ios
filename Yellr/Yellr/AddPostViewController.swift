@@ -65,73 +65,84 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             addPostDesc.text = postDesc
         }
         
+        //pickedImage.image = UIImage(named: "Debjit.jpg")
+        
     }
     
     @IBAction func takeVideo(sender: UIButton) {
         
-        
-        var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-        
-        var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.openCamera(true)
+        if (iOS8) {
+            var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
-        }
-        var galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
-            UIAlertAction in
-            self.openGallery()
-        }
-        var cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
-            UIAlertAction in
+            var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.openCamera(true)
+                
+            }
+            var galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
+                UIAlertAction in
+                self.openGallery(true)
+            }
+            var cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
+                UIAlertAction in
+                
+            }
             
-        }
-        
-        // Add options
-        alert.addAction(cameraAction)
-        alert.addAction(galleryAction)
-        alert.addAction(cancelAction)
-        
-        // Present the actionsheet - bottom pop menu
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            self.presentViewController(alert, animated: true, completion: nil)
+            // Add options
+            alert.addAction(cameraAction)
+            alert.addAction(galleryAction)
+            alert.addAction(cancelAction)
+            
+            // Present the actionsheet - bottom pop menu
+            if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                //for iPad - when we support in the future
+                popover=UIPopoverController(contentViewController: alert)
+                popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            }
         } else {
-            //for iPad - when we support in the future
-            popover=UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            
         }
         
     }
     
     @IBAction func takePhoto(sender: UIButton) {
         
-        var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        if (iOS8) {
         
-        var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.openCamera(false)
-                
-        }
-        var galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.openGallery()
-        }
-        var cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
-                UIAlertAction in
-                
-        }
-        
-        // Add options
-        alert.addAction(cameraAction)
-        alert.addAction(galleryAction)
-        alert.addAction(cancelAction)
-        
-        // Present the actionsheet - bottom pop menu
-        if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            self.presentViewController(alert, animated: true, completion: nil)
+            var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            
+            var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.openCamera(false)
+                    
+            }
+            var galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.openGallery(false)
+            }
+            var cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
+                    UIAlertAction in
+                    
+            }
+            
+            // Add options
+            alert.addAction(cameraAction)
+            alert.addAction(galleryAction)
+            alert.addAction(cancelAction)
+            
+            // Present the actionsheet - bottom pop menu
+            if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+                self.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                //for iPad - when we support in the future
+                popover=UIPopoverController(contentViewController: alert)
+                popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            }
+            
         } else {
-            //for iPad - when we support in the future
-            popover=UIPopoverController(contentViewController: alert)
-            popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+            
         }
 
     }
@@ -148,13 +159,19 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             self.presentViewController(picker, animated: true, completion: nil)
         } else {
             //show gallery if camera is not available
-            openGallery()
+            openGallery(videoCamera)
         }
     }
     
-    func openGallery() {
+    func openGallery(videoCamera : Bool) {
         picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+            //what to show in gallery - photo or video
+            if (videoCamera) {
+                picker.mediaTypes = [kUTTypeMovie!]
+            } else {
+                picker.mediaTypes = [kUTTypeImage!]
+            }
             self.presentViewController(picker, animated: true, completion: nil)
         } else {
             //for iPad
@@ -184,29 +201,49 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                             if let name = defaults.stringForKey(YellrConstants.AddPost.checkVersionOnceAs) {
                                 
                             } else {
-                                //first time assignment post
+                                //first time assignment post - show one time popup
                                 //populate this NSDefault name
                             }
                         } else {
                             if let name = defaults.stringForKey(YellrConstants.AddPost.checkVersionOnce) {
-                                
+                                println("NOT First Time Free Post")
+                                //certain post completion tasks
+                                self.completionAddPostSuccess()
                             } else {
-                                //first time free post                                
+                                println("First Time Free Post")
+                                //first time free post  - show one time popup
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    
+                                    //hide the active HUDs
+                                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                                    
+                                    if(iOS8) {
+                                        
+                                        let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted"), message:
+                                            NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
+                                        alertController.addAction(UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"), style: UIAlertActionStyle.Default, handler: { (action) in
+                                                //dismiss the add post view on pressing okay
+                                                self.dismissViewControllerAnimated(true, completion: nil)
+                                            }
+                                        ))
+                                        
+                                        self.presentViewController(alertController, animated: true, completion: nil)
+                                        
+                                    } else {
+                                        
+                                        let alert = UIAlertView()
+                                        alert.delegate = self
+                                        alert.title = NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted")
+                                        alert.message = NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful")
+                                        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"))
+                                        alert.show()
+                                        
+                                    }
+                                    
+                                }
                                 //populate this NSDefault name
+                                //defaults.setObject(YellrConstants.AppInfo.version, forKey: YellrConstants.AddPost.checkVersionOnce)
                             }
-                        }
-                        
-                        self.dismissViewControllerAnimated(true, completion: nil);
-                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                        postFail = true
-                        //show done hud on the source view controller
-                        dispatch_async(dispatch_get_main_queue()) {
-                            let spinningActivityDone = MBProgressHUD.showHUDAddedTo(self.presentingViewController?.view, animated: true)
-                            let checkImage = UIImage(named: "37x-Checkmark.png")
-                            spinningActivityDone.customView = UIImageView(image: checkImage)
-                            spinningActivityDone.mode = MBProgressHUDMode.CustomView
-                            spinningActivityDone.labelText = NSLocalizedString(YellrConstants.AddPost.SuccessMsg, comment: "Add Post Success")
-                            spinningActivityDone.hide(true, afterDelay: NSTimeInterval(3))
                         }
                         
                     } else {
@@ -231,16 +268,52 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         }
     }
     
+    //this function should be called when a post is succesful
+    func completionAddPostSuccess() {
+        self.dismissViewControllerAnimated(true, completion: nil);
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+        //show done hud on the source view controller
+        dispatch_async(dispatch_get_main_queue()) {
+            let spinningActivityDone = MBProgressHUD.showHUDAddedTo(self.presentingViewController?.view, animated: true)
+            let checkImage = UIImage(named: "37x-Checkmark.png")
+            spinningActivityDone.customView = UIImageView(image: checkImage)
+            spinningActivityDone.mode = MBProgressHUDMode.CustomView
+            spinningActivityDone.labelText = NSLocalizedString(YellrConstants.AddPost.SuccessMsg, comment: "Add Post Success")
+            spinningActivityDone.hide(true, afterDelay: NSTimeInterval(3))
+        }
+    }
+    
     //dismiss the addpostmodal on pressing cancel
     @IBAction func cancelPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil);
+    }
+    
+    //MARK: Alert View Delegates for iOS7
+    func alertView(View: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
+        
+        switch buttonIndex{
+            
+        case 0:
+            //dismiss the add post view on pressing okay
+            println("Here1")
+            self.dismissViewControllerAnimated(true, completion: nil)
+            break;
+        case 1:
+            //dismiss the add post view on pressing okay
+            println("Here2")
+            self.dismissViewControllerAnimated(true, completion: nil)
+            break;
+        default:
+            break;
+            
+        }
     }
     
     //MARK: Delegates
     //on chosing image - do what
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
         var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        //pickedImage.contentMode = .ScaleAspectFit
+        pickedImage.contentMode = .ScaleAspectFit
         pickedImage.image = chosenImage
         dismissViewControllerAnimated(true, completion: nil)
         

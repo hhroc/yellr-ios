@@ -40,6 +40,11 @@ struct YellrConstants {
         static let PopMenuGallery = "new_post_pop_menu_gallery"
         static let PopMenuCancel = "new_post_pop_menu_cancel"
         
+        //first time alert
+        static let FirstTimeTitle = "new_post_first_time_alert_title"
+        static let FirstTimeMessage = "new_post_first_time_alert_message"
+        static let FirstTimeOkay = "new_post_first_time_alert_okay"
+        
         //to show the one time screen after free / assgn post
         static let checkVersionOnce = "check_version"
         static let checkVersionOnceAs = "check_version_as"
