@@ -267,7 +267,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 postAcFail.customView = UIView()
                 postAcFail.mode = MBProgressHUDMode.CustomView
                 postAcFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsgLocation, comment: "Empty Location Fail")
-                postAcFail.yOffset = iOS8 ? 225 : 175
+                //postAcFail.yOffset = iOS8 ? 225 : 175
                 postAcFail.hide(true, afterDelay: NSTimeInterval(2.5))
                 
             } else {
@@ -356,7 +356,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             postAcFail.customView = UIView()
             postAcFail.mode = MBProgressHUDMode.CustomView
             postAcFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsgEmptyPost, comment: "Empty Post Text Fail")
-            postAcFail.yOffset = iOS8 ? 225 : 175
+            //postAcFail.yOffset = iOS8 ? 225 : 175
             postAcFail.hide(true, afterDelay: NSTimeInterval(2.5))
         }
         

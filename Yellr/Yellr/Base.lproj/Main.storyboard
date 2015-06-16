@@ -366,7 +366,6 @@
                                     <outlet property="postedOn" destination="qmR-va-wk4" id="mTS-yB-mac"/>
                                     <outlet property="upVoteBtn" destination="t1N-cJ-aOy" id="MTi-hv-qHT"/>
                                     <outlet property="upVoteCount" destination="Edb-hU-m0P" id="B2y-z0-Unf"/>
-                                    <segue destination="mQn-Hs-FTV" kind="show" identifier="LocalPostDetailSegue" id="Bdo-fX-30G"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>

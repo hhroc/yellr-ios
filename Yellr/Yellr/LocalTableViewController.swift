@@ -289,7 +289,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             
         }
         
-        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        //show small arrow towards the right of each cell
+        //cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
     
     }
     
