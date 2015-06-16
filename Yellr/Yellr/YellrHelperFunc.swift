@@ -79,7 +79,9 @@ func postImage(params : Dictionary<String, String>, image:NSData, postCompleted 
     
     var fieldName: String = "media_file"
     var url: String = buildUrl("upload_media" + ".json", "NIL", "NIL")
+    
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    //var request = NSMutableURLRequest(URL: NSURL(string: "http://exa.ms/abc.php")!)
     var session = NSURLSession.sharedSession()
     
     let uniqueId = NSProcessInfo.processInfo().globallyUniqueString

@@ -26,7 +26,12 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         self.title = NSLocalizedString(YellrConstants.Stories.Title, comment: "Stories Screen title")
         self.initWebActivityIndicator()
         //self.loadStoriesTableView()
-    
+        
+        //right side bar button items
+        var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
+        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, profileBarButtonItem], animated: true)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -84,6 +89,16 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
             viewController.publishedOn = self.dataSource[indexPath.row].publish;
             
         }
+    }
+    
+    //when profile button is tapped in UINavBar
+    func profileTapped(sender:UIButton) {
+        self.performSegueWithIdentifier("StoryToProfile", sender: self)
+    }
+    
+    //when add post button is tapped in UINavBar
+    func addPostTapped(sender:UIButton) {
+        self.performSegueWithIdentifier("StoryToPost", sender: self)
     }
     
     //starts the tableviewload process

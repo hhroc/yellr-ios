@@ -26,6 +26,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         self.title = NSLocalizedString(YellrConstants.Assignments.Title, comment: "Assignments Screen title")
         self.initWebActivityIndicator()
         
+        //right side bar button items
+        var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
+        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, profileBarButtonItem], animated: true)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -83,6 +88,16 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
         }
+    }
+    
+    //when profile button is tapped in UINavBar
+    func profileTapped(sender:UIButton) {
+        self.performSegueWithIdentifier("AssignmentToProfile", sender: self)
+    }
+    
+    //when add post button is tapped in UINavBar
+    func addPostTapped(sender:UIButton) {
+        self.performSegueWithIdentifier("AssignmentToPost", sender: self)
     }
     
     //starts the tableviewload process

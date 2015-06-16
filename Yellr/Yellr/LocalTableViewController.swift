@@ -26,6 +26,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
         self.initWebActivityIndicator()
+        
+        //right side bar button items
+        var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
+        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, profileBarButtonItem], animated: true)
 
     }
     
@@ -80,6 +85,16 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         configureCell(cell, atIndexPath: indexPath)
         return cell
+    }
+    
+    //when profile button is tapped in UINavBar
+    func profileTapped(sender:UIButton) {
+        self.performSegueWithIdentifier("LocalToProfile", sender: self)
+    }
+    
+    //when add post button is tapped in UINavBar
+    func addPostTapped(sender:UIButton) {
+        self.performSegueWithIdentifier("LocalToPost", sender: self)
     }
     
     //starts the tableviewload process
