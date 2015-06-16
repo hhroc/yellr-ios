@@ -12,10 +12,12 @@ struct YellrConstants {
     
     struct AppInfo {
         static let version = "0.1"
+        static let CUIDKeyName = "ycuid"
     }
     
     struct Common {
         static let CancelButton = "cancel_button_text"
+        static let BackButton = "back_button_text"
     }
     
     struct LocalPosts {
@@ -33,6 +35,7 @@ struct YellrConstants {
     
     struct Profile {
         static let Title = "profile_title"
+        static let ResetCUIDButton = "profile_reset_cuid_button"
     }
     
     struct AddPost {

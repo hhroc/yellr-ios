@@ -29,8 +29,10 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         //right side bar button items
         var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        var fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        fixedSpace.width = 30.0
         var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
-        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, profileBarButtonItem], animated: true)
+        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
 
     }
     
@@ -452,7 +454,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
 
-        yprintln(endPointURL)
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             

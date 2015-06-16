@@ -659,7 +659,22 @@
                     <view key="view" contentMode="scaleToFill" id="w9m-61-IBX">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAA-AAAA-AAAA-AAAA-AAAA-AAAA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUZ-mw-h9O">
+                                <rect key="frame" x="145" y="137" width="338" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="338" id="phW-uU-sbW"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="lUZ-mw-h9O" firstAttribute="top" secondItem="fMK-1o-V3s" secondAttribute="bottom" constant="73" id="5f7-zP-hg6"/>
+                            <constraint firstAttribute="centerX" secondItem="lUZ-mw-h9O" secondAttribute="centerX" constant="-14" id="Kiw-Nm-y7V"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7yl-M5-vVa">
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="jAS-cx-gx7">
@@ -667,9 +682,16 @@
                                 <action selector="cancelPressed:" destination="eiH-uA-qGm" id="1z6-1m-yrk"/>
                             </connections>
                         </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Reset CUID" id="kOM-zK-Urn">
+                            <connections>
+                                <action selector="resetCUIDPressed:" destination="eiH-uA-qGm" id="brT-RG-rbQ"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="jAS-cx-gx7" id="4Qg-ed-BoB"/>
+                        <outlet property="cuidValue" destination="lUZ-mw-h9O" id="N4p-g7-jBZ"/>
+                        <outlet property="resetCuidButton" destination="kOM-zK-Urn" id="D37-rr-5EP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lGe-of-Fhv" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -7,10 +7,12 @@
 */
 
 cancel_button_text="Cancel";
+back_button_text="Back";
 local_post_title="Local";
 assignments_title="Assignments";
 stories_title="Stories";
 profile_title="Profile";
+profile_reset_cuid_button="Reset CUID";
 new_post_title="Free Post";
 anonymous_user="Anonymous User";
 new_post_failed="Post failed. Please try again!";

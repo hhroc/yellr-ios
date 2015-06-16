@@ -28,8 +28,10 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         //right side bar button items
         var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        var fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        fixedSpace.width = 30.0
         var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
-        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, profileBarButtonItem], animated: true)
+        self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
     }
     
