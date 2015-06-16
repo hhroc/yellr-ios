@@ -14,6 +14,10 @@ struct YellrConstants {
         static let version = "0.1"
     }
     
+    struct Common {
+        static let CancelButton = "cancel_button_text"
+    }
+    
     struct LocalPosts {
         static let Title = "local_post_title"
         static let AnonymousUser = "anonymous_user"

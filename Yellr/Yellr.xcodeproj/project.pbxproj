@@ -35,6 +35,7 @@
 		2661C8ED1B2A3B3A00CC681F /* 37x-Checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2661C8EB1B2A3B3A00CC681F /* 37x-Checkmark.png */; };
 		2661C8EE1B2A3B3A00CC681F /* 37x-Checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2661C8EC1B2A3B3A00CC681F /* 37x-Checkmark@2x.png */; };
 		2661C8F01B2C737600CC681F /* Debjit.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2661C8EF1B2C737600CC681F /* Debjit.jpg */; };
+		267964B61B2FCBEF00735925 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267964B51B2FCBEF00735925 /* ProfileViewController.swift */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -89,6 +90,7 @@
 		2661C8EB1B2A3B3A00CC681F /* 37x-Checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark.png"; sourceTree = "<group>"; };
 		2661C8EC1B2A3B3A00CC681F /* 37x-Checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "37x-Checkmark@2x.png"; sourceTree = "<group>"; };
 		2661C8EF1B2C737600CC681F /* Debjit.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Debjit.jpg; sourceTree = "<group>"; };
+		267964B51B2FCBEF00735925 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		269A10D61B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -153,6 +155,7 @@
 				263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */,
 				26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */,
 				2604889D1B1E541900D781FE /* AddPostViewController.swift */,
+				267964B51B2FCBEF00735925 /* ProfileViewController.swift */,
 				263E1B701B18D36A0063E9C6 /* Main.storyboard */,
 				263E1B731B18D36A0063E9C6 /* Images.xcassets */,
 				263E1B751B18D36A0063E9C6 /* LaunchScreen.xib */,
@@ -387,6 +390,7 @@
 				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				2604889E1B1E541900D781FE /* AddPostViewController.swift in Sources */,
 				2661C87F1B27530500CC681F /* VoteButton.swift in Sources */,
+				267964B61B2FCBEF00735925 /* ProfileViewController.swift in Sources */,
 				2661C8E91B2A353200CC681F /* MBProgressHUD.m in Sources */,
 				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
 				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
