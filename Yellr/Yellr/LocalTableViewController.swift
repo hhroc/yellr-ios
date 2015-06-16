@@ -22,6 +22,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
     
+    var lat: String = ""
+    var long: String = ""
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
@@ -300,7 +303,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         //api needs string postID
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
-        post(["post_id":postId, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":postId, "is_up_vote":"1"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
             yprintln(msg)
             //TODO: apply response results to button pressess
             //currently we are changing UI feedback assuming that
@@ -374,7 +377,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         //api needs string postID
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
-        post(["post_id":postId, "is_up_vote":"0"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":postId, "is_up_vote":"0"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
             yprintln(msg)
         }
         
@@ -533,6 +536,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
         var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        self.lat = latitude
+        self.long = longitude
         
         self.loadLocalPostsTableView(latitude, longitude: longitude)
         locationManager.stopUpdatingLocation()

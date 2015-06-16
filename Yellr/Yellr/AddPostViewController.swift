@@ -8,8 +8,9 @@
 
 import UIKit
 import MobileCoreServices
+import CoreLocation
 
-class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate {
+class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var photoBtn: UIButton!
     @IBOutlet weak var vdoBtn: UIButton!
@@ -30,6 +31,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     var postDesc: String!
     var asgPost: String!
     var popover:UIPopoverController? = nil
+    
+    var latitude:String = ""
+    var longitude:String = ""
+    
+    var locationManager: CLLocationManager = CLLocationManager()
+    var startLocation: CLLocation!
     
     let picker = UIImagePickerController()
     
@@ -66,6 +73,27 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         }
         
         //pickedImage.image = UIImage(named: "Debjit.jpg")
+        
+    }
+    
+    //for the location object
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        //location
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.delegate = self
+        
+        //this check is needed to add the additional
+        //location methods for ios8
+        if iOS8 {
+            locationManager.requestWhenInUseAuthorization()
+        } else {
+            
+        }
+        
+        locationManager.startUpdatingLocation()
+        startLocation = nil
         
     }
     
@@ -232,80 +260,94 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
 
         if (postCont != "") {
             
-            let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-            spinningActivity.labelText = "Posting"
-            spinningActivity.userInteractionEnabled = false
-            
-            if let imagePick = self.pickedImage.image {
+            if (self.latitude == "" || self.longitude == "") {
                 
-                let imageData:NSData = NSData(data: UIImageJPEGRepresentation(self.pickedImage.image, 1.0))
-                
-                postImage(["media_type":"image", "media_caption":postCont], imageData){ (succeeded: Bool, msg: String) -> () in
-                    yprintln("Image Uploaded : " + msg)
-                    
-                    if (msg != "NOTHING" && msg != "Error") {
-                        
-                        post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
-                            yprintln("Post Added : " + msg)
-                            if (msg != "NOTHING") {
-                                
-                                if (self.asgPost != nil) {
-                                    self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
-                                } else {
-                                    self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
-                                }
-                                
-                            } else {
-                                //fail toast
-                                postFail = true
-                            }
-                        }
-                    } else {
-                        postFail = true
-                    }
-                    
-                }
+                //show location empty hud
+                let postAcFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                postAcFail.customView = UIView()
+                postAcFail.mode = MBProgressHUDMode.CustomView
+                postAcFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsgLocation, comment: "Empty Location Fail")
+                postAcFail.yOffset = iOS8 ? 225 : 175
+                postAcFail.hide(true, afterDelay: NSTimeInterval(2.5))
                 
             } else {
+            
+                let spinningActivity = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                spinningActivity.labelText = "Posting"
+                spinningActivity.userInteractionEnabled = false
                 
-                post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
-                    yprintln("Media Uploaded : " + msg)
+                if let imagePick = self.pickedImage.image {
                     
-                    if (msg != "NOTHING" && msg != "Error") {
+                    let imageData:NSData = NSData(data: UIImageJPEGRepresentation(self.pickedImage.image, 1.0))
+                    
+                    postImage(["media_type":"image", "media_caption":postCont], imageData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                        yprintln("Image Uploaded : " + msg)
                         
-                        post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
-                            yprintln("Post Added : " + msg)
-                            if (msg != "NOTHING") {
-                                
-                                if (self.asgPost != nil) {
-                                    self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+                        if (msg != "NOTHING" && msg != "Error") {
+                            
+                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                                yprintln("Post Added : " + msg)
+                                if (msg != "NOTHING") {
+                                    
+                                    if (self.asgPost != nil) {
+                                        self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+                                    } else {
+                                        self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                                    }
+                                    
                                 } else {
-                                    self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                                    //fail toast
+                                    postFail = true
                                 }
-                                
-                            } else {
-                                //fail toast
-                                postFail = true
                             }
+                        } else {
+                            postFail = true
                         }
-                    } else {
-                        postFail = true
+                        
+                    }
+                    
+                } else {
+                    
+                    post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                        yprintln("Media Uploaded : " + msg)
+                        
+                        if (msg != "NOTHING" && msg != "Error") {
+                            
+                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                                yprintln("Post Added : " + msg)
+                                if (msg != "NOTHING") {
+                                    
+                                    if (self.asgPost != nil) {
+                                        self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+                                    } else {
+                                        self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                                    }
+                                    
+                                } else {
+                                    //fail toast
+                                    postFail = true
+                                }
+                            }
+                        } else {
+                            postFail = true
+                        }
+                        
                     }
                     
                 }
                 
-            }
-            
-            if (postFail) {
-                dispatch_async(dispatch_get_main_queue()) {
-                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                    let spinningActivityFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                    spinningActivityFail.customView = UIView()
-                    spinningActivityFail.mode = MBProgressHUDMode.CustomView
-                    spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
-                    spinningActivityFail.yOffset = iOS8 ? 225 : 175
-                    spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
+                if (postFail) {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                        let spinningActivityFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        spinningActivityFail.customView = UIView()
+                        spinningActivityFail.mode = MBProgressHUDMode.CustomView
+                        spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
+                        spinningActivityFail.yOffset = iOS8 ? 225 : 175
+                        spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
+                    }
                 }
+            
             }
             
         } else {
@@ -524,5 +566,29 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    //MARK: Location Delegate functions
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        var latestLocation: AnyObject = locations[locations.count - 1]
+        
+        self.latitude = String(format: "%.2f", latestLocation.coordinate.latitude)
+        self.longitude = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        locationManager.stopUpdatingLocation()
+        
+        //TODO: Store Lat Long in userprefs
+        //TODO: stopUpdatingLocation should be called after a couple of seconds from
+        //receiving the first location
+        
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        yprintln(error)
+        let alert = UIAlertView()
+        alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
+        alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
+        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
+        alert.show()
     }
 }

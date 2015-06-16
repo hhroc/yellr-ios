@@ -85,12 +85,10 @@ extension NSMutableData {
  * Post method for uploading Images
  */
 
-func postImage(params : Dictionary<String, String>, image:NSData, postCompleted : (succeeded: Bool, msg: String) -> ()) {
+func postImage(params : Dictionary<String, String>, image:NSData, latitude:String, longitude:String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
     var fieldName: String = "media_file"
-    var url: String = buildUrl("upload_media" + ".json", "NIL", "NIL")
-    
-    yprintln("Image ag - " + url)
+    var url: String = buildUrl("upload_media" + ".json", latitude, longitude)
     
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
     //var request = NSMutableURLRequest(URL: NSURL(string: "http://exa.ms/abc.php")!)
@@ -175,9 +173,9 @@ func postImage(params : Dictionary<String, String>, image:NSData, postCompleted 
 /**
  * Post method for sending API adds
  */
-func post(params : Dictionary<String, String>, method : String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
+func post(params : Dictionary<String, String>, method : String, latitude:String, longitude:String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
-    var url: String = buildUrl(method + ".json", "NIL", "NIL")
+    var url: String = buildUrl(method + ".json", latitude, longitude)
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
     var session = NSURLSession.sharedSession()
     request.HTTPMethod = "POST"
@@ -274,8 +272,8 @@ func buildUrl(method: String , latitude: String, longitude: String) -> String {
         url = url + "&lng=" + longitude
     }
 
-    //url = url + "&platform=" + "iOS"
-    //url = url + "&app_version=" + YellrConstants.AppInfo.version
+    url = url + "&platform=" + "iOS"
+    url = url + "&app_version=" + YellrConstants.AppInfo.version
     
     return url;
 }

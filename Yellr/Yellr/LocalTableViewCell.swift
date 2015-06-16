@@ -29,7 +29,7 @@ class LocalTableViewCell: UITableViewCell {
         yprintln(cell)
 
         var postID : String = String(sender.tag)
-        post(["post_id":postID, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+        //post(["post_id":postID, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
 //            var alert = UIAlertView(title: "Success!", message: msg, delegate: nil, cancelButtonTitle: "Okay.")
 //            if(succeeded) {
 //                alert.title = "Success!"
@@ -45,14 +45,14 @@ class LocalTableViewCell: UITableViewCell {
 //                // Show the alert
 //                //alert.show()
 //            })
-        }
+        //}
     }
     
     @IBAction func downVoteCLicked(sender: UIButton) {
-        var postID : String = String(sender.tag)
-        post(["post_id":postID, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
-
-        }
+//        var postID : String = String(sender.tag)
+//        post(["post_id":postID, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
+//
+//        }
     }
 
     

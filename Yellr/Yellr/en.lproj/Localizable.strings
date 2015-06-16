@@ -17,6 +17,7 @@ new_post_title="Free Post";
 anonymous_user="Anonymous User";
 new_post_failed="Post failed. Please try again!";
 new_post_failed_empty_text="Post content cannot be empty!";
+new_post_failed_empty_location="Please wait while we attach your location to the post!";
 new_post_success="Posted!";
 new_post_pop_menu_title="Choose Image";
 new_post_pop_menu_title_video="Choose Video";
