@@ -236,20 +236,24 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             spinningActivity.labelText = "Posting"
             spinningActivity.userInteractionEnabled = false
             
-            if (self.pickedImage != nil) {
+            if let imagePick = self.pickedImage.image {
                 
                 let imageData:NSData = NSData(data: UIImageJPEGRepresentation(self.pickedImage.image, 1.0))
+                
+                postImage(["media_type":"image", "media_text":postCont, "media_caption":postCont], imageData){ (succeeded: Bool, msg: String) -> () in
+                    yprintln(msg)
+                }
                 
             } else {
                 
             }
             
             post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media") { (succeeded: Bool, msg: String) -> () in
-                debugPrint("Media Uploaded : " + msg)
+                yprintln("Media Uploaded : " + msg)
                 if (msg != "NOTHING" && msg != "Error") {
 
                     post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post") { (succeeded: Bool, msg: String) -> () in
-                        debugPrint("Post Added : " + msg)
+                        yprintln("Post Added : " + msg)
                         if (msg != "NOTHING") {
                             
                             if (self.asgPost != nil) {
@@ -302,7 +306,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             
             if (name == YellrConstants.AppInfo.version) {
             
-                debugPrint("NOT First Time Free Post")
+                yprintln("NOT First Time Free Post")
                 
                 //do not show first time popup
                 //certain post completion tasks
@@ -335,7 +339,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     //for a new user or an user with an updated app
     func completionAddPostSuccessForFirstTimeUser() {
      
-        debugPrint("First Time Free Post")
+        yprintln("First Time Free Post")
         //first time free post  - show one time popup
         dispatch_async(dispatch_get_main_queue()) {
             

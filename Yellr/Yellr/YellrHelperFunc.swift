@@ -32,7 +32,7 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor {
 /**
  * Debug Function
  */
-func debugPrint(input: AnyObject) {
+func yprintln(input: AnyObject) {
     if (debugEnabled) {
         println(input)
     }
@@ -113,6 +113,50 @@ func postImage(params : Dictionary<String, String>, image:NSData, postCompleted 
     
     postBody.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
     
+    request.HTTPBody = NSData(data: postBody)
+    
+    var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+        //yprintln("Response: \(response)")
+        var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
+        yprintln("Body: \(strData)")
+        var err: NSError?
+        var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
+        
+        var msg = "NOTHING"
+        
+        if(err != nil) {
+            yprintln(err!.localizedDescription)
+            let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+            yprintln("Error could not parse JSON: '\(jsonStr)'")
+            postCompleted(succeeded: false, msg: "Error")
+        }
+        else {
+            if let parseJSON = json {
+                // check if successful
+                if let success = parseJSON["success"] as? Bool {
+                    
+                    if (success) {
+                        
+                        if let mediaId = parseJSON["media_id"] as? String {
+                            msg =  mediaId
+                        }
+                        
+                    } else {
+                    }
+                    postCompleted(succeeded: success, msg: msg)
+                }
+                return
+            }
+            else {
+                let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                yprintln("Error could not parse JSON: \(jsonStr)")
+                postCompleted(succeeded: false, msg: "Error")
+            }
+        }
+    })
+    
+    task.resume()
+    
 }
 
 /**
@@ -137,21 +181,21 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
     request.HTTPBody = (requestData as NSString).dataUsingEncoding(NSUTF8StringEncoding)
     request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
-    //debugPrint(request)
+    //yprintln(request)
     
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-        //debugPrint("Response: \(response)")
+        //yprintln("Response: \(response)")
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        debugPrint("Body: \(strData)")
+        yprintln("Body: \(strData)")
         var err: NSError?
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
         
         var msg = "NOTHING"
         
         if(err != nil) {
-            debugPrint(err!.localizedDescription)
+            yprintln(err!.localizedDescription)
             let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-            debugPrint("Error could not parse JSON: '\(jsonStr)'")
+            yprintln("Error could not parse JSON: '\(jsonStr)'")
             postCompleted(succeeded: false, msg: "Error")
         }
         else {
@@ -188,7 +232,7 @@ func post(params : Dictionary<String, String>, method : String, postCompleted : 
             }
             else {
                 let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                debugPrint("Error could not parse JSON: \(jsonStr)")
+                yprintln("Error could not parse JSON: \(jsonStr)")
                 postCompleted(succeeded: false, msg: "Error")
             }
         }

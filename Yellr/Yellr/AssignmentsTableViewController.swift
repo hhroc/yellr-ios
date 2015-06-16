@@ -92,7 +92,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         self.assignmentsUrlEndpoint = buildUrl("get_assignments.json", latitude, longitude)
         self.requestAssignments(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
-            //debugPrint("1")
+            //yprintln("1")
             
         })
     }
@@ -177,7 +177,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        debugPrint(error)
+        yprintln(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
