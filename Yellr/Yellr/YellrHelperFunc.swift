@@ -71,6 +71,16 @@ func initNavBarStyle() {
     
 }
 
+// Append string to NSMutableData
+// Shorthand for string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+extension NSMutableData {
+    
+    func appendString(string: String) {
+        let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        appendData(data!)
+    }
+}
+
 /**
  * Post method for uploading Images
  */
@@ -80,45 +90,46 @@ func postImage(params : Dictionary<String, String>, image:NSData, postCompleted 
     var fieldName: String = "media_file"
     var url: String = buildUrl("upload_media" + ".json", "NIL", "NIL")
     
+    yprintln("Image ag - " + url)
+    
     var request = NSMutableURLRequest(URL: NSURL(string: url)!)
     //var request = NSMutableURLRequest(URL: NSURL(string: "http://exa.ms/abc.php")!)
     var session = NSURLSession.sharedSession()
     
     let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
     
-    var postBody:NSMutableData = NSMutableData()
-    var postData:String = String()
-    var boundary:String = "------WebKitFormBoundary\(uniqueId)"
+
+    var boundary:String = "Boundary-\(NSUUID().UUIDString)"
     
     request.HTTPMethod = "POST"
+    request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+
+    let body = NSMutableData()
     
-    request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField:"Content-Type")
-    
-    //add the caption text
-    postData += "--\(boundary)\r\n"
-    for (key, value : String) in params {
-        postData += "--\(boundary)\r\n"
-        postData += "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n"
-        postData += "\(value)\r\n"
+    for (key, value) in params {
+            body.appendString("--\(boundary)\r\n")
+            body.appendString("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
+            body.appendString("\(value)\r\n")
     }
     
-    //add the image file
-    postData += "--\(boundary)\r\n"
-    postData += "Content-Disposition: form-data; name=\"\(fieldName)\"; filename=\"\(Int64(NSDate().timeIntervalSince1970*1000)).jpg\"\r\n"
-    postData += "Content-Type: image/jpeg\r\n\r\n"
-    postBody.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
-    postBody.appendData(image)
+
+    let filePathKey = "media_file"
+    let filename = NSUUID().UUIDString + ".jpeg"
+    let mimetype = "image/jpeg"
     
-    postData = String()
-    postData += "\r\n"
-    postData += "\r\n--\(boundary)--\r\n"
+    body.appendString("--\(boundary)\r\n")
+    body.appendString("Content-Disposition: form-data; name=\"\(filePathKey)\"; filename=\"\(filename)\"\r\n")
+    body.appendString("Content-Type: \(mimetype)\r\n\r\n")
+    body.appendData(image)
+    body.appendString("\r\n")
     
-    postBody.appendData(postData.dataUsingEncoding(NSUTF8StringEncoding)!)
+    body.appendString("--\(boundary)--\r\n")
     
-    request.HTTPBody = NSData(data: postBody)
+    
+    request.HTTPBody = body
     
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-        //yprintln("Response: \(response)")
+
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
         yprintln("Body: \(strData)")
         var err: NSError?
@@ -263,8 +274,8 @@ func buildUrl(method: String , latitude: String, longitude: String) -> String {
         url = url + "&lng=" + longitude
     }
 
-    url = url + "&platform=" + "iOS"
-    url = url + "&app_version=" + YellrConstants.AppInfo.version
+    //url = url + "&platform=" + "iOS"
+    //url = url + "&app_version=" + YellrConstants.AppInfo.version
     
     return url;
 }
