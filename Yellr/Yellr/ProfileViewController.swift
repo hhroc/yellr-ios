@@ -36,6 +36,20 @@ class ProfileViewController: UIViewController {
         self.resetCuidButton.title = NSLocalizedString(YellrConstants.Profile.ResetCUIDButton, comment: "Profile Screen Reset CUID button")
         
         self.cuidValue.text = "CUID: " + getCUID()
+        
+        self.postsLogo.font = UIFont.fontAwesome(size: 13)
+        self.postsLogo.text =  "\(String.fontAwesome(unicode: 0xf086)) "
+        self.postsViewedLogo.font = UIFont.fontAwesome(size: 13)
+        self.postsViewedLogo.text =  "\(String.fontAwesome(unicode: 0xf086)) "
+        self.postsUsedLogo.font = UIFont.fontAwesome(size: 13)
+        self.postsUsedLogo.text =  "\(String.fontAwesome(unicode: 0xf086)) "
+        
+        self.userLogo.backgroundColor = UIColorFromRGB(YellrConstants.Colors.dark_yellow)
+        
+        self.postsLabel.text = NSLocalizedString(YellrConstants.Profile.PostsLabel, comment: "Profile Screen Posts")
+        self.postsViewedLabel.text = NSLocalizedString(YellrConstants.Profile.PostsViewedLabel, comment: "Profile Screen Posts Viewed")
+        self.postsUsedLabel.text = NSLocalizedString(YellrConstants.Profile.PostsUsedLabel, comment: "Profile Screen Posts Used")
+        
     }
     
     //dismiss the profilemodal on pressing cancel

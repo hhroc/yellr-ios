@@ -36,6 +36,9 @@ struct YellrConstants {
     struct Profile {
         static let Title = "profile_title"
         static let ResetCUIDButton = "profile_reset_cuid_button"
+        static let PostsLabel = "profile_posts_label"
+        static let PostsViewedLabel = "profile_posts_viewed_label"
+        static let PostsUsedLabel = "profile_posts_used_label"
     }
     
     struct AddPost {
