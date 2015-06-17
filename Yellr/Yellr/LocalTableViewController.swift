@@ -25,6 +25,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     var lat: String = ""
     var long: String = ""
     
+    var containerWidth: CGFloat = 0.0
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.LocalPosts.Title, comment: "Local Post Screen title")
@@ -100,23 +102,21 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         var height:CGFloat = 120.0
+        var calculationView : UITextView = UITextView()
         
         if let text = localPostItem.lp_media_text as? String {
             if (count(text) == 0) {
                 height += 120.0
             } else {
-                yprintln(count(text) / 25)
-                height += CGFloat( ( count(text) / 25 ) * 10 )
+
+                calculationView.attributedText = NSMutableAttributedString(string: text)
+                var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                height += size.height
             }
+            
         }
         
-        height += 50.0
-        
-        yprintln("Ht:")
-        
-        yprintln(height)
-        
-        return height
+        return height + 20
     }
     
     //when profile button is tapped in UINavBar
@@ -200,7 +200,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         if let postType = localPostItem.lp_media_type_name as? String {
             if (postType == "text") {
                 
-                let textView = UITextView(frame: CGRectMake(0, 0, cell.mediaContainer.frame.width, cell.mediaContainer.frame.height))
+                let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_text as? String
                 textView.hidden = false
                 textView.sizeToFit()
@@ -218,7 +218,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 cell.mediaContainer.hidden = false
                 
-                let textView = UITextView(frame: CGRectMake(0, 0, cell.mediaContainer.frame.width, cell.mediaContainer.frame.height))
+                let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_caption as? String
                 textView.hidden = false
                 textView.sizeToFit()

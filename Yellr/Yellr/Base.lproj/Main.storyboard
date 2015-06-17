@@ -310,12 +310,11 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Test Post" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y9c-94-IG5">
-                                            <rect key="frame" x="56" y="42" width="350" height="22"/>
+                                            <rect key="frame" x="56" y="42" width="516" height="22"/>
                                             <constraints>
-                                                <constraint firstAttribute="width" constant="350" id="6ve-WO-DT9"/>
                                                 <constraint firstAttribute="height" constant="22" id="Vnf-vj-XkL"/>
                                             </constraints>
-                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="16"/>
+                                            <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="13"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -344,6 +343,7 @@
                                         </view>
                                     </subviews>
                                     <constraints>
+                                        <constraint firstAttribute="trailingMargin" secondItem="y9c-94-IG5" secondAttribute="trailing" constant="20" id="1Pi-ku-MeR"/>
                                         <constraint firstItem="qk7-Qo-deb" firstAttribute="top" secondItem="Edb-hU-m0P" secondAttribute="bottom" constant="10" id="26o-5Q-PCU"/>
                                         <constraint firstItem="8jg-n5-v7j" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" id="5ap-4R-jXi"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="leading" secondItem="Edb-hU-m0P" secondAttribute="trailing" constant="18" id="8nj-S2-R9P"/>
