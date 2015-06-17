@@ -105,8 +105,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             if (count(text) == 0) {
                 height += 120.0
             } else {
-                yprintln(count(text) / 30)
-                height += CGFloat( ( count(text) / 30 ) * 10 )
+                yprintln(count(text) / 25)
+                height += CGFloat( ( count(text) / 25 ) * 10 )
             }
         }
         
@@ -200,7 +200,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         if let postType = localPostItem.lp_media_type_name as? String {
             if (postType == "text") {
                 
-                let textView = UITextView(frame: CGRectMake(0, 0, 300, 21))
+                let textView = UITextView(frame: CGRectMake(0, 0, cell.mediaContainer.frame.width, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_text as? String
                 textView.hidden = false
                 textView.sizeToFit()
@@ -218,7 +218,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 cell.mediaContainer.hidden = false
                 
-                let textView = UITextView(frame: CGRectMake(0, 0, 300, 21))
+                let textView = UITextView(frame: CGRectMake(0, 0, cell.mediaContainer.frame.width, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_caption as? String
                 textView.hidden = false
                 textView.sizeToFit()
@@ -237,7 +237,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 if self.imageCache.objectForKey(urlString) != nil {
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
-                    imageView.frame = CGRect(x: 0, y: 30, width: 200, height: 80)
+                    imageView.frame = CGRect(x: 0, y: 30, width: cell.mediaContainer.frame.width, height: cell.mediaContainer.frame.height + 60.0)
+                    imageView.contentMode = UIViewContentMode.ScaleAspectFit
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
                     cell.setNeedsLayout()
@@ -270,7 +271,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                 if currentIndex?.item == capturedIndex!.item {
                                     
                                     let imageView = UIImageView(image: itemImage!)
-                                    imageView.frame = CGRect(x: 0, y: 30, width: 200, height: 80)
+                                    imageView.frame = CGRect(x: 0, y: 30, width: cell.mediaContainer.frame.width, height: cell.mediaContainer.frame.height + 60.0)
+                                    imageView.contentMode = UIViewContentMode.ScaleAspectFit
+//                                    imageView.autoresizingMask =
+//                                        (UIViewAutoresizing.FlexibleLeftMargin
+//                                            | UIViewAutoresizing.FlexibleRightMargin
+//                                            | UIViewAutoresizing.FlexibleTopMargin
+//                                            | UIViewAutoresizing.FlexibleWidth)
                                     imageView.hidden = false
                                     
                                     //add the image view

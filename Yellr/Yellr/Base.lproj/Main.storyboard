@@ -330,12 +330,17 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qen-yb-Roq">
-                                            <rect key="frame" x="56" y="72" width="300" height="83"/>
+                                            <rect key="frame" x="56" y="72" width="516" height="83"/>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="83" id="eLU-5V-cao"/>
                                                 <constraint firstAttribute="width" constant="300" id="xLH-uA-QDU"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="xLH-uA-QDU"/>
+                                                </mask>
+                                            </variation>
                                         </view>
                                     </subviews>
                                     <constraints>
@@ -343,6 +348,7 @@
                                         <constraint firstItem="8jg-n5-v7j" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" id="5ap-4R-jXi"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="leading" secondItem="Edb-hU-m0P" secondAttribute="trailing" constant="18" id="8nj-S2-R9P"/>
                                         <constraint firstItem="dK7-1n-ply" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="10" id="BOY-fb-4Wo"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" constant="-8" id="LpQ-98-QIU"/>
                                         <constraint firstItem="t1N-cJ-aOy" firstAttribute="leading" secondItem="rkL-B0-gyW" secondAttribute="leadingMargin" id="NyS-WR-jPs"/>
                                         <constraint firstItem="Edb-hU-m0P" firstAttribute="top" secondItem="t1N-cJ-aOy" secondAttribute="bottom" constant="10" id="P5d-EM-WGD"/>
                                         <constraint firstItem="8jg-n5-v7j" firstAttribute="top" secondItem="qk7-Qo-deb" secondAttribute="bottom" constant="10" id="Q8o-3Z-h38"/>
@@ -350,6 +356,7 @@
                                         <constraint firstItem="qen-yb-Roq" firstAttribute="leading" secondItem="qk7-Qo-deb" secondAttribute="trailing" constant="18" id="YUZ-KC-0gq"/>
                                         <constraint firstItem="y9c-94-IG5" firstAttribute="top" secondItem="dK7-1n-ply" secondAttribute="bottom" constant="2" id="aQ0-ia-JHv"/>
                                         <constraint firstItem="qen-yb-Roq" firstAttribute="top" secondItem="y9c-94-IG5" secondAttribute="bottom" constant="8" id="fZj-sa-gm5"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="qen-yb-Roq" secondAttribute="trailing" constant="20" id="jHB-bR-liX"/>
                                         <constraint firstItem="qmR-va-wk4" firstAttribute="top" secondItem="rkL-B0-gyW" secondAttribute="topMargin" constant="10" id="qW5-rF-1gO"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="qmR-va-wk4" secondAttribute="trailing" constant="-8" id="tcQ-2t-365"/>
                                         <constraint firstItem="dK7-1n-ply" firstAttribute="leading" secondItem="t1N-cJ-aOy" secondAttribute="trailing" constant="18" id="wfN-Vs-P5A"/>
