@@ -14,6 +14,21 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var cuidValue: UILabel!
     
+    @IBOutlet weak var userName: UILabel!
+    @IBOutlet weak var verified: UILabel!
+    @IBOutlet weak var userLogo: UILabel!
+    
+    @IBOutlet weak var postsLogo: UILabel!
+    @IBOutlet weak var postsViewedLogo: UILabel!
+    @IBOutlet weak var postsUsedLogo: UILabel!
+    @IBOutlet weak var postsLabel: UILabel!
+    @IBOutlet weak var postsViewedLabel: UILabel!
+    @IBOutlet weak var postsUsedLabel: UILabel!
+    @IBOutlet weak var postsCount: UILabel!
+    @IBOutlet weak var postsViewedCount: UILabel!
+    @IBOutlet weak var postsUsedCount: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.Profile.Title, comment: "Profile Screen title")

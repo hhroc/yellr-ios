@@ -666,20 +666,125 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="AAAA-AAAA-AAAA-AAAA-AAAA-AAAA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUZ-mw-h9O">
-                                <rect key="frame" x="131" y="239" width="338" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAA-AAAA-AAAA-AAAA-AAAA-AAAA" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUZ-mw-h9O">
+                                <rect key="frame" x="212" y="239" width="205" height="61"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="338" id="phW-uU-sbW"/>
+                                    <constraint firstAttribute="height" constant="61" id="MBo-H2-tX4"/>
+                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="UB7-4X-ybO"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anonylogo" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p70-aT-Ngo">
+                                <rect key="frame" x="16" y="78" width="106" height="103"/>
+                                <color key="backgroundColor" red="1" green="0.38823529410000002" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="103" id="Lj5-UX-ctb"/>
+                                    <constraint firstAttribute="width" constant="106" id="V9F-gG-cBO"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Anonymous" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SnP-bB-mAW">
+                                <rect key="frame" x="146" y="84" width="181" height="31"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="31" id="2i9-0R-Jav"/>
+                                    <constraint firstAttribute="width" constant="181" id="tKj-CL-DBP"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="30"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="UU Unverified" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBQ-dK-0zd">
+                                <rect key="frame" x="167" y="135" width="112" height="24"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PL" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EIF-2y-xDe">
+                                <rect key="frame" x="48" y="348" width="21" height="21"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Posts" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kaL-og-wnV">
+                                <rect key="frame" x="117" y="348" width="44" height="21"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Posts Viewed" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3H5-la-DRF">
+                                <rect key="frame" x="117" y="395" width="104" height="21"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Posts Used" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WMw-Wa-fNK">
+                                <rect key="frame" x="117" y="442" width="89" height="21"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PV" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uFR-U9-GT8">
+                                <rect key="frame" x="48" y="395" width="24" height="21"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="PU" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhT-KT-HuQ">
+                                <rect key="frame" x="48" y="442" width="24" height="21"/>
+                                <fontDescription key="fontDescription" name="IowanOldStyle-Roman" family="Iowan Old Style" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y0V-3A-l9Q">
+                                <rect key="frame" x="501" y="348" width="53" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="EyC-iW-NPC"/>
+                                    <constraint firstAttribute="width" constant="53" id="iyj-V1-I6L"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W5m-rh-C4o">
+                                <rect key="frame" x="501" y="395" width="53" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="53" id="Azb-rX-Fv5"/>
+                                    <constraint firstAttribute="height" constant="21" id="BWZ-l1-zli"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cHB-Cm-ik2">
+                                <rect key="frame" x="501" y="442" width="53" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="53" id="qDT-5c-Btr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="lUZ-mw-h9O" firstAttribute="top" secondItem="fMK-1o-V3s" secondAttribute="bottom" constant="73" id="5f7-zP-hg6"/>
+                            <constraint firstItem="y0V-3A-l9Q" firstAttribute="top" secondItem="w9m-61-IBX" secondAttribute="topMargin" constant="348" id="0gF-Hk-GoD"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="y0V-3A-l9Q" secondAttribute="trailing" constant="30" id="2oH-IX-u5D"/>
+                            <constraint firstItem="W5m-rh-C4o" firstAttribute="top" secondItem="y0V-3A-l9Q" secondAttribute="bottom" constant="26" id="322-L8-Cl8"/>
+                            <constraint firstItem="cHB-Cm-ik2" firstAttribute="top" secondItem="W5m-rh-C4o" secondAttribute="bottom" constant="26" id="KaS-JF-pLn"/>
                             <constraint firstAttribute="centerX" secondItem="lUZ-mw-h9O" secondAttribute="centerX" constant="-14" id="Kiw-Nm-y7V"/>
+                            <constraint firstItem="rBQ-dK-0zd" firstAttribute="leading" secondItem="p70-aT-Ngo" secondAttribute="trailing" constant="45" id="Lde-mK-SCJ"/>
+                            <constraint firstItem="SnP-bB-mAW" firstAttribute="top" secondItem="fMK-1o-V3s" secondAttribute="bottom" constant="20" id="MBJ-iu-4IE"/>
+                            <constraint firstItem="lUZ-mw-h9O" firstAttribute="top" secondItem="rBQ-dK-0zd" secondAttribute="bottom" constant="80" id="NG9-HR-dnb"/>
+                            <constraint firstItem="p70-aT-Ngo" firstAttribute="top" secondItem="fMK-1o-V3s" secondAttribute="bottom" constant="14" id="PeN-51-snc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cHB-Cm-ik2" secondAttribute="trailing" constant="30" id="YoC-7n-V8j"/>
+                            <constraint firstItem="rBQ-dK-0zd" firstAttribute="top" secondItem="SnP-bB-mAW" secondAttribute="bottom" constant="20" id="kSC-kM-kvW"/>
+                            <constraint firstItem="SnP-bB-mAW" firstAttribute="leading" secondItem="p70-aT-Ngo" secondAttribute="trailing" constant="24" id="lGO-EJ-CEl"/>
+                            <constraint firstItem="p70-aT-Ngo" firstAttribute="leading" secondItem="w9m-61-IBX" secondAttribute="leadingMargin" id="mer-YR-2ga"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="W5m-rh-C4o" secondAttribute="trailing" constant="30" id="ptl-cx-nCz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7yl-M5-vVa">
@@ -697,7 +802,19 @@
                     <connections>
                         <outlet property="cancelButton" destination="jAS-cx-gx7" id="4Qg-ed-BoB"/>
                         <outlet property="cuidValue" destination="lUZ-mw-h9O" id="N4p-g7-jBZ"/>
+                        <outlet property="postsCount" destination="y0V-3A-l9Q" id="mJN-Ni-Pad"/>
+                        <outlet property="postsLabel" destination="kaL-og-wnV" id="3ma-dj-OYJ"/>
+                        <outlet property="postsLogo" destination="EIF-2y-xDe" id="yJR-rn-dzE"/>
+                        <outlet property="postsUsedCount" destination="cHB-Cm-ik2" id="03d-YH-mBh"/>
+                        <outlet property="postsUsedLabel" destination="WMw-Wa-fNK" id="PGV-yp-APm"/>
+                        <outlet property="postsUsedLogo" destination="mhT-KT-HuQ" id="gSP-oJ-JjW"/>
+                        <outlet property="postsViewedCount" destination="W5m-rh-C4o" id="EsP-aP-4KU"/>
+                        <outlet property="postsViewedLabel" destination="3H5-la-DRF" id="nyC-tb-Lv3"/>
+                        <outlet property="postsViewedLogo" destination="uFR-U9-GT8" id="VnK-Vg-xqY"/>
                         <outlet property="resetCuidButton" destination="kOM-zK-Urn" id="D37-rr-5EP"/>
+                        <outlet property="userLogo" destination="p70-aT-Ngo" id="08w-Vg-w5z"/>
+                        <outlet property="userName" destination="SnP-bB-mAW" id="koz-Gv-ldS"/>
+                        <outlet property="verified" destination="rBQ-dK-0zd" id="Hlz-kU-eRa"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lGe-of-Fhv" userLabel="First Responder" sceneMemberID="firstResponder"/>

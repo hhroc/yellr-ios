@@ -106,7 +106,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         if let text = localPostItem.lp_media_text as? String {
             if (count(text) == 0) {
-                height += 120.0
+                height += 140.0
             } else {
 
                 calculationView.attributedText = NSMutableAttributedString(string: text)
@@ -237,7 +237,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 if self.imageCache.objectForKey(urlString) != nil {
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
-                    imageView.frame = CGRect(x: 0, y: 30, width: cell.mediaContainer.frame.width, height: cell.mediaContainer.frame.height + 60.0)
+                    imageView.frame = CGRect(x: 0, y: 30, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
                     imageView.contentMode = UIViewContentMode.ScaleAspectFit
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
@@ -271,7 +271,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                 if currentIndex?.item == capturedIndex!.item {
                                     
                                     let imageView = UIImageView(image: itemImage!)
-                                    imageView.frame = CGRect(x: 0, y: 30, width: cell.mediaContainer.frame.width, height: cell.mediaContainer.frame.height + 60.0)
+                                    imageView.frame = CGRect(x: 0, y: 30, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
                                     imageView.contentMode = UIViewContentMode.ScaleAspectFit
 //                                    imageView.autoresizingMask =
 //                                        (UIViewAutoresizing.FlexibleLeftMargin
