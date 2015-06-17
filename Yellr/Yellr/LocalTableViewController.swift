@@ -92,6 +92,33 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         return cell
     }
     
+//    override func tableView(tableView: UITableView, estimatedHeightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+//        return 200.0;
+//    }
+//    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        
+        var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        var height:CGFloat = 120.0
+        
+        if let text = localPostItem.lp_media_text as? String {
+            if (count(text) == 0) {
+                height += 120.0
+            } else {
+                yprintln(count(text) / 30)
+                height += CGFloat( ( count(text) / 30 ) * 10 )
+            }
+        }
+        
+        height += 50.0
+        
+        yprintln("Ht:")
+        
+        yprintln(height)
+        
+        return height
+    }
+    
     //when profile button is tapped in UINavBar
     func profileTapped(sender:UIButton) {
         self.performSegueWithIdentifier("LocalToProfile", sender: self)
@@ -173,20 +200,33 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         if let postType = localPostItem.lp_media_type_name as? String {
             if (postType == "text") {
                 
-                var label = UILabel(frame: CGRectMake(0, 0, 300, 21))
-                label.textAlignment = NSTextAlignment.Left
-                label.lineBreakMode = .ByWordWrapping // or NSLineBreakMode.ByWordWrapping
-                label.numberOfLines = 0
-                label.text = localPostItem.lp_media_text as? String
-                label.hidden = false
-                cell.mediaContainer.addSubview(label)
+                let textView = UITextView(frame: CGRectMake(0, 0, 300, 21))
+                textView.text = localPostItem.lp_media_text as? String
+                textView.hidden = false
+                textView.sizeToFit()
+                textView.scrollEnabled = false
+                textView.editable = false
+                textView.selectable = false
+                textView.textAlignment = NSTextAlignment.Left
+                cell.mediaContainer.addSubview(textView)
                 cell.mediaContainer.hidden = false
+                cell.setNeedsLayout()
                 
             }
             
             if (postType == "image") {
                 
                 cell.mediaContainer.hidden = false
+                
+                let textView = UITextView(frame: CGRectMake(0, 0, 300, 21))
+                textView.text = localPostItem.lp_media_caption as? String
+                textView.hidden = false
+                textView.sizeToFit()
+                textView.scrollEnabled = false
+                textView.editable = false
+                textView.selectable = false
+                textView.textAlignment = NSTextAlignment.Left
+                cell.mediaContainer.addSubview(textView)
                 
                 //url of image
                 var urlString : String = localPostItem.lp_file_name as! String
@@ -197,7 +237,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 if self.imageCache.objectForKey(urlString) != nil {
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
-                    imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+                    imageView.frame = CGRect(x: 0, y: 30, width: 200, height: 80)
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
                     cell.setNeedsLayout()
@@ -230,7 +270,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                 if currentIndex?.item == capturedIndex!.item {
                                     
                                     let imageView = UIImageView(image: itemImage!)
-                                    imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+                                    imageView.frame = CGRect(x: 0, y: 30, width: 200, height: 80)
                                     imageView.hidden = false
                                     
                                     //add the image view
@@ -447,14 +487,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.view.addSubview(self.webActivityIndicator)
     }
     
-//    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        return 60.0
-//    }
-    
-//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        
-//    }
-    
     // MARK: - Networking
     func requestLocalPosts(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
 
@@ -494,6 +526,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 var lpmtext : String = ""
                 var lpmtname : String = ""
                 var lppfname : String = ""
+                var lpmdcpt : String = ""
                 var mediaItems = itemDict["media_objects"] as! Array<Dictionary<String,String>>
                 
                 for itemDictMedia in mediaItems {
@@ -501,6 +534,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     lpmtext = itemDictMedia["media_text"]!
                     lpmtname = itemDictMedia["media_type_name"]!
                     lppfname = itemDictMedia["preview_file_name"]!
+                    lpmdcpt = itemDictMedia["caption"]!
                 }
                 
                 var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
@@ -513,6 +547,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     lp_media_text : lpmtext,
                     lp_media_type_name : lpmtname,
                     lp_preview_file_name : lppfname,
+                    lp_media_caption : lpmdcpt,
                     
                     lp_first_name : itemDict["first_name"],
                     lp_question_text : itemDict["question_text"],

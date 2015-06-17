@@ -252,7 +252,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocalTVCIdentifier" rowHeight="166" id="BSR-NS-GG5" customClass="LocalTableViewCell" customModule="Yellr" customModuleProvider="target">
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LocalTVCIdentifier" id="BSR-NS-GG5" customClass="LocalTableViewCell" customModule="Yellr" customModuleProvider="target">
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BSR-NS-GG5" id="rkL-B0-gyW">
                                     <autoresizingMask key="autoresizingMask"/>
@@ -659,8 +659,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AAAA-AAAA-AAAA-AAAA-AAAA-AAAA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUZ-mw-h9O">
-                                <rect key="frame" x="145" y="137" width="338" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="AAAA-AAAA-AAAA-AAAA-AAAA-AAAA" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUZ-mw-h9O">
+                                <rect key="frame" x="131" y="239" width="338" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="338" id="phW-uU-sbW"/>
                                 </constraints>
@@ -757,7 +757,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Yl4-7o-WYg"/>
-        <segue reference="4Dz-8N-i6t"/>
+        <segue reference="GUf-3E-6Jk"/>
+        <segue reference="hEe-pR-idg"/>
     </inferredMetricsTieBreakers>
 </document>
