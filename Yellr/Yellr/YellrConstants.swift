@@ -39,6 +39,7 @@ struct YellrConstants {
         static let PostsLabel = "profile_posts_label"
         static let PostsViewedLabel = "profile_posts_viewed_label"
         static let PostsUsedLabel = "profile_posts_used_label"
+        static let Unverified = "profile_unverified"
     }
     
     struct AddPost {

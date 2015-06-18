@@ -16,6 +16,7 @@ profile_reset_cuid_button="Reset CUID";
 profile_posts_label="Posts";
 profile_posts_viewed_label="Posts Viewed";
 profile_posts_used_label="Posts Used";
+profile_unverified="Unverified";
 new_post_title="Free Post";
 anonymous_user="Anonymous User";
 new_post_failed="Post failed. Please try again!";
