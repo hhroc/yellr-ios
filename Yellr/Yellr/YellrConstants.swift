@@ -15,9 +15,18 @@ struct YellrConstants {
         static let CUIDKeyName = "ycuid"
     }
     
+    struct Direction {
+        static let Longitude = "ylr_longitude"
+        static let Latitude = "ylr_latitude"
+    }
+    
     struct Common {
         static let CancelButton = "cancel_button_text"
         static let BackButton = "back_button_text"
+    }
+    struct Keys {
+        static let StoredStoriesCount = "stored_stories_count_key"
+        static let StoredAssignmentsCount = "stored_assignments_count_key"
     }
     
     struct LocalPosts {

@@ -583,6 +583,12 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.lat = latitude
         self.long = longitude
         
+        //store lat long in prefs
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(self.lat, forKey: YellrConstants.Direction.Latitude)
+        defaults.setObject(self.long, forKey: YellrConstants.Direction.Longitude)
+        defaults.synchronize()        
+        
         self.loadLocalPostsTableView(latitude, longitude: longitude)
         locationManager.stopUpdatingLocation()
         

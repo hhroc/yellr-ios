@@ -575,6 +575,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         self.latitude = String(format: "%.2f", latestLocation.coordinate.latitude)
         self.longitude = String(format: "%.2f", latestLocation.coordinate.longitude)
         
+        //store lat long in prefs
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(self.latitude, forKey: YellrConstants.Direction.Latitude)
+        defaults.setObject(self.longitude, forKey: YellrConstants.Direction.Longitude)
+        defaults.synchronize()
+        
         locationManager.stopUpdatingLocation()
         
         //TODO: Store Lat Long in userprefs

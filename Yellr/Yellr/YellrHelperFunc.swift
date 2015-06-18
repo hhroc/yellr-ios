@@ -309,3 +309,114 @@ func resetCUID() {
     let didSave = preferences.synchronize()
     if !didSave {}
 }
+
+//function to fetch background data and show notification
+func fetchBackgroundDataAndShowNotification() -> Void{
+    
+    var latitude = "43.16"
+    var longitude = "-77.61"
+    var storedStoriesCount = 0
+    var storiesCount = 2
+    var storedAssignmentsCount = 0
+    var assignmentsCount = 2
+    
+    var hasNewStories = false
+    var hasNewAssignments = false
+    var hasNewStoriesCount = 0
+    var hasNewAssignmentsCount = 0
+    
+    let defaults = NSUserDefaults.standardUserDefaults()
+    if let ylatitude = defaults.stringForKey(YellrConstants.Direction.Latitude) {
+        latitude = ylatitude
+    } else {}
+    if let ylongitude = defaults.stringForKey(YellrConstants.Direction.Longitude) {
+        longitude = ylongitude
+    } else {}
+    
+    if let ystoredstoriescount = defaults.stringForKey(YellrConstants.Keys.StoredStoriesCount) {
+        storedStoriesCount = ystoredstoriescount.toInt()!
+    } else {}
+    
+    if let ystoredassignmentscount = defaults.stringForKey(YellrConstants.Keys.StoredAssignmentsCount) {
+        storedAssignmentsCount = ystoredassignmentscount.toInt()!
+    } else {}
+    
+    
+    //count new stories if any 
+    
+    var request = NSURLRequest(URL: NSURL(string: buildUrl("get_stories.json", latitude, longitude))!);
+    
+    NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
+        (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+        
+        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+            
+            var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
+            
+            for itemDict in rawStoryItems {
+                
+                storiesCount++
+            }
+            
+        } else {
+            
+        }
+        
+        if (storiesCount > storedStoriesCount) {
+            hasNewStories = true
+            hasNewStoriesCount = storiesCount - storedStoriesCount
+        }
+        
+    }
+    
+    //count new assignments if any
+    
+    request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
+    
+    NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
+        (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+        
+        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+            
+            var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
+            
+            for itemDict in rawAssignmentItems {
+                
+                assignmentsCount++
+            }
+            
+        } else {
+            
+        }
+        
+        if (assignmentsCount > storedAssignmentsCount) {
+            hasNewAssignments = true
+            hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
+        }
+        
+    }
+
+    var localNotification:UILocalNotification = UILocalNotification()
+    //localNotification.alertAction = "New notifications on Yellr"
+
+    //TODO: Localization
+    if (hasNewAssignments && hasNewStories) {
+        localNotification.alertBody = "You have new stories and assignments."
+    } else if (hasNewAssignments && !hasNewStories) {
+        if (hasNewAssignmentsCount > 1) {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignment."
+        } else {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments."
+        }
+    } else if (!hasNewAssignments && hasNewStories) {
+        if (hasNewAssignmentsCount > 1) {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new story."
+        } else {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new stories."
+        }
+    }
+    
+    localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
+    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+
+}

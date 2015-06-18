@@ -13,7 +13,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     
     let assgnViewModel = AssignmentsViewModel()
     
-    var assignmentsUrlEndpoint: String = ""
+    var storiesUrlEndpoint: String = ""
     var dataSource : Array<StoriesDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     var urlSession = NSURLSession.sharedSession()
@@ -103,14 +103,41 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         self.performSegueWithIdentifier("StoryToPost", sender: self)
     }
     
+    //class fucntion to return count of new stories fetched
+    class func numberOfStories() -> Int {
+        
+        var latitude = "43.16"
+        var longitude = "-77.61"
+        var storiesCount = 0
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let ylatitude = defaults.stringForKey(YellrConstants.Direction.Latitude) {
+            latitude = ylatitude
+        } else {}
+        if let ylongitude = defaults.stringForKey(YellrConstants.Direction.Longitude) {
+            longitude = ylongitude
+        } else {}
+        
+        var storiesUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
+        
+        return storiesCount
+    }
+    
     //starts the tableviewload process
     //api call and then populate
     func loadStoriesTableView(latitude : String, longitude : String) {
         
-        self.assignmentsUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
-        self.requestStories(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
+        self.storiesUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
+        self.requestStories(self.storiesUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
             //yprintln("1")
+            
+            self.dataSource = items!
+                
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                self.tableView.reloadData()
+                self.webActivityIndicator.hidden = true
+            })
             
         })
     }
@@ -139,14 +166,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            self.dataSource = self.storyItems(data)
-            
-            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                self.tableView.reloadData()
-                self.webActivityIndicator.hidden = true
-            })
-            
-            responseHandler( error: nil, items: nil)
+            responseHandler( error: nil, items: self.storyItems(data))
         })
         task.resume()
     }
@@ -154,6 +174,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     func storyItems(data: NSData) -> (Array<StoriesDataModel>) {
         var jsonParseError: NSError?
         var refinedStoryItems : Array<StoriesDataModel> = []
+        var storiesCount = 0
         
         if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
 
@@ -168,8 +189,14 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
                     st_contents_rendered : itemDict["contents_rendered"]
                 )
                 
+                storiesCount++
                 refinedStoryItems.append(item)
             }
+            
+            //save stories count
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(String(storiesCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+            defaults.synchronize()
             
         } else {
             
@@ -191,6 +218,12 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         
         var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
         var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        //store lat long in prefs
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(latitude, forKey: YellrConstants.Direction.Latitude)
+        defaults.setObject(longitude, forKey: YellrConstants.Direction.Longitude)
+        defaults.synchronize()        
         
         self.loadStoriesTableView(latitude, longitude: longitude)
         locationManager.stopUpdatingLocation()

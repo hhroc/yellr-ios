@@ -22,12 +22,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initNavBarStyle()
         
         //local notifications
-        if (iOS8) {
-            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
-        }
-        
+        let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil)
+        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+//        if (iOS8) {
+//            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
+//        }
         
         return true
+    }
+    
+    //needed for local notifications / background service
+    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        yprintln("Background Data")
+        completionHandler(UIBackgroundFetchResult.NewData)
+        fetchBackgroundDataAndShowNotification()
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -51,7 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
 
 }
 

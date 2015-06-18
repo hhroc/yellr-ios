@@ -159,6 +159,12 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         self.latitude = String(format: "%.2f", latestLocation.coordinate.latitude)
         self.longitude = String(format: "%.2f", latestLocation.coordinate.longitude)
         
+        //store lat long in prefs
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(self.latitude, forKey: YellrConstants.Direction.Latitude)
+        defaults.setObject(self.longitude, forKey: YellrConstants.Direction.Longitude)
+        defaults.synchronize()
+        
         self.profileUrlEndpoint = buildUrl("get_profile.json", self.latitude, self.longitude)
         self.requestProfile(self.profileUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here

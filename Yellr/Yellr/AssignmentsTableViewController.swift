@@ -152,6 +152,8 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     func assignmentItems(data: NSData) -> (Array<AssignmentsDataModel>) {
         var jsonParseError: NSError?
         var refinedAssignmentItems : Array<AssignmentsDataModel> = []
+        var assignmentsCount = 0
+        
         if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
          
             var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
@@ -165,8 +167,14 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
                     as_post_count : itemDict["post_count"],
                     as_post_ID : itemDict["assignment_id"])
                 
+                assignmentsCount++
                 refinedAssignmentItems.append(item)
             }
+            
+            //save assignments count
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+            defaults.synchronize()
             
         } else {
             
@@ -188,6 +196,12 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
         var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        
+        //store lat long in prefs
+        let defaults = NSUserDefaults.standardUserDefaults()
+        defaults.setObject(latitude, forKey: YellrConstants.Direction.Latitude)
+        defaults.setObject(longitude, forKey: YellrConstants.Direction.Longitude)
+        defaults.synchronize()        
         
         self.loadAssignmentsTableView(latitude, longitude: longitude)
         locationManager.stopUpdatingLocation()
