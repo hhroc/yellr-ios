@@ -281,12 +281,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     let imageData:NSData = NSData(data: UIImageJPEGRepresentation(self.pickedImage.image, 1.0))
                     
                     postImage(["media_type":"image", "media_caption":postCont], imageData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
-                        yprintln("Image Uploaded : " + msg)
+                        Yellr.println("Image Uploaded : " + msg)
                         
                         if (msg != "NOTHING" && msg != "Error") {
                             
                             post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
-                                yprintln("Post Added : " + msg)
+                                Yellr.println("Post Added : " + msg)
                                 if (msg != "NOTHING") {
                                     
                                     if (self.asgPost != nil) {
@@ -309,12 +309,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 } else {
                     
                     post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
-                        yprintln("Media Uploaded : " + msg)
+                        Yellr.println("Media Uploaded : " + msg)
                         
                         if (msg != "NOTHING" && msg != "Error") {
                             
                             post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
-                                yprintln("Post Added : " + msg)
+                                Yellr.println("Post Added : " + msg)
                                 if (msg != "NOTHING") {
                                     
                                     if (self.asgPost != nil) {
@@ -374,7 +374,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             
             if (name == YellrConstants.AppInfo.version) {
             
-                yprintln("NOT First Time Free Post")
+                Yellr.println("NOT First Time Free Post")
                 
                 //do not show first time popup
                 //certain post completion tasks
@@ -407,7 +407,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     //for a new user or an user with an updated app
     func completionAddPostSuccessForFirstTimeUser() {
      
-        yprintln("First Time Free Post")
+        Yellr.println("First Time Free Post")
         //first time free post  - show one time popup
         dispatch_async(dispatch_get_main_queue()) {
             
@@ -590,7 +590,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        yprintln(error)
+        Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")

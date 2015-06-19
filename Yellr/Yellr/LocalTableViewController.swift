@@ -136,7 +136,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.localPostsUrlEndpoint = buildUrl("get_local_posts.json", latitude, longitude)
         self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
-            //yprintln("1")
+            //Yellr.println("1")
             
         })
     }
@@ -352,7 +352,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
         post(["post_id":postId, "is_up_vote":"1"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
-            yprintln(msg)
+            Yellr.println(msg)
             //TODO: apply response results to button pressess
             //currently we are changing UI feedback assuming that
             //request will always succeed
@@ -426,7 +426,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
         post(["post_id":postId, "is_up_vote":"0"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
-            yprintln(msg)
+            Yellr.println(msg)
         }
         
         if let hasVoted = localPostItem.lp_has_voted as? Bool {
@@ -500,8 +500,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            //yprintln(response)
-            //yprintln(error)
+            //Yellr.println(response)
+            //Yellr.println(error)
             
             if (error == nil) {
                 self.dataSource = self.localPostItems(data)
@@ -513,7 +513,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 responseHandler( error: nil, items: nil)
             } else {
-                yprintln(error)
+                Yellr.println(error)
             }
 
         })
@@ -599,7 +599,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        yprintln(error)
+        Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")

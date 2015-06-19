@@ -30,13 +30,8 @@ func UIColorFromRGB(rgbValue: UInt) -> UIColor {
 }
 
 /**
- * Debug Function
+ * init nav bar
  */
-func yprintln(input: AnyObject) {
-    if (debugEnabled) {
-        println(input)
-    }
-}
 
 func initNavBarStyle() {
     //Nav bar color
@@ -129,16 +124,16 @@ func postImage(params : Dictionary<String, String>, image:NSData, latitude:Strin
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
 
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        yprintln("Body: \(strData)")
+        Yellr.println("Body: \(strData)")
         var err: NSError?
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
         
         var msg = "NOTHING"
         
         if(err != nil) {
-            yprintln(err!.localizedDescription)
+            Yellr.println(err!.localizedDescription)
             let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-            yprintln("Error could not parse JSON: '\(jsonStr)'")
+            Yellr.println("Error could not parse JSON: '\(jsonStr)'")
             postCompleted(succeeded: false, msg: "Error")
         }
         else {
@@ -160,7 +155,7 @@ func postImage(params : Dictionary<String, String>, image:NSData, latitude:Strin
             }
             else {
                 let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                yprintln("Error could not parse JSON: \(jsonStr)")
+                Yellr.println("Error could not parse JSON: \(jsonStr)")
                 postCompleted(succeeded: false, msg: "Error")
             }
         }
@@ -192,21 +187,21 @@ func post(params : Dictionary<String, String>, method : String, latitude:String,
     request.HTTPBody = (requestData as NSString).dataUsingEncoding(NSUTF8StringEncoding)
     request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
-    //yprintln(request)
+    //Yellr.println(request)
     
     var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-        //yprintln("Response: \(response)")
+        //Yellr.println("Response: \(response)")
         var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        yprintln("Body: \(strData)")
+        Yellr.println("Body: \(strData)")
         var err: NSError?
         var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
         
         var msg = "NOTHING"
         
         if(err != nil) {
-            yprintln(err!.localizedDescription)
+            Yellr.println(err!.localizedDescription)
             let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-            yprintln("Error could not parse JSON: '\(jsonStr)'")
+            Yellr.println("Error could not parse JSON: '\(jsonStr)'")
             postCompleted(succeeded: false, msg: "Error")
         }
         else {
@@ -243,7 +238,7 @@ func post(params : Dictionary<String, String>, method : String, latitude:String,
             }
             else {
                 let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                yprintln("Error could not parse JSON: \(jsonStr)")
+                Yellr.println("Error could not parse JSON: \(jsonStr)")
                 postCompleted(succeeded: false, msg: "Error")
             }
         }
@@ -367,56 +362,56 @@ func fetchBackgroundDataAndShowNotification() -> Void{
             hasNewStoriesCount = storiesCount - storedStoriesCount
         }
         
-    }
-    
-    //count new assignments if any
-    
-    request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
-    
-    NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
-        (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+        //count new assignments if any
+        request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
         
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+        NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
+            (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
             
-            var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
-            
-            for itemDict in rawAssignmentItems {
+            if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
                 
-                assignmentsCount++
+                var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
+                
+                for itemDict in rawAssignmentItems {
+                    
+                    assignmentsCount++
+                }
+                
+            } else {
+                
             }
             
-        } else {
+            if (assignmentsCount > storedAssignmentsCount) {
+                hasNewAssignments = true
+                hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
+            }
+            
+            //setup notifications
+            var localNotification:UILocalNotification = UILocalNotification()
+            //localNotification.alertAction = "New notifications on Yellr"
+            
+            //TODO: Localization
+            if (hasNewAssignments && hasNewStories) {
+                localNotification.alertBody = "You have new stories and assignments."
+            } else if (hasNewAssignments && !hasNewStories) {
+                if (hasNewAssignmentsCount > 1) {
+                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignment."
+                } else {
+                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments."
+                }
+            } else if (!hasNewAssignments && hasNewStories) {
+                if (hasNewAssignmentsCount > 1) {
+                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new story."
+                } else {
+                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new stories."
+                }
+            }
+            
+            localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
+            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
             
         }
         
-        if (assignmentsCount > storedAssignmentsCount) {
-            hasNewAssignments = true
-            hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
-        }
-        
     }
-
-    var localNotification:UILocalNotification = UILocalNotification()
-    //localNotification.alertAction = "New notifications on Yellr"
-
-    //TODO: Localization
-    if (hasNewAssignments && hasNewStories) {
-        localNotification.alertBody = "You have new stories and assignments."
-    } else if (hasNewAssignments && !hasNewStories) {
-        if (hasNewAssignmentsCount > 1) {
-            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignment."
-        } else {
-            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments."
-        }
-    } else if (!hasNewAssignments && hasNewStories) {
-        if (hasNewAssignmentsCount > 1) {
-            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new story."
-        } else {
-            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new stories."
-        }
-    }
-    
-    localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
-    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
 
 }

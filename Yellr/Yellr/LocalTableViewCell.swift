@@ -25,8 +25,8 @@ class LocalTableViewCell: UITableViewCell {
         var cell: UITableViewCell = sender.superview?.superview as! UITableViewCell
         var table: UITableView = cell.superview as! UITableView
         //let textFieldIndexPath = table.indexPathForCell(cell)
-        //yprintln(textFieldIndexPath?.row)
-        yprintln(cell)
+        //Yellr.println(textFieldIndexPath?.row)
+        Yellr.println(cell)
 
         var postID : String = String(sender.tag)
         //post(["post_id":postID, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in

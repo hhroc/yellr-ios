@@ -24,7 +24,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.Stories.Title, comment: "Stories Screen title")
-        self.initWebActivityIndicator()
+
         //self.loadStoriesTableView()
         
         //right side bar button items
@@ -33,6 +33,13 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         fixedSpace.width = 30.0
         var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
+        
+        //application is becoming active again
+        //may be from background or from notification
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "applicationBecameActive:",
+            name: UIApplicationDidBecomeActiveNotification,
+            object: nil)
         
     }
     
@@ -127,10 +134,10 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     //api call and then populate
     func loadStoriesTableView(latitude : String, longitude : String) {
         
+        self.initWebActivityIndicator()
+        
         self.storiesUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
         self.requestStories(self.storiesUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //yprintln("1")
             
             self.dataSource = items!
                 
@@ -230,12 +237,26 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        yprintln(error)
+        Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
+    }
+    
+    func applicationBecameActive(notification: NSNotification) {
+        var latitude = ""
+        var longitude = ""
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let ylatitude = defaults.stringForKey(YellrConstants.Direction.Latitude) {
+            latitude = ylatitude
+        } else {}
+        if let ylongitude = defaults.stringForKey(YellrConstants.Direction.Longitude) {
+            longitude = ylongitude
+        } else {}
+        self.loadStoriesTableView(latitude, longitude: longitude)
     }
     
 }

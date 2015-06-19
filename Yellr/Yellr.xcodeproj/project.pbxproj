@@ -38,6 +38,7 @@
 		267964B61B2FCBEF00735925 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267964B51B2FCBEF00735925 /* ProfileViewController.swift */; };
 		267964B81B31C19100735925 /* YellrDeviceDetect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267964B71B31C19100735925 /* YellrDeviceDetect.swift */; };
 		267964BA1B33050600735925 /* ProfileDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267964B91B33050600735925 /* ProfileDataModel.swift */; };
+		267964BC1B3392A300735925 /* PrintlnMagic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 267964BB1B3392A300735925 /* PrintlnMagic.swift */; };
 		269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 269A10D31B1CC4360001577D /* YellrConstants.swift */; };
 		269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 269A10DD1B1CCAB90001577D /* Localizable.strings */; };
 		26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D401B1CD3090094BFC3 /* StoryDetailViewController.swift */; };
@@ -95,6 +96,7 @@
 		267964B51B2FCBEF00735925 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		267964B71B31C19100735925 /* YellrDeviceDetect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrDeviceDetect.swift; sourceTree = "<group>"; };
 		267964B91B33050600735925 /* ProfileDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDataModel.swift; sourceTree = "<group>"; };
+		267964BB1B3392A300735925 /* PrintlnMagic.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrintlnMagic.swift; sourceTree = "<group>"; };
 		269A10D31B1CC4360001577D /* YellrConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrConstants.swift; sourceTree = "<group>"; };
 		269A10D51B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		269A10D61B1CC8D90001577D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -175,6 +177,7 @@
 			isa = PBXGroup;
 			children = (
 				2645437A1B23244A00B8EA79 /* FontAwesome.otf */,
+				267964BB1B3392A300735925 /* PrintlnMagic.swift */,
 				264543781B22BFB100B8EA79 /* Font-Awesome.swift */,
 				269A10D31B1CC4360001577D /* YellrConstants.swift */,
 				26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */,
@@ -384,6 +387,7 @@
 				26CA8D451B1D05980094BFC3 /* YellrTabBarController.swift in Sources */,
 				263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */,
 				26157ECA1B1A245700615428 /* LocalTableViewCell.swift in Sources */,
+				267964BC1B3392A300735925 /* PrintlnMagic.swift in Sources */,
 				267964B81B31C19100735925 /* YellrDeviceDetect.swift in Sources */,
 				26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */,
 				264543691B21F51500B8EA79 /* LocalPostDataModel.swift in Sources */,

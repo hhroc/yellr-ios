@@ -24,7 +24,6 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         super.viewDidLoad()
         self.webActivityIndicator.hidden = true
         self.title = NSLocalizedString(YellrConstants.Assignments.Title, comment: "Assignments Screen title")
-        self.initWebActivityIndicator()
         
         //right side bar button items
         var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
@@ -32,6 +31,13 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         fixedSpace.width = 30.0
         var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
+        
+        //application is becoming active again
+        //may be from background or from notification
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector: "applicationBecameActive:",
+            name: UIApplicationDidBecomeActiveNotification,
+            object: nil)
         
     }
     
@@ -106,10 +112,17 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     //api call and then populate
     func loadAssignmentsTableView(latitude : String, longitude : String) {
         
+        self.initWebActivityIndicator()
+        
         self.assignmentsUrlEndpoint = buildUrl("get_assignments.json", latitude, longitude)
         self.requestAssignments(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //yprintln("1")
+            
+            self.dataSource = items!
+            
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                self.tableView.reloadData()
+                self.webActivityIndicator.hidden = true
+            })
             
         })
     }
@@ -137,14 +150,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            self.dataSource = self.assignmentItems(data)
-            
-            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                self.tableView.reloadData()
-                self.webActivityIndicator.hidden = true
-            })
-            
-            responseHandler( error: nil, items: nil)
+            responseHandler( error: nil, items: self.assignmentItems(data))
         })
         task.resume()
     }
@@ -208,12 +214,27 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        yprintln(error)
+        Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
+    }
+    
+    func applicationBecameActive(notification: NSNotification) {
+        var latitude = ""
+        var longitude = ""
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        if let ylatitude = defaults.stringForKey(YellrConstants.Direction.Latitude) {
+            latitude = ylatitude
+        } else {}
+        if let ylongitude = defaults.stringForKey(YellrConstants.Direction.Longitude) {
+            longitude = ylongitude
+        } else {}
+        self.loadAssignmentsTableView(latitude, longitude: longitude)
+        Yellr.println("here - didbacemaactive assignment")
     }
     
 }

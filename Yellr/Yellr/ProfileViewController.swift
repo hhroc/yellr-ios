@@ -110,14 +110,14 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            //yprintln(response)
-            //yprintln(error)
+            //Yellr.println(response)
+            //Yellr.println(error)
             
             if (error == nil) {
                 self.profileItems(data)
                 responseHandler( error: nil, items: nil)
             } else {
-                yprintln(error)
+                Yellr.println(error)
             }
             
         })
@@ -168,7 +168,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         self.profileUrlEndpoint = buildUrl("get_profile.json", self.latitude, self.longitude)
         self.requestProfile(self.profileUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
-            //yprintln("1")
+            //Yellr.println("1")
             
         })
         
@@ -181,7 +181,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        yprintln(error)
+        Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
