@@ -308,12 +308,15 @@ func resetCUID() {
 //function to fetch background data and show notification
 func fetchBackgroundDataAndShowNotification() -> Void{
     
+    //using sendSynchronousRequest instead of sendAsynchronousRequest
+    //as async is not working in background for iOS7
+    
     var latitude = "43.16"
     var longitude = "-77.61"
     var storedStoriesCount = 0
-    var storiesCount = 2
+    var storiesCount = 0
     var storedAssignmentsCount = 0
-    var assignmentsCount = 2
+    var assignmentsCount = 0
     
     var hasNewStories = false
     var hasNewAssignments = false
@@ -337,81 +340,178 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     } else {}
     
     
-    //count new stories if any 
+    //for iOS7
+    //count new stories if any
     
     var request = NSURLRequest(URL: NSURL(string: buildUrl("get_stories.json", latitude, longitude))!);
     
-    NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
-        (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+    //NSURLConnection.se
+    var response: NSURLResponse?
+    var error: NSError?
+    
+    if let urlData = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error) as NSData? {
         
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+        if let httpResponse = response as? NSHTTPURLResponse {
             
-            var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
             
-            for itemDict in rawStoryItems {
+            //Yellr.println()
+            
+            if let jsonResult = NSJSONSerialization.JSONObjectWithData(urlData, options: .MutableContainers, error: nil) as? NSDictionary {
                 
-                storiesCount++
-            }
-            
-        } else {
-            
-        }
-        
-        if (storiesCount > storedStoriesCount) {
-            hasNewStories = true
-            hasNewStoriesCount = storiesCount - storedStoriesCount
-        }
-        
-        //count new assignments if any
-        request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
-        
-        NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
-            (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
-            
-            if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+                var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
                 
-                var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
-                
-                for itemDict in rawAssignmentItems {
+                for itemDict in rawStoryItems {
                     
-                    assignmentsCount++
+                    storiesCount++
                 }
                 
             } else {
                 
             }
             
-            if (assignmentsCount > storedAssignmentsCount) {
-                hasNewAssignments = true
-                hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
+            
+        }
+    
+    }
+    
+    //count new assignments if any
+    request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
+    
+    if let urlData = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error) as NSData? {
+        
+        if let jsonResult = NSJSONSerialization.JSONObjectWithData(urlData, options: nil, error: nil) as? NSDictionary {
+            
+            var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
+            
+            for itemDict in rawAssignmentItems {
+                
+                assignmentsCount++
             }
             
-            //setup notifications
-            var localNotification:UILocalNotification = UILocalNotification()
-            //localNotification.alertAction = "New notifications on Yellr"
-            
-            //TODO: Localization
-            if (hasNewAssignments && hasNewStories) {
-                localNotification.alertBody = "You have new stories and assignments."
-            } else if (hasNewAssignments && !hasNewStories) {
-                if (hasNewAssignmentsCount > 1) {
-                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignment."
-                } else {
-                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments."
-                }
-            } else if (!hasNewAssignments && hasNewStories) {
-                if (hasNewAssignmentsCount > 1) {
-                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new story."
-                } else {
-                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new stories."
-                }
-            }
-            
-            localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
-            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        } else {
             
         }
         
+        if (assignmentsCount > storedAssignmentsCount) {
+            hasNewAssignments = true
+            hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
+        }
+        
     }
+    
+    //setup notifications
+    var localNotification:UILocalNotification = UILocalNotification()
+    //localNotification.alertAction = "New notifications on Yellr"
+    
+    //TODO: Localization
+    if (hasNewAssignments && hasNewStories) {
+        localNotification.alertBody = "You have new stories and assignments."
+    } else if (hasNewAssignments && !hasNewStories) {
+        if (hasNewAssignmentsCount > 1) {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignment"
+        } else {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments"
+        }
+    } else if (!hasNewAssignments && hasNewStories) {
+        if (hasNewAssignmentsCount > 1) {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new story"
+        } else {
+            localNotification.alertBody = "You have \(hasNewAssignmentsCount) new stories"
+        }
+    }
+    
+    localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
+    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+    
+    //for iOS8
+    
+    //count stories
+//    request = NSURLRequest(URL: NSURL(string: buildUrl("get_stories.json", latitude, longitude))!);
+//    NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
+//        (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+//        
+//        Yellr.println("test2")
+//        
+//        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+//            
+//            var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
+//            
+//            for itemDict in rawStoryItems {
+//                
+//                storiesCount++
+//            }
+//            
+//        } else {
+//            
+//        }
+//        
+//        if (storiesCount > storedStoriesCount) {
+//            hasNewStories = true
+//            hasNewStoriesCount = storiesCount - storedStoriesCount
+//        }
+//        
+//        //count new assignments if any
+//        request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
+//        
+//
+//        
+//        NSURLConnection.sendAsynchronousRequest(request,queue: NSOperationQueue.mainQueue()) {
+//            (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+//            
+//            if ((error) != nil) {
+//                Yellr.println(error)
+//            }
+//            
+//            Yellr.println("test3")
+//            
+//            if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: nil, error: nil) as? NSDictionary {
+//                
+//                var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
+//                
+//                for itemDict in rawAssignmentItems {
+//                    
+//                    assignmentsCount++
+//                }
+//                
+//            } else {
+//                
+//            }
+//            
+//            if (assignmentsCount > storedAssignmentsCount) {
+//                hasNewAssignments = true
+//                hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
+//            }
+//            
+//            Yellr.println("gegege")
+//            
+//            //setup notifications
+//            var localNotification:UILocalNotification = UILocalNotification()
+//            //localNotification.alertAction = "New notifications on Yellr"
+//            
+//            //TODO: Localization
+//            if (hasNewAssignments && hasNewStories) {
+//                localNotification.alertBody = "You have new stories and assignments."
+//            } else if (hasNewAssignments && !hasNewStories) {
+//                if (hasNewAssignmentsCount > 1) {
+//                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignment."
+//                } else {
+//                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments."
+//                }
+//            } else if (!hasNewAssignments && hasNewStories) {
+//                if (hasNewAssignmentsCount > 1) {
+//                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new story."
+//                } else {
+//                    localNotification.alertBody = "You have \(hasNewAssignmentsCount) new stories."
+//                }
+//            }
+//            
+//            localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
+//            UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+//            
+//            Yellr.println("Here")
+//            
+//        }
+//        
+//    }
 
 }

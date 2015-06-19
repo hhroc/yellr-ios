@@ -23,9 +23,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         //local notifications
         if (iOS8) {
-            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil)
+            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
             UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        } else {
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound | UIRemoteNotificationType.Alert)
         }
 //        if (iOS8) {
 //            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
