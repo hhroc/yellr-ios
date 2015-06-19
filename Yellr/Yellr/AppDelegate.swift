@@ -22,9 +22,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         initNavBarStyle()
         
         //local notifications
-        let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil)
-        UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-        UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        if (iOS8) {
+            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert, categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
+            UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        }
 //        if (iOS8) {
 //            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
 //        }
