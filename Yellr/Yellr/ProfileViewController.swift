@@ -98,9 +98,13 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
 
     func resetCuidTapped(sender: UIBarButtonItem) {
         let alert = UIAlertView()
-        alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
-        alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
-        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
+        alert.title = NSLocalizedString(YellrConstants.Profile.ResetDialogTitle, comment: "Reset Dialog Title")
+        alert.message = NSLocalizedString(YellrConstants.Profile.ResetDialogMessage, comment: "Reset Dialog Message")
+        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Profile.ResetDialogConfirm, comment: "Yes"))
+        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Common.CancelButton, comment: "Cancel"))
+        alert.cancelButtonIndex = 1
+        alert.tag=213
+        alert.delegate = self
         alert.show()
     }
     
@@ -174,10 +178,6 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         
         locationManager.stopUpdatingLocation()
         
-        //TODO: Store Lat Long in userprefs
-        //TODO: stopUpdatingLocation should be called after a couple of seconds from
-        //receiving the first location
-        
     }
     
     func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
@@ -187,6 +187,34 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
+    }
+    
+    //MARK: Alert View Delegates
+    func alertView(View: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
+        Yellr.println(View.tag)
+        //identifier for the reset dialog
+        if (View.tag == 213) {
+            Yellr.println(buttonIndex)
+            //first time post notify
+            switch buttonIndex{
+                
+                case 0:
+                    //reset the cuid
+                    var cuid = resetCUID()
+                    dispatch_async(dispatch_get_main_queue()){
+                        self.cuidValue.text = "CUID: " + cuid
+                        self.postsCount.text = String("0")
+                        self.postsViewedCount.text = String("0")
+                        self.postsUsedCount.text = String("0")
+                    }
+                    break;
+                default:
+                    break;
+                
+            }
+            
+        }
+        
     }
     
 }

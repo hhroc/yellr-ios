@@ -49,6 +49,9 @@ struct YellrConstants {
         static let PostsViewedLabel = "profile_posts_viewed_label"
         static let PostsUsedLabel = "profile_posts_used_label"
         static let Unverified = "profile_unverified"
+        static let ResetDialogTitle = "profile_reset_dialog_title"
+        static let ResetDialogMessage = "profile_reset_dialog_message"
+        static let ResetDialogConfirm = "profile_reset_dialog_confirm"
     }
     
     struct AddPost {

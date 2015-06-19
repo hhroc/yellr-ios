@@ -583,9 +583,6 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         locationManager.stopUpdatingLocation()
         
-        //TODO: Store Lat Long in userprefs
-        //TODO: stopUpdatingLocation should be called after a couple of seconds from
-        //receiving the first location
         
     }
     

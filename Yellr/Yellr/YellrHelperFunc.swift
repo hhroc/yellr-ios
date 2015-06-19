@@ -295,7 +295,7 @@ func getCUID() -> String {
 /**
  * reset the CUID
  */
-func resetCUID() {
+func resetCUID() -> String {
     let preferences = NSUserDefaults.standardUserDefaults()
     var cuid = NSUUID().UUIDString
     let cuidKey = "ycuid"
@@ -303,6 +303,8 @@ func resetCUID() {
     //  Save to disk
     let didSave = preferences.synchronize()
     if !didSave {}
+    
+    return cuid
 }
 
 //function to fetch background data and show notification
