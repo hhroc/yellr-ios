@@ -109,7 +109,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 height += 140.0
             } else {
 
-                calculationView.attributedText = NSMutableAttributedString(string: text)
+                var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                calculationView.attributedText = NSAttributedString(string: text, attributes: attrs)
                 var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                 height += size.height
             }
@@ -117,6 +118,45 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         }
         
         return height + 20
+        
+        
+        
+        
+//        var sizingCell : LocalTableViewCell
+//        var onceToken : dispatch_once_t
+//
+//        dispatch_once(&onceToken, { () -> Void in
+//            sizingCell = tableView.dequeueReusableCellWithIdentifier("LocalTVCIdentifier", forIndexPath: indexPath) as! LocalTableViewCell
+//        })
+//        
+//        var mo : ModelObject = self.model[indexPath.row]
+//        
+//        // 3
+//        CGFloat (^calcCellHeight)(MyTableViewCell *, NSString *) = ^ CGFloat(MyTableViewCell *sizingCell, NSString *labelText){
+//            
+//            sizingCell.customLabel.text = labelText;
+//            
+//            return [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
+//        };
+//        
+//        NSUInteger ix = indexPath.row;
+//        
+//        // 4
+//        if ([self.cachedHeights[ix] isEqual:[NSNull null]]){
+//            
+//            CGFloat cellHeight = calcCellHeight(sizingCell, mo.customStringProperty);
+//            
+//            self.cachedHeights[ix] = @(cellHeight);
+//        }
+//        
+//        // 5  
+//        return ([self.cachedHeights[ix] floatValue] < MyMinimumCellHeight) ?
+//            MyMinimumCellHeight : [self.cachedHeights[ix] floatValue];
+
+        
+        
+        
+        
     }
     
     //when profile button is tapped in UINavBar
@@ -202,6 +242,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_text as? String
+                textView.font = UIFont(name: "IowanOldStyle-Roman", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false
