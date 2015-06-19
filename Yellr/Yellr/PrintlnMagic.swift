@@ -24,7 +24,7 @@ import Foundation
 */
 public func println<T>(object: T, _ file: String = __FILE__, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
 {
-    var enabled = true
+    var enabled = YellrConstants.AppInfo.DevMode
     let filename = file.lastPathComponent.stringByDeletingPathExtension
     if (enabled) {
         print("\n")

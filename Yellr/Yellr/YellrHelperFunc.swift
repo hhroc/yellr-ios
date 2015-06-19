@@ -279,7 +279,7 @@ func buildUrl(method: String , latitude: String, longitude: String) -> String {
 func getCUID() -> String {
     let preferences = NSUserDefaults.standardUserDefaults()
     var cuid = ""
-    let cuidKey = YellrConstants.AppInfo.CUIDKeyName
+    let cuidKey = YellrConstants.Keys.CUIDKeyName
     if preferences.objectForKey(cuidKey) == nil {
         cuid = NSUUID().UUIDString
         preferences.setValue(cuid, forKey: cuidKey)

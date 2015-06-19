@@ -12,7 +12,7 @@ struct YellrConstants {
     
     struct AppInfo {
         static let version = "0.1"
-        static let CUIDKeyName = "ycuid"
+        static let DevMode = true
     }
     
     struct Direction {
@@ -27,6 +27,7 @@ struct YellrConstants {
     struct Keys {
         static let StoredStoriesCount = "stored_stories_count_key"
         static let StoredAssignmentsCount = "stored_assignments_count_key"
+        static let CUIDKeyName = "ycuid"        
     }
     
     struct LocalPosts {
