@@ -13,6 +13,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     
     let assgnViewModel = AssignmentsViewModel()
     
+    var repliedToAssignments : NSString = ""
     var assignmentsUrlEndpoint: String = ""
     var dataSource : Array<AssignmentsDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -72,6 +73,16 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         locationManager.startUpdatingLocation()
         startLocation = nil
+        
+        //get replied to assignments
+        let asdefaults = NSUserDefaults.standardUserDefaults()
+        if asdefaults.objectForKey(YellrConstants.Keys.RepliedToAssignments) == nil {
+            
+        } else {
+            self.repliedToAssignments = asdefaults.stringForKey(YellrConstants.Keys.RepliedToAssignments)!
+        }
+        Yellr.println(self.repliedToAssignments)
+
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -134,6 +145,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     func configureCell(cell:AssignmentsTableViewCell, atIndexPath indexPath:NSIndexPath) {
         
         var assignmentItem : AssignmentsDataModel = self.dataSource[indexPath.row]
+        var postID = assignmentItem.as_post_ID as? Int
+        
+        if (self.repliedToAssignments.containsString("[" + String(stringInterpolationSegment: postID!) + "]")) {
+            cell.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_grey)
+        }
         
         cell.assgnTitle.text = assignmentItem.as_question_text as? String
         

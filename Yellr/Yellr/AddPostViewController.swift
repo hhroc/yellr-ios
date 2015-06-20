@@ -335,6 +335,19 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                                         self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
                                     }
                                     
+                                    //save used assignment ID in UserPrefs to grey out used assignment item
+                                    if (self.postId != 0) {
+                                        let asdefaults = NSUserDefaults.standardUserDefaults()
+                                        var savedAssignmentIds = ""
+                                        if asdefaults.objectForKey(YellrConstants.Keys.RepliedToAssignments) == nil {
+
+                                        } else {
+                                            savedAssignmentIds = asdefaults.stringForKey(YellrConstants.Keys.RepliedToAssignments)!
+                                        }
+                                        asdefaults.setObject(savedAssignmentIds + "[" + String(self.postId) + "]", forKey: YellrConstants.Keys.RepliedToAssignments)
+                                        asdefaults.synchronize()
+                                    }
+                                    
                                 } else {
                                     //fail toast
                                     postFail = true

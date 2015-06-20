@@ -28,7 +28,8 @@ struct YellrConstants {
     struct Keys {
         static let StoredStoriesCount = "stored_stories_count_key"
         static let StoredAssignmentsCount = "stored_assignments_count_key"
-        static let CUIDKeyName = "ycuid"        
+        static let CUIDKeyName = "ycuid"
+        static let RepliedToAssignments = "replied_to_assignments"
     }
     
     struct LocalPosts {
@@ -107,6 +108,7 @@ struct YellrConstants {
         static let up_vote_green:UInt = 0x1abc9c;
         static let grey:UInt = 0x444444;
         static let light_grey:UInt = 0xbbbbbb;
+        static let very_light_grey:UInt = 0xe8e8e8;
         static let assignment_response_grey:UInt = 0xe0e0e0;
         static let background:UInt = 0xeeeeee;
     }

@@ -104,6 +104,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 //    
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         
+        //TODO: Implement Cache
+        
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         var height:CGFloat = 120.0
         var calculationView : UITextView = UITextView()
