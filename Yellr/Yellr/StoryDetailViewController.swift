@@ -24,6 +24,7 @@ class StoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.title = story
         stitle.text = story
         postedBy.text = lname + " " + fname
         postedOn.text = publishedOn

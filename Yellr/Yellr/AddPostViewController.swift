@@ -66,10 +66,16 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         if (postTitle != nil) {
             addPostTitle.text = postTitle
+            addPostTitle.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            addPostTitle.numberOfLines = 0
+            addPostTitle.sizeToFit()
         }
         
         if (postDesc != nil) {
             addPostDesc.text = postDesc
+            addPostDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            addPostDesc.numberOfLines = 0
+            addPostDesc.sizeToFit()
         }
         
         //pickedImage.image = UIImage(named: "Debjit.jpg")
