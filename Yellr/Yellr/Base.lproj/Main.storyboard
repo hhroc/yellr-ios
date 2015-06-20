@@ -540,10 +540,10 @@
             </objects>
             <point key="canvasLocation" x="2730" y="1118"/>
         </scene>
-        <!--Yellr Tab Bar Controller-->
+        <!--YellrTabBarVC-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController modalTransitionStyle="partialCurl" id="49e-Tb-3d3" customClass="YellrTabBarController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="YellrTabBarVC" title="YellrTabBarVC" modalTransitionStyle="partialCurl" id="49e-Tb-3d3" customClass="YellrTabBarController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
@@ -579,10 +579,10 @@
             </objects>
             <point key="canvasLocation" x="873" y="134"/>
         </scene>
-        <!--Stories TVC-->
+        <!--StoriesTVC-->
         <scene sceneID="eXX-dd-Xxo">
             <objects>
-                <tableViewController title="Stories TVC" id="R5t-p8-Wc0" customClass="StoriesTableViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="StoriesTVC" title="StoriesTVC" id="R5t-p8-Wc0" customClass="StoriesTableViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="108" sectionHeaderHeight="22" sectionFooterHeight="22" id="jYA-vb-dz4">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -899,7 +899,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="4Dz-8N-i6t"/>
-        <segue reference="Yl4-7o-WYg"/>
+        <segue reference="GUf-3E-6Jk"/>
+        <segue reference="hEe-pR-idg"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Yellr.println("thisihs2")
             //show correct VC based on userinfo
             Yellr.println(notification.userInfo)
+            
         }
         
         if(application.applicationState == UIApplicationState.Active ) {
