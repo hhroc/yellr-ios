@@ -261,6 +261,8 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
             longitude = ylongitude
         } else {}
         self.loadStoriesTableView(latitude, longitude: longitude)
+        
+        Yellr.println("H3")
     }
     
 }

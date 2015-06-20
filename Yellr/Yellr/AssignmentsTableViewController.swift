@@ -38,7 +38,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
         //application is becoming active again
-        //may be from background or from notification
+        //may be from background service or from notification
         NSNotificationCenter.defaultCenter().addObserver(self,
             selector: "applicationBecameActive:",
             name: UIApplicationDidBecomeActiveNotification,
@@ -242,6 +242,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         alert.show()
     }
     
+    //user comes here from the notification, do this
     func applicationBecameActive(notification: NSNotification) {
         var latitude = ""
         var longitude = ""
@@ -255,6 +256,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         } else {}
         self.loadAssignmentsTableView(latitude, longitude: longitude)
         Yellr.println("here - didbacemaactive assignment")
+        Yellr.println("H2")
     }
     
 }

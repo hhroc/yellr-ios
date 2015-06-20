@@ -316,7 +316,7 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     var latitude = "43.16"
     var longitude = "-77.61"
     var storedStoriesCount = 0
-    var storiesCount = 2
+    var storiesCount = 0
     var storedAssignmentsCount = 0
     var assignmentsCount = 0
     
@@ -335,6 +335,7 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     
     if let ystoredstoriescount = defaults.stringForKey(YellrConstants.Keys.StoredStoriesCount) {
         storedStoriesCount = ystoredstoriescount.toInt()!
+        Yellr.println(storedStoriesCount)
     } else {}
     
     if let ystoredassignmentscount = defaults.stringForKey(YellrConstants.Keys.StoredAssignmentsCount) {
@@ -371,6 +372,15 @@ func fetchBackgroundDataAndShowNotification() -> Void{
                 
             }
             
+            if (storiesCount > storedStoriesCount) {
+                hasNewStories = true
+                hasNewStoriesCount = storiesCount - storedStoriesCount
+                
+                //store the new stories count in userprefs
+                defaults.setObject(String(storiesCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+                defaults.synchronize()
+            }
+            
             
         }
     
@@ -397,6 +407,10 @@ func fetchBackgroundDataAndShowNotification() -> Void{
         if (assignmentsCount > storedAssignmentsCount) {
             hasNewAssignments = true
             hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
+            
+            //store the new assignments count in userprefs
+            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
+            defaults.synchronize()
         }
         
     }
