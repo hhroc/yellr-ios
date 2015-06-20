@@ -11,6 +11,7 @@ import Foundation
 struct YellrConstants {
     
     struct AppInfo {
+        static let Name = "Yellr"
         static let version = "0.1"
         static let DevMode = true
     }

@@ -316,7 +316,7 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     var latitude = "43.16"
     var longitude = "-77.61"
     var storedStoriesCount = 0
-    var storiesCount = 0
+    var storiesCount = 2
     var storedAssignmentsCount = 0
     var assignmentsCount = 0
     

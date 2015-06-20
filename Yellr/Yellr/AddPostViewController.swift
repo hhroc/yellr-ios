@@ -51,18 +51,24 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         photoBtn.titleLabel?.textAlignment = .Center
         photoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
+        photoBtn.layer.cornerRadius = 20
+        //photoBtn.frame.size.width += 20
         
         vdoBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
         vdoBtn.setFontAwesome(fontAwesome: "f03d", forState: .Normal)
         
         vdoBtn.titleLabel?.textAlignment = .Center
-        vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
+        vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        vdoBtn.layer.cornerRadius = 20
+        vdoBtn.userInteractionEnabled = false
         
         recordBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
         recordBtn.setFontAwesome(fontAwesome: "f130", forState: .Normal)
         
         recordBtn.titleLabel?.textAlignment = .Center
-        recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
+        recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        recordBtn.layer.cornerRadius = 20
+        recordBtn.userInteractionEnabled = false
         
         if (postTitle != nil) {
             addPostTitle.text = postTitle

@@ -32,6 +32,10 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
+        //left barbutton item
+        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
+        
         //application is becoming active again
         //may be from background or from notification
         NSNotificationCenter.defaultCenter().addObserver(self,
