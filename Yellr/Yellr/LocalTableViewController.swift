@@ -657,9 +657,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         alert.show()
     }
     
-    func applicationBecameActive(notification: NSNotification) {
-        Yellr.println("H1")
-    }
     
 }
 

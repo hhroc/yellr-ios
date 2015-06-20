@@ -417,6 +417,7 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     
     //setup notifications
     var localNotification:UILocalNotification = UILocalNotification()
+    var screenToShow = "assignments"
     //localNotification.alertAction = "New notifications on Yellr"
     
     //TODO: Localization
@@ -435,8 +436,9 @@ func fetchBackgroundDataAndShowNotification() -> Void{
         } else {
             localNotification.alertBody = "You have a new story to view"
         }
+        screenToShow = "stories"
     }
-    
+    localNotification.userInfo = ["screen" : screenToShow]
     localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
     UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
     

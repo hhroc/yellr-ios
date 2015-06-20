@@ -37,13 +37,6 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
-        //application is becoming active again
-        //may be from background service or from notification
-        NSNotificationCenter.defaultCenter().addObserver(self,
-            selector: "applicationBecameActive:",
-            name: UIApplicationDidBecomeActiveNotification,
-            object: nil)
-        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -147,9 +140,18 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         var assignmentItem : AssignmentsDataModel = self.dataSource[indexPath.row]
         var postID = assignmentItem.as_post_ID as? Int
         
-        if (self.repliedToAssignments.containsString("[" + String(stringInterpolationSegment: postID!) + "]")) {
-            cell.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_grey)
+        if (iOS8) {
+            if (self.repliedToAssignments.containsString("[" + String(stringInterpolationSegment: postID!) + "]")) {
+                cell.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_grey)
+            }
+        } else {
+            //for ios7
+            var range : NSRange = self.repliedToAssignments.rangeOfString("[" + String(stringInterpolationSegment: postID!) + "]")
+            if (range.length != 0) {
+                cell.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_grey)
+            }
         }
+
         
         cell.assgnTitle.text = assignmentItem.as_question_text as? String
         
@@ -240,23 +242,6 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
-    }
-    
-    //user comes here from the notification, do this
-    func applicationBecameActive(notification: NSNotification) {
-        var latitude = ""
-        var longitude = ""
-        
-        let defaults = NSUserDefaults.standardUserDefaults()
-        if let ylatitude = defaults.stringForKey(YellrConstants.Direction.Latitude) {
-            latitude = ylatitude
-        } else {}
-        if let ylongitude = defaults.stringForKey(YellrConstants.Direction.Longitude) {
-            longitude = ylongitude
-        } else {}
-        self.loadAssignmentsTableView(latitude, longitude: longitude)
-        Yellr.println("here - didbacemaactive assignment")
-        Yellr.println("H2")
     }
     
 }

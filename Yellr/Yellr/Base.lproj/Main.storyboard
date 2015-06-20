@@ -44,8 +44,8 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AX-RF-XTb">
-                                            <rect key="frame" x="550" y="8" width="42" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AX-RF-XTb">
+                                            <rect key="frame" x="552" y="8" width="42" height="21"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="42" id="7D1-CL-tsj"/>
                                                 <constraint firstAttribute="height" constant="21" id="yho-v3-EVx"/>
@@ -60,9 +60,15 @@
                                         <constraint firstItem="JfK-FM-U8e" firstAttribute="top" secondItem="Kfy-DX-Qo2" secondAttribute="topMargin" id="Vkf-Rk-am9"/>
                                         <constraint firstItem="6AX-RF-XTb" firstAttribute="top" secondItem="Kfy-DX-Qo2" secondAttribute="topMargin" id="XOF-Ve-W0P"/>
                                         <constraint firstItem="8gm-3W-kp0" firstAttribute="leading" secondItem="Kfy-DX-Qo2" secondAttribute="leadingMargin" id="XcJ-dw-CwR"/>
+                                        <constraint firstItem="6AX-RF-XTb" firstAttribute="trailing" secondItem="Kfy-DX-Qo2" secondAttribute="trailingMargin" constant="2" id="oyW-Y5-bJA"/>
                                         <constraint firstItem="JfK-FM-U8e" firstAttribute="leading" secondItem="Kfy-DX-Qo2" secondAttribute="leadingMargin" id="sxI-lz-RA0"/>
                                         <constraint firstItem="8gm-3W-kp0" firstAttribute="top" secondItem="JfK-FM-U8e" secondAttribute="bottom" constant="8" id="tkd-1F-Oqz"/>
                                     </constraints>
+                                    <variation key="default">
+                                        <mask key="constraints">
+                                            <exclude reference="Fjy-53-0Yt"/>
+                                        </mask>
+                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="assgnTitle" destination="8gm-3W-kp0" id="o6s-R3-YAj"/>
