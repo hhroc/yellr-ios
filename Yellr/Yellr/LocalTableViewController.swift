@@ -197,6 +197,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         cell.downVoteBtn.addTarget(self, action: "downVoteClicked:", forControlEvents: .TouchUpInside)
         
         cell.postTitle?.text = localPostItem.lp_question_text as? String
+        cell.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        cell.postTitle?.numberOfLines = 0
+        cell.postTitle?.sizeToFit()
         
         if let author = localPostItem.lp_first_name as? String {
             cell.postedBy?.text = author
