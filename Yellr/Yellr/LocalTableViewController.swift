@@ -202,10 +202,20 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         cell.upVoteBtn.addTarget(self, action: "upVoteClicked:", forControlEvents: .TouchUpInside)
         cell.downVoteBtn.addTarget(self, action: "downVoteClicked:", forControlEvents: .TouchUpInside)
         
-        cell.postTitle?.text = localPostItem.lp_question_text as? String
-        cell.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        cell.postTitle?.numberOfLines = 0
-        cell.postTitle?.sizeToFit()
+        //for the questionmark
+        var attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
+        var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
+        
+        if let postTitle = localPostItem.lp_question_text as? String {
+
+            cell.postTitle?.text = "\(String.fontAwesome(unicode: 0xf059)) " + postTitle
+            cell.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            cell.postTitle?.numberOfLines = 0
+            cell.postTitle?.sizeToFit()
+            
+        } else {
+            cell.postTitle?.text = ""
+        }
         
         if let author = localPostItem.lp_first_name as? String {
             cell.postedBy?.text = author
@@ -251,7 +261,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_text as? String
-                textView.font = UIFont(name: "IowanOldStyle-Roman", size: 17.0)
+                textView.font = UIFont(name: "ArialMT", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false

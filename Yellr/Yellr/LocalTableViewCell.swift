@@ -39,7 +39,7 @@ class LocalTableViewCell: UITableViewCell {
 //                alert.title = "Failed : ("
 //                alert.message = msg
 //            }
-//            
+//
 //            // Move to the UI thread
 //            dispatch_async(dispatch_get_main_queue(), { () -> Void in
 //                // Show the alert
