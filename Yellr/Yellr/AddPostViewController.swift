@@ -10,7 +10,7 @@ import UIKit
 import MobileCoreServices
 import CoreLocation
 
-class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, CLLocationManagerDelegate {
+class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
     
     @IBOutlet weak var photoBtn: UIButton!
     @IBOutlet weak var vdoBtn: UIButton!
@@ -85,6 +85,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         }
         
         //pickedImage.image = UIImage(named: "Debjit.jpg")
+        postContent.delegate = self
         
     }
     
@@ -618,5 +619,11 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
+    }
+    
+    //MARK: Keyboard Delegates
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        postContent.resignFirstResponder()
+        return true
     }
 }

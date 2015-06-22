@@ -123,7 +123,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             
         }
         
-        return height + 20
+        return height + 0
         
         
         
