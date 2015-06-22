@@ -1,0 +1,39 @@
+/* 
+  Localizable.strings
+  Yellr
+
+  Created by Debjit Saha on 6/1/15.
+  Copyright (c) 2015 wxxi. All rights reserved.
+*/
+
+cancel_button_text="Cancel";
+back_button_text="Back";
+local_post_title="Local";
+assignments_title="Assignments";
+stories_title="Stories";
+profile_title="Profile";
+profile_reset_cuid_button="Reset CUID";
+profile_posts_label="Posts";
+profile_posts_viewed_label="Posts Viewed";
+profile_posts_used_label="Posts Used";
+profile_unverified="Unverified";
+profile_reset_dialog_title="Reset your CUID";
+profile_reset_dialog_message="Reseting your CUID will delete all your post ownership. Are you sure about this?";
+profile_reset_dialog_confirm="Yes";
+new_post_title="Free Post";
+anonymous_user="Anonymous User";
+new_post_failed="Post failed. Please try again!";
+new_post_failed_empty_text="Post content cannot be empty!";
+new_post_failed_empty_location="Please wait while we attach your location to the post!";
+new_post_success="Posted!";
+new_post_pop_menu_title="Choose Image";
+new_post_pop_menu_title_video="Choose Video";
+new_post_pop_menu_camera="Camera";
+new_post_pop_menu_gallery="Gallery";
+new_post_pop_menu_cancel="Cancel";
+new_post_first_time_alert_title="Posted!";
+new_post_first_time_alert_message="Your post will be visible to the public once it has been moderated by an Admin";
+new_post_first_time_alert_okay="Okay";
+location_error_title="Location Error";
+location_error_message="Could not get your current location. Yellr needs your current location to show stories.";
+location_error_okay="Okay";
