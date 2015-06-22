@@ -416,44 +416,6 @@
             </objects>
             <point key="canvasLocation" x="1605" y="134"/>
         </scene>
-        <!--Local Post Detail View Controller-->
-        <scene sceneID="KMg-UG-1Pq">
-            <objects>
-                <viewController title="Local Post Detail View Controller" id="mQn-Hs-FTV" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Wdx-YS-fTv"/>
-                        <viewControllerLayoutGuide type="bottom" id="6sy-XB-JCk"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="6dz-TE-VP0">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fug-IJ-ZQG">
-                                <rect key="frame" x="16" y="72" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lqD-W0-lQY">
-                                <rect key="frame" x="16" y="110" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yFR-L0-JSK">
-                                <rect key="frame" x="542" y="110" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aRc-Gm-Kkm" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2750" y="134"/>
-        </scene>
         <!--Story Detail View Controller-->
         <scene sceneID="cNH-sz-Yje">
             <objects>
@@ -495,17 +457,6 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vt1-CU-9DY">
                                 <rect key="frame" x="16" y="130" width="568" height="406"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="4Zo-hi-duh"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="568" id="IbQ-hk-a2Z"/>
-                                    <constraint firstAttribute="height" constant="406" id="X9D-ca-Mgf"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="398" id="bSq-VU-Lr7"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="4Zo-hi-duh"/>
-                                    </mask>
-                                </variation>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -515,6 +466,7 @@
                             <constraint firstItem="d35-Gh-vm8" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" constant="10" id="XXf-zN-hKb"/>
                             <constraint firstItem="vt1-CU-9DY" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" id="ZVo-mY-z4K"/>
                             <constraint firstItem="SY0-QW-59Y" firstAttribute="top" secondItem="d35-Gh-vm8" secondAttribute="bottom" constant="5" id="f0W-F8-Jwv"/>
+                            <constraint firstItem="Xwt-Gx-nDQ" firstAttribute="top" secondItem="vt1-CU-9DY" secondAttribute="bottom" constant="15" id="gEO-CG-ijj"/>
                             <constraint firstItem="d35-Gh-vm8" firstAttribute="top" secondItem="4fW-yS-AzJ" secondAttribute="bottom" constant="8" id="oub-Vf-1VA"/>
                             <constraint firstAttribute="centerX" secondItem="vt1-CU-9DY" secondAttribute="centerX" id="rN6-GC-IJx"/>
                             <constraint firstItem="vt1-CU-9DY" firstAttribute="top" secondItem="W6U-tM-Qio" secondAttribute="bottom" constant="18" id="sne-hq-oIj"/>
