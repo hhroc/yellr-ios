@@ -59,13 +59,13 @@ class LocalTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
+        downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.light_grey), forState: .Normal)
         downVoteBtn.setFontAwesome(fontAwesome: "f0dd", forState: .Normal)
         
         downVoteBtn.titleLabel?.textAlignment = .Center
         downVoteBtn.titleLabel?.numberOfLines = 1
         
-        upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
+        upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.light_grey), forState: .Normal)
         upVoteBtn.setFontAwesome(fontAwesome: "f0de", forState: .Normal)
         
         upVoteBtn.titleLabel?.textAlignment = .Center

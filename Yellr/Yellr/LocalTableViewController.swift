@@ -243,10 +243,12 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
                 if (isUpVote) {
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                   cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                 } else {
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                    cell.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
                 }
             } else {
                 cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
@@ -442,6 +444,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     //changing down vote to up vote
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
                     
                     //register the up vote
                     localPostItem.lp_is_up_vote = 1
@@ -461,6 +464,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 //first time voting
                 cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
                 cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
+                
                 localPostItem.lp_has_voted = 1
                 localPostItem.lp_is_up_vote = 1
                 
@@ -513,6 +518,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     //changing up vote to down vote
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                    cell.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
                     
                     //register the up vote
                     localPostItem.lp_is_up_vote = 0
@@ -532,6 +538,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 //first time down voting
                 cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                 cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                cell.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
                 localPostItem.lp_has_voted = 1
                 localPostItem.lp_is_up_vote = 0
                 
