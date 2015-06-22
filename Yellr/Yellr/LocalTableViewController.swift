@@ -202,10 +202,20 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         cell.upVoteBtn.addTarget(self, action: "upVoteClicked:", forControlEvents: .TouchUpInside)
         cell.downVoteBtn.addTarget(self, action: "downVoteClicked:", forControlEvents: .TouchUpInside)
         
-        cell.postTitle?.text = localPostItem.lp_question_text as? String
-        cell.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        cell.postTitle?.numberOfLines = 0
-        cell.postTitle?.sizeToFit()
+        //for the questionmark
+        var attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
+        var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
+        
+        if let postTitle = localPostItem.lp_question_text as? String {
+
+            cell.postTitle?.text = "\(String.fontAwesome(unicode: 0xf059)) " + postTitle
+            cell.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+            cell.postTitle?.numberOfLines = 0
+            cell.postTitle?.sizeToFit()
+            
+        } else {
+            cell.postTitle?.text = ""
+        }
         
         if let author = localPostItem.lp_first_name as? String {
             cell.postedBy?.text = author
@@ -233,10 +243,12 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
                 if (isUpVote) {
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                   cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                 } else {
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                    cell.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
                 }
             } else {
                 cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
@@ -251,7 +263,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_text as? String
-                textView.font = UIFont(name: "IowanOldStyle-Roman", size: 17.0)
+                textView.font = UIFont(name: "ArialMT", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false
@@ -432,6 +444,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     //changing down vote to up vote
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
                     
                     //register the up vote
                     localPostItem.lp_is_up_vote = 1
@@ -451,6 +464,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 //first time voting
                 cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
                 cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
+                
                 localPostItem.lp_has_voted = 1
                 localPostItem.lp_is_up_vote = 1
                 
@@ -503,6 +518,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     //changing up vote to down vote
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                     cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                    cell.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
                     
                     //register the up vote
                     localPostItem.lp_is_up_vote = 0
@@ -522,6 +538,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 //first time down voting
                 cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                 cell.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                cell.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
                 localPostItem.lp_has_voted = 1
                 localPostItem.lp_is_up_vote = 0
                 
