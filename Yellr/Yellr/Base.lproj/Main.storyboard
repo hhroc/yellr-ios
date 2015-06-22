@@ -457,17 +457,6 @@
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vt1-CU-9DY">
                                 <rect key="frame" x="16" y="130" width="568" height="406"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="600" id="4Zo-hi-duh"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="568" id="IbQ-hk-a2Z"/>
-                                    <constraint firstAttribute="height" constant="406" id="X9D-ca-Mgf"/>
-                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="398" id="bSq-VU-Lr7"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="4Zo-hi-duh"/>
-                                    </mask>
-                                </variation>
                             </webView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -477,6 +466,7 @@
                             <constraint firstItem="d35-Gh-vm8" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" constant="10" id="XXf-zN-hKb"/>
                             <constraint firstItem="vt1-CU-9DY" firstAttribute="leading" secondItem="NFZ-iZ-gNY" secondAttribute="leadingMargin" id="ZVo-mY-z4K"/>
                             <constraint firstItem="SY0-QW-59Y" firstAttribute="top" secondItem="d35-Gh-vm8" secondAttribute="bottom" constant="5" id="f0W-F8-Jwv"/>
+                            <constraint firstItem="Xwt-Gx-nDQ" firstAttribute="top" secondItem="vt1-CU-9DY" secondAttribute="bottom" constant="15" id="gEO-CG-ijj"/>
                             <constraint firstItem="d35-Gh-vm8" firstAttribute="top" secondItem="4fW-yS-AzJ" secondAttribute="bottom" constant="8" id="oub-Vf-1VA"/>
                             <constraint firstAttribute="centerX" secondItem="vt1-CU-9DY" secondAttribute="centerX" id="rN6-GC-IJx"/>
                             <constraint firstItem="vt1-CU-9DY" firstAttribute="top" secondItem="W6U-tM-Qio" secondAttribute="bottom" constant="18" id="sne-hq-oIj"/>
