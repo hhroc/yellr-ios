@@ -281,13 +281,13 @@ func getCUID() -> String {
     var cuid = ""
     let cuidKey = YellrConstants.Keys.CUIDKeyName
     if preferences.objectForKey(cuidKey) == nil {
-        cuid = NSUUID().UUIDString
+        cuid = NSUUID().UUIDString.lowercaseString
         preferences.setValue(cuid, forKey: cuidKey)
         //  Save to disk
         let didSave = preferences.synchronize()
         if !didSave {}
     } else {
-        cuid = preferences.stringForKey(cuidKey)!
+        cuid = preferences.stringForKey(cuidKey)!.lowercaseString
     }
     return cuid
 }
@@ -297,7 +297,7 @@ func getCUID() -> String {
  */
 func resetCUID() -> String {
     let preferences = NSUserDefaults.standardUserDefaults()
-    var cuid = NSUUID().UUIDString
+    var cuid = NSUUID().UUIDString.lowercaseString
     let cuidKey = "ycuid"
     preferences.setValue(cuid, forKey: cuidKey)
     //  Save to disk
