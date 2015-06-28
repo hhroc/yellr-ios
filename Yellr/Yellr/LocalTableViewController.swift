@@ -112,7 +112,23 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         if let text = localPostItem.lp_media_text as? String {
             if (count(text) == 0) {
-                height += 140.0
+                //this is an image so check for caption
+                
+                if let mediaCaption = localPostItem.lp_media_caption as? String {
+                    if (count(mediaCaption) == 0) {
+                        //there is no caption
+                        height += 140.0
+                    } else {
+                        //there is a caption
+                        var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                        calculationView.attributedText = NSAttributedString(string: mediaCaption, attributes: attrs)
+                        var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                        
+                        height += size.height
+                        
+                        height += 140.0
+                    }
+                }
             } else {
 
                 var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
@@ -123,46 +139,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             
         }
         
-        return height + 0
-        
-        
-        
-        
-//        var sizingCell : LocalTableViewCell
-//        var onceToken : dispatch_once_t
-//
-//        dispatch_once(&onceToken, { () -> Void in
-//            sizingCell = tableView.dequeueReusableCellWithIdentifier("LocalTVCIdentifier", forIndexPath: indexPath) as! LocalTableViewCell
-//        })
-//        
-//        var mo : ModelObject = self.model[indexPath.row]
-//        
-//        // 3
-//        CGFloat (^calcCellHeight)(MyTableViewCell *, NSString *) = ^ CGFloat(MyTableViewCell *sizingCell, NSString *labelText){
-//            
-//            sizingCell.customLabel.text = labelText;
-//            
-//            return [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
-//        };
-//        
-//        NSUInteger ix = indexPath.row;
-//        
-//        // 4
-//        if ([self.cachedHeights[ix] isEqual:[NSNull null]]){
-//            
-//            CGFloat cellHeight = calcCellHeight(sizingCell, mo.customStringProperty);
-//            
-//            self.cachedHeights[ix] = @(cellHeight);
-//        }
-//        
-//        // 5  
-//        return ([self.cachedHeights[ix] floatValue] < MyMinimumCellHeight) ?
-//            MyMinimumCellHeight : [self.cachedHeights[ix] floatValue];
-
-        
-        
-        
-        
+        Yellr.println(height)
+        return height
     }
     
     //when profile button is tapped in UINavBar
@@ -282,6 +260,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_caption as? String
+                textView.font = UIFont(name: "ArialMT", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false
@@ -295,11 +274,17 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 urlString = YellrConstants.API.endPoint + "/media/" + urlString
                 
                 //MARK: Version 2 - With Image Cache
-        
+                
+                //to get the height of the text view holding the caption
+                var calculationView : UITextView = UITextView()
+                var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                calculationView.attributedText = NSAttributedString(string: textView.text, attributes: attrs)
+                var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                
                 if self.imageCache.objectForKey(urlString) != nil {
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
-                    imageView.frame = CGRect(x: 0, y: 30, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
+                    imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
                     imageView.contentMode = UIViewContentMode.ScaleAspectFit
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
@@ -333,7 +318,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                 if currentIndex?.item == capturedIndex!.item {
                                     
                                     let imageView = UIImageView(image: itemImage!)
-                                    imageView.frame = CGRect(x: 0, y: 30, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
+                                    imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
                                     imageView.contentMode = UIViewContentMode.ScaleAspectFit
 //                                    imageView.autoresizingMask =
 //                                        (UIViewAutoresizing.FlexibleLeftMargin
