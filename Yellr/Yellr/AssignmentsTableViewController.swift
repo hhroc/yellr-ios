@@ -43,11 +43,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         super.viewDidAppear(animated)
         let subViews = self.tabBarController!.tabBar.subviews
         for subview in subViews{
-            if (subview.tag == 1201) {
+            if (subview.tag == YellrConstants.TagIds.BottomTabLocal) {
                 (subview as? UIView)!.hidden = true
-            } else if (subview.tag == 1202) {
+            } else if (subview.tag == YellrConstants.TagIds.BottomTabAssignments) {
                 (subview as? UIView)!.hidden = false
-            } else if (subview.tag == 1203) {
+            } else if (subview.tag == YellrConstants.TagIds.BottomTabStories) {
                 (subview as? UIView)!.hidden = true
             }
         }

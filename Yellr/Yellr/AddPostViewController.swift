@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import CoreLocation
+import MediaPlayer
 
 class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
     
@@ -18,7 +19,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet weak var submitBtn: UIBarButtonItem!
     @IBOutlet weak var cancelBtn: UIBarButtonItem!
     
-    @IBOutlet weak var pickedImage: UIImageView!
+    @IBOutlet weak var contentView: UIView!
+    
     
     @IBOutlet weak var addPostTitle: UILabel!
     @IBOutlet weak var addPostDesc: UILabel!
@@ -26,6 +28,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
     
+    var chosenMediaType = 0 //0 - pic, 1 - video, 2 - audio
     var postId: Int = 0
     var postTitle: String!
     var postDesc: String!
@@ -37,6 +40,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
+    var moviePlayer: MPMoviePlayerController?
     
     let picker = UIImagePickerController()
     
@@ -58,9 +62,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         vdoBtn.setFontAwesome(fontAwesome: "f03d", forState: .Normal)
         
         vdoBtn.titleLabel?.textAlignment = .Center
-        vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         vdoBtn.layer.cornerRadius = 20
-        vdoBtn.userInteractionEnabled = false
         
         recordBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
         recordBtn.setFontAwesome(fontAwesome: "f130", forState: .Normal)
@@ -84,7 +87,6 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             addPostDesc.sizeToFit()
         }
         
-        //pickedImage.image = UIImage(named: "Debjit.jpg")
         postContent.delegate = self
         
     }
@@ -236,7 +238,9 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         if(UIImagePickerController .isSourceTypeAvailable(UIImagePickerControllerSourceType.Camera)) {
             picker.sourceType = UIImagePickerControllerSourceType.Camera
             picker.allowsEditing = false
+            self.chosenMediaType = 0
             if (videoCamera) {
+                self.chosenMediaType = 1
                 picker.mediaTypes = [kUTTypeMovie!]
                 picker.videoQuality = UIImagePickerControllerQualityType.TypeLow
             }
@@ -254,8 +258,10 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
             //what to show in gallery - photo or video
             if (videoCamera) {
+                self.chosenMediaType = 1
                 picker.mediaTypes = [kUTTypeMovie!]
             } else {
+                self.chosenMediaType = 0
                 picker.mediaTypes = [kUTTypeImage!]
             }
             self.presentViewController(picker, animated: true, completion: nil)
@@ -289,9 +295,9 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 spinningActivity.labelText = "Posting"
                 spinningActivity.userInteractionEnabled = false
                 
-                if let imagePick = self.pickedImage.image {
+                if let imagePick = self.contentView.viewWithTag(YellrConstants.TagIds.AddPostImageView) as? UIImageView {
                     
-                    let imageData:NSData = NSData(data: UIImageJPEGRepresentation(self.pickedImage.image, 1.0))
+                    let imageData:NSData = NSData(data: UIImageJPEGRepresentation(imagePick.image, 1.0))
                     
                     postImage(["media_type":"image", "media_caption":postCont], imageData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
                         Yellr.println("Image Uploaded : " + msg)
@@ -583,9 +589,26 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     //MARK: Delegates
     //on chosing image - do what
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-        var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-        pickedImage.contentMode = .ScaleAspectFit
-        pickedImage.image = chosenImage
+        Yellr.println(self.chosenMediaType)
+        if (self.chosenMediaType == 0) {
+            Yellr.println("Here")
+            var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+            var pickedImage : UIImageView = UIImageView()
+            pickedImage.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: contentView.frame.height)
+            pickedImage.contentMode = .ScaleAspectFit
+            pickedImage.image = chosenImage
+            pickedImage.tag = YellrConstants.TagIds.AddPostImageView //a random identifier
+            if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostVideoView) != nil) {
+                //check and remove existing video view
+                self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostVideoView)?.removeFromSuperview()
+            }
+            self.contentView.addSubview(pickedImage)
+        } else if (self.chosenMediaType == 1) {
+            let tempImage = info[UIImagePickerControllerMediaURL] as! NSURL
+            let pathString = tempImage.relativePath
+            startPlayingVideo(tempImage)
+            Yellr.println(pathString)
+        }
         dismissViewControllerAnimated(true, completion: nil)
         
     }
@@ -625,5 +648,88 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         postContent.resignFirstResponder()
         return true
+    }
+    
+    //MARK: Video playing routines - mostly taken from http://git.io/vtaLK
+    func videoHasFinishedPlaying(notification: NSNotification){
+        
+        Yellr.println("Video finished playing")
+        
+        /* Find out what the reason was for the player to stop */
+        let reason =
+        notification.userInfo![MPMoviePlayerPlaybackDidFinishReasonUserInfoKey]
+            as! NSNumber?
+        
+        if let theReason = reason{
+            
+            let reasonValue = MPMovieFinishReason(rawValue: theReason.integerValue)
+            
+            switch reasonValue!{
+            case .PlaybackEnded:
+                /* The movie ended normally */
+                Yellr.println("Playback Ended")
+            case .PlaybackError:
+                /* An error happened and the movie ended */
+                Yellr.println("Error happened")
+            case .UserExited:
+                /* The user exited the player */
+                Yellr.println("User exited")
+            }
+            
+            Yellr.println("Finish Reason = \(theReason)")
+            stopPlayingVideo()
+        }
+        
+    }
+    
+    func stopPlayingVideo() {
+        
+        if let player = moviePlayer{
+            NSNotificationCenter.defaultCenter().removeObserver(self)
+            //player.stop()
+            //player.view.removeFromSuperview()
+        }
+        
+    }
+    
+    func startPlayingVideo(url : NSURL ){
+        
+        /* Now create a new movie player using the URL */
+        moviePlayer = MPMoviePlayerController(contentURL: url)
+        
+        if let player = moviePlayer{
+            
+            /* Listen for the notification that the movie player sends us
+            whenever it finishes playing */
+            NSNotificationCenter.defaultCenter().addObserver(self,
+                selector: "videoHasFinishedPlaying:",
+                name: MPMoviePlayerPlaybackDidFinishNotification,
+                object: nil)
+            
+            print("Successfully instantiated the movie player")
+            
+            //player.view.setTranslatesAutoresizingMaskIntoConstraints(true)
+            player.scalingMode = .AspectFit
+            player.prepareToPlay()
+            //player.movieSourceType = MPMovieSourceType.Streaming
+            player.contentURL = url
+            player.controlStyle = MPMovieControlStyle.Embedded
+            player.scalingMode = MPMovieScalingMode.AspectFill
+            player.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: self.contentView.frame.size.width, height: self.contentView.frame.size.height))
+            //player.setFullscreen(true, animated: false)
+            //player.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+            //player.view.autoresizesSubviews = true
+            player.view.tag = YellrConstants.TagIds.AddPostVideoView
+            if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostAudioView) != nil) {
+                //check and remove existing Audio view
+                self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostAudioView)?.removeFromSuperview()
+            }
+            self.contentView.addSubview(player.view)
+            //player.play()
+            
+        } else {
+            print("Failed to instantiate the movie player")
+        }
+        
     }
 }

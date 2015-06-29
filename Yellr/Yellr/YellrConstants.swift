@@ -25,6 +25,16 @@ struct YellrConstants {
         static let CancelButton = "cancel_button_text"
         static let BackButton = "back_button_text"
     }
+    
+    struct TagIds {
+        static let AddPostImageView = 221
+        static let AddPostVideoView = 222
+        static let AddPostAudioView = 223
+        static let BottomTabLocal = 1201
+        static let BottomTabAssignments = 1202
+        static let BottomTabStories = 1203
+    }
+    
     struct Keys {
         static let StoredStoriesCount = "stored_stories_count_key"
         static let StoredAssignmentsCount = "stored_assignments_count_key"

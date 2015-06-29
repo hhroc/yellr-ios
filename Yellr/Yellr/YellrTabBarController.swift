@@ -35,17 +35,17 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         //underline yellow bars for tabs
         let selectedBar1 = UIView(frame: CGRectMake(0, tabBar.frame.height+5, itemWidth, 6))
-        selectedBar1.tag = 1201
+        selectedBar1.tag = YellrConstants.TagIds.BottomTabLocal
         selectedBar1.hidden = false
         selectedBar1.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
         let selectedBar2 = UIView(frame: CGRectMake(0+itemWidth, tabBar.frame.height+5, itemWidth, 6))
-        selectedBar2.tag = 1202
+        selectedBar2.tag = YellrConstants.TagIds.BottomTabAssignments
         selectedBar2.hidden = true
         selectedBar2.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
         let selectedBar3 = UIView(frame: CGRectMake(0+2*itemWidth, tabBar.frame.height+5, itemWidth, 6))
-        selectedBar3.tag = 1203
+        selectedBar3.tag = YellrConstants.TagIds.BottomTabStories
         selectedBar3.hidden = true
         selectedBar3.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         
