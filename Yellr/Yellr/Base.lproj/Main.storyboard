@@ -159,6 +159,9 @@
                                 <variation key="widthClass=compact" fixedFrame="YES">
                                     <rect key="frame" x="344" y="129" width="40" height="30"/>
                                 </variation>
+                                <connections>
+                                    <action selector="recordAudio:" destination="f3Q-QL-uDs" eventType="touchUpInside" id="FXK-rB-Q38"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Udz-kI-egq">
                                 <rect key="frame" x="270" y="129" width="61" height="30"/>

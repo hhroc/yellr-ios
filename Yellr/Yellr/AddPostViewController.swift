@@ -10,6 +10,7 @@ import UIKit
 import MobileCoreServices
 import CoreLocation
 import MediaPlayer
+import AVFoundation
 
 class AddPostViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIActionSheetDelegate, CLLocationManagerDelegate, UITextFieldDelegate {
     
@@ -42,6 +43,17 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     var startLocation: CLLocation!
     var moviePlayer: MPMoviePlayerController?
     
+    var (abRecord, abPlay, abStop) = (UIButton(), UIButton(), UIButton())
+    var recordStatusLabel = UILabel()
+    
+    //Audio player, recorder
+    var recorder: AVAudioRecorder!
+    var player:AVAudioPlayer!
+    var meterTimer:NSTimer!
+    var soundFileURL:NSURL?
+    var audioRecordView:UIView!
+    //
+    
     let picker = UIImagePickerController()
     
     override func viewDidLoad() {
@@ -69,7 +81,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         recordBtn.setFontAwesome(fontAwesome: "f130", forState: .Normal)
         
         recordBtn.titleLabel?.textAlignment = .Center
-        recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         recordBtn.layer.cornerRadius = 20
         
         if (postTitle != nil) {
@@ -88,6 +100,13 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         postContent.delegate = self
         
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        recorder = nil
+        player = nil
+        moviePlayer = nil
     }
     
     //for the location object
@@ -109,6 +128,136 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         locationManager.startUpdatingLocation()
         startLocation = nil
         
+    }
+    
+    @IBAction func recordAudio(sender: UIButton) {
+        
+        abRecord.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        abRecord.setTitle("Record", forState: .Normal)
+        abRecord.frame = CGRectMake(0, 0, 100, 50)
+        abRecord.tag = YellrConstants.TagIds.AddPostAudioButtonRecord
+        abRecord.addTarget(self, action: "pressed:", forControlEvents: .TouchUpInside)
+        
+        abPlay.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        abPlay.setTitle("Play", forState: .Normal)
+        abPlay.frame = CGRectMake(115, 0, 100, 50)
+        abPlay.tag = YellrConstants.TagIds.AddPostAudioButtonPlay
+        abPlay.addTarget(self, action: "pressed:", forControlEvents: .TouchUpInside)
+        
+        abStop.setTitleColor(UIColor.blueColor(), forState: .Normal)
+        abStop.setTitle("Stop", forState: .Normal)
+        abStop.frame = CGRectMake(230, 0, 100, 50)
+        abStop.tag = YellrConstants.TagIds.AddPostAudioButtonStop
+        abStop.addTarget(self, action: "pressed:", forControlEvents: .TouchUpInside)
+        
+        recordStatusLabel.text = ""
+        recordStatusLabel.font = UIFont(name: "MarkerFelt-Thin", size: 45)
+        recordStatusLabel.textColor = UIColor.redColor()
+        recordStatusLabel.textAlignment = .Center
+        recordStatusLabel.numberOfLines = 2
+        recordStatusLabel.frame = CGRectMake(0, 80, 300, 500)
+        
+        abPlay.enabled = false
+        abStop.enabled = false
+        setSessionPlayback()
+        askForNotifications()
+        
+        self.audioRecordView = UIView(frame:CGRectMake(0, 0, 400, 300))
+        self.audioRecordView.addSubview(abRecord)
+        self.audioRecordView.addSubview(abStop)
+        self.audioRecordView.addSubview(abPlay)
+        self.audioRecordView.tag = YellrConstants.TagIds.AddPostAudioView
+        //remove views
+        self.removeViewsNotNeeded()
+        self.contentView.addSubview(self.audioRecordView)
+    }
+    
+    func pressed(sender: UIButton) {
+        if (sender.tag == YellrConstants.TagIds.AddPostAudioButtonRecord) {
+            
+            //Record
+            if player != nil && player.playing {
+                player.stop()
+            }
+            
+            if recorder == nil {
+                Yellr.println("recording. recorder nil")
+                abRecord.setTitle("Pause", forState:.Normal)
+                abPlay.enabled = false
+                abStop.enabled = true
+                recordWithPermission(true)
+                return
+            }
+            
+            if recorder != nil && recorder.recording {
+                Yellr.println("pausing")
+                recorder.pause()
+                abRecord.setTitle("Continue", forState:.Normal)
+                
+            } else {
+                Yellr.println("recording")
+                abRecord.setTitle("Pause", forState:.Normal)
+                abPlay.enabled = false
+                abStop.enabled = true
+                //            recorder.record()
+                recordWithPermission(false)
+            }
+            
+        } else if (sender.tag == YellrConstants.TagIds.AddPostAudioButtonStop) {
+            
+            //Stop Button
+            Yellr.println("stop")
+            
+            recorder?.stop()
+            player?.stop()
+            
+            meterTimer.invalidate()
+            
+            abRecord.setTitle("Record", forState:.Normal)
+            let session:AVAudioSession = AVAudioSession.sharedInstance()
+            var error: NSError?
+            if !session.setActive(false, error: &error) {
+                println("could not make session inactive")
+                if let e = error {
+                    println(e.localizedDescription)
+                    return
+                }
+            }
+            abPlay.enabled = true
+            abStop.enabled = false
+            abRecord.enabled = true
+            recorder = nil
+            
+        } else if (sender.tag == YellrConstants.TagIds.AddPostAudioButtonPlay) {
+            
+            //Play Button
+            Yellr.println("playing")
+            var error: NSError?
+            
+            if let r = recorder {
+                self.player = AVAudioPlayer(contentsOfURL: r.url, error: &error)
+                if self.player == nil {
+                    if let e = error {
+                        println(e.localizedDescription)
+                    }
+                }
+            } else {
+                self.player = AVAudioPlayer(contentsOfURL: soundFileURL!, error: &error)
+                if player == nil {
+                    if let e = error {
+                        println(e.localizedDescription)
+                    }
+                }
+            }
+            
+            abStop.enabled = true
+            
+            player.delegate = self
+            player.prepareToPlay()
+            player.volume = 1.0
+            player.play()
+            
+        }
     }
     
     @IBAction func takeVideo(sender: UIButton) {
@@ -597,10 +746,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             pickedImage.contentMode = .ScaleAspectFit
             pickedImage.image = chosenImage
             pickedImage.tag = YellrConstants.TagIds.AddPostImageView //a random identifier
-            if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostVideoView) != nil) {
-                //check and remove existing video view
-                self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostVideoView)?.removeFromSuperview()
-            }
+            self.removeViewsNotNeeded()
             self.contentView.addSubview(pickedImage)
         } else if (self.chosenMediaType == 1) {
             let tempImage = info[UIImagePickerControllerMediaURL] as! NSURL
@@ -681,6 +827,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
     }
     
+    //Video related functions
     func stopPlayingVideo() {
         
         if let player = moviePlayer{
@@ -705,7 +852,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 name: MPMoviePlayerPlaybackDidFinishNotification,
                 object: nil)
             
-            print("Successfully instantiated the movie player")
+            Yellr.println("Successfully instantiated the movie player")
             
             //player.view.setTranslatesAutoresizingMaskIntoConstraints(true)
             player.scalingMode = .AspectFit
@@ -719,16 +866,202 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             //player.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
             //player.view.autoresizesSubviews = true
             player.view.tag = YellrConstants.TagIds.AddPostVideoView
-            if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostAudioView) != nil) {
-                //check and remove existing Audio view
-                self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostAudioView)?.removeFromSuperview()
-            }
+            //remove views
+            self.removeViewsNotNeeded()
             self.contentView.addSubview(player.view)
             //player.play()
             
         } else {
-            print("Failed to instantiate the movie player")
+            Yellr.println("Failed to instantiate the movie player")
         }
         
+    }
+    
+    func removeViewsNotNeeded() {
+        if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostAudioView) != nil) {
+            //check and remove existing Audio view
+            self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostAudioView)?.removeFromSuperview()
+        }
+        if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostVideoView) != nil) {
+            //check and remove existing Audio view
+            self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostVideoView)?.removeFromSuperview()
+        }
+        if (self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostImageView) != nil) {
+            //check and remove existing Audio view
+            self.contentView?.viewWithTag(YellrConstants.TagIds.AddPostImageView)?.removeFromSuperview()
+        }
+    }
+    
+    //Audio record functions
+    func setupRecorder() {
+        var format = NSDateFormatter()
+        format.dateFormat="yyyy-MM-dd-HH-mm-ss"
+        var currentFileName = "recording-\(format.stringFromDate(NSDate())).m4a"
+        println(currentFileName)
+        
+        var dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
+        var docsDir: AnyObject = dirPaths[0]
+        var soundFilePath = docsDir.stringByAppendingPathComponent(currentFileName)
+        soundFileURL = NSURL(fileURLWithPath: soundFilePath)
+        let filemanager = NSFileManager.defaultManager()
+        if filemanager.fileExistsAtPath(soundFilePath) {
+            // probably won't happen. want to do something about it?
+            Yellr.println("sound exists")
+        }
+        
+        var recordSettings:[NSObject: AnyObject] = [
+            AVFormatIDKey: kAudioFormatAppleLossless,
+            AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
+            AVEncoderBitRateKey : 320000,
+            AVNumberOfChannelsKey: 2,
+            AVSampleRateKey : 44100.0
+        ]
+        var error: NSError?
+        recorder = AVAudioRecorder(URL: soundFileURL!, settings: recordSettings, error: &error)
+        if let e = error {
+            Yellr.println(e.localizedDescription)
+        } else {
+            recorder.delegate = self
+            recorder.meteringEnabled = true
+            recorder.prepareToRecord() // creates/overwrites the file at soundFileURL
+        }
+    }
+    
+    func updateAudioMeter(timer:NSTimer) {
+        
+        if recorder.recording {
+            let min = Int(recorder.currentTime / 60)
+            let sec = Int(recorder.currentTime % 60)
+            let s = String(format: "%02d:%02d", min, sec)
+            recordStatusLabel.text = s
+            recorder.updateMeters()
+            // if you want to draw some graphics...
+            var apc0 = recorder.averagePowerForChannel(0)
+            var peak0 = recorder.peakPowerForChannel(0)
+        }
+    }
+    
+    func recordWithPermission(setup:Bool) {
+        let session:AVAudioSession = AVAudioSession.sharedInstance()
+        // ios 8 and later
+        if (session.respondsToSelector("requestRecordPermission:")) {
+            AVAudioSession.sharedInstance().requestRecordPermission({(granted: Bool)-> Void in
+                if granted {
+                    Yellr.println("Permission to record granted")
+                    self.setSessionPlayAndRecord()
+                    if setup {
+                        self.setupRecorder()
+                    }
+                    self.recorder.record()
+                    self.meterTimer = NSTimer.scheduledTimerWithTimeInterval(0.1,
+                        target:self,
+                        selector:"updateAudioMeter:",
+                        userInfo:nil,
+                        repeats:true)
+                } else {
+                    Yellr.println("Permission to record not granted")
+                }
+            })
+        } else {
+            Yellr.println("requestRecordPermission unrecognized")
+        }
+    }
+    
+    func setSessionPlayback() {
+        let session:AVAudioSession = AVAudioSession.sharedInstance()
+        var error: NSError?
+        if !session.setCategory(AVAudioSessionCategoryPlayback, error:&error) {
+            println("could not set session category")
+            if let e = error {
+                Yellr.println(e.localizedDescription)
+            }
+        }
+        if !session.setActive(true, error: &error) {
+            println("could not make session active")
+            if let e = error {
+                Yellr.println(e.localizedDescription)
+            }
+        }
+    }
+    
+    func setSessionPlayAndRecord() {
+        let session:AVAudioSession = AVAudioSession.sharedInstance()
+        var error: NSError?
+        if !session.setCategory(AVAudioSessionCategoryPlayAndRecord, error:&error) {
+            println("could not set session category")
+            if let e = error {
+                Yellr.println(e.localizedDescription)
+            }
+        }
+        if !session.setActive(true, error: &error) {
+            println("could not make session active")
+            if let e = error {
+                Yellr.println(e.localizedDescription)
+            }
+        }
+    }
+    
+    func askForNotifications() {
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector:"background:",
+            name:UIApplicationWillResignActiveNotification,
+            object:nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self,
+            selector:"foreground:",
+            name:UIApplicationWillEnterForegroundNotification,
+            object:nil)
+    }
+    
+    func background(notification:NSNotification) {
+        Yellr.println("background")
+    }
+    
+    func foreground(notification:NSNotification) {
+        Yellr.println("foreground")
+    }
+}
+
+// MARK: AVAudioRecorderDelegate
+extension AddPostViewController : AVAudioRecorderDelegate {
+    
+    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!,
+        successfully flag: Bool) {
+            println("finished recording \(flag)")
+            abStop.enabled = false
+            abPlay.enabled = true
+            abRecord.setTitle("Record", forState:.Normal)
+            
+            // iOS8 and later
+            var alert = UIAlertController(title: "Recorder",
+                message: "Finished Recording",
+                preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "Keep", style: .Default, handler: {action in
+                println("keep was tapped")
+            }))
+            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {action in
+                println("delete was tapped")
+                self.recorder.deleteRecording()
+            }))
+            self.presentViewController(alert, animated:true, completion:nil)
+    }
+    
+    func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder!,
+        error: NSError!) {
+            println("\(error.localizedDescription)")
+    }
+}
+
+// MARK: AVAudioPlayerDelegate
+extension AddPostViewController : AVAudioPlayerDelegate {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+        Yellr.println("finished playing \(flag)")
+        abRecord.enabled = true
+        abStop.enabled = false
+    }
+    
+    func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer!, error: NSError!) {
+        Yellr.println("\(error.localizedDescription)")
     }
 }

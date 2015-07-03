@@ -33,6 +33,9 @@ struct YellrConstants {
         static let BottomTabLocal = 1201
         static let BottomTabAssignments = 1202
         static let BottomTabStories = 1203
+        static let AddPostAudioButtonRecord = 331
+        static let AddPostAudioButtonPlay = 332
+        static let AddPostAudioButtonStop = 333
     }
     
     struct Keys {
