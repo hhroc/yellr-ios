@@ -133,6 +133,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
 
                 var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
                 calculationView.attributedText = NSAttributedString(string: text, attributes: attrs)
+                calculationView.sizeToFit()
                 var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                 height += size.height
             }
@@ -283,7 +284,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
                     imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
-                    imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                    //imageView.contentMode = UIViewContentMode.ScaleAspectFit
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
                     cell.setNeedsLayout()
@@ -310,14 +311,19 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
                             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
         
-                                let itemImage = UIImage(data:imageData!)
+                                var itemImage = UIImage(data:imageData!)
+                                itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height))
+                                
+                                Yellr.println(itemImage!.size.width)
+                                Yellr.println(itemImage!.size.height)
+                                
                                 let currentIndex = self.tableView.indexPathForCell(cell)
         
                                 if currentIndex?.item == capturedIndex!.item {
                                     
                                     let imageView = UIImageView(image: itemImage!)
                                     imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
-                                    imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                                    //imageView.contentMode = UIViewContentMode.ScaleAspectFit
 //                                    imageView.autoresizingMask =
 //                                        (UIViewAutoresizing.FlexibleLeftMargin
 //                                            | UIViewAutoresizing.FlexibleRightMargin

@@ -71,7 +71,6 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         recordBtn.titleLabel?.textAlignment = .Center
         recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
         recordBtn.layer.cornerRadius = 20
-        recordBtn.userInteractionEnabled = false
         
         if (postTitle != nil) {
             addPostTitle.text = postTitle
