@@ -865,24 +865,6 @@
             </objects>
             <point key="canvasLocation" x="-578" y="454"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="XHQ-CW-hut">
-            <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="VFe-c5-AtA" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="InB-S2-6ie"/>
-                        <viewControllerLayoutGuide type="bottom" id="quH-aZ-x87"/>
-                    </layoutGuides>
-                    <view key="view" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="ngv-aF-HPG">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <toolbarItems/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="0OK-19-o3d" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="hEe-pR-idg"/>
