@@ -142,6 +142,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         return height
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        Yellr.println("Here")
+        self.performSegueWithIdentifier("LocalPostDetailSegue", sender: self)
+    }
+    
     //when profile button is tapped in UINavBar
     func profileTapped(sender:UIButton) {
         self.performSegueWithIdentifier("LocalToProfile", sender: self)
@@ -388,7 +393,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         }
         
         //show small arrow towards the right of each cell
-        //cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
     
     }
     
@@ -541,6 +546,227 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             
         }
         
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+        if (segue.identifier == "LocalPostDetailSegue") {
+            
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            var localPostItem:LocalPostDataModel = self.dataSource[indexPath.row]
+            var viewController = segue.destinationViewController as! LocalPostDetailViewController
+            viewController.title = localPostItem.lp_media_text as? String
+            
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                //for the questionmark
+                var attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
+                var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
+                
+                if let postTitle = localPostItem.lp_question_text as? String {
+                    
+                    viewController.postTitle?.text = "\(String.fontAwesome(unicode: 0xf059)) " + postTitle
+                    viewController.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                    viewController.postTitle?.numberOfLines = 0
+                    viewController.postTitle?.sizeToFit()
+                    
+                } else {
+                    viewController.postTitle?.text = ""
+                }
+                
+                if let author = localPostItem.lp_first_name as? String {
+                    viewController.postedBy?.text = author
+                } else {
+                    viewController.postedBy?.font = UIFont.fontAwesome(size: 13)
+                    viewController.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) " + NSLocalizedString(YellrConstants.LocalPosts.AnonymousUser, comment: "Anonymous User")
+                }
+                
+                var postedOn:String = (localPostItem.lp_post_datetime as? String)!
+                viewController.postedOn?.font = UIFont.fontAwesome(size: 13)
+                viewController.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
+                
+                viewController.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
+                //add - (negative to downvote counts)
+                var downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
+                var downVoteCountString = NSString(format:"%d", (stringInterpolationSegment: downVoteCount)) as String
+                if (downVoteCount != 0) {
+                    downVoteCountString = "-" + downVoteCountString
+                }
+                viewController.downVoteCount?.text = downVoteCountString
+                
+                //set vote count colors based on whether or not user has voted
+                if let hasVoted = localPostItem.lp_has_voted as? Bool {
+                    if (hasVoted) {
+                        var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                        if (isUpVote) {
+                            viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                            viewController.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
+                            viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                        } else {
+                            viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                            viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                            viewController.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
+                        }
+                    } else {
+                        viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                        viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    }
+                } else {
+                    
+                }
+                
+                if let postType = localPostItem.lp_media_type_name as? String {
+                    if (postType == "text") {
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_text as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        viewController.mediaContainer.hidden = false
+                        
+                    }
+                    
+                    if (postType == "image") {
+                        
+                        viewController.mediaContainer.hidden = false
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_caption as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        
+                        //url of image
+                        var urlString : String = localPostItem.lp_file_name as! String
+                        urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                        
+                        //MARK: Version 2 - With Image Cache
+                        
+                        //to get the height of the text view holding the caption
+                        var calculationView : UITextView = UITextView()
+                        var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                        calculationView.attributedText = NSAttributedString(string: textView.text, attributes: attrs)
+                        var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                        
+                        if self.imageCache.objectForKey(urlString) != nil {
+                            let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
+                            let imageView = UIImageView(image: itemImage!)
+                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 60.0)
+                            //imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                            imageView.hidden = false
+                            viewController.mediaContainer.addSubview(imageView)
+                            //cell.setNeedsLayout()
+                        }
+                        else {
+                            
+                            //start a loader animation
+                            var loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+                            loadIndicator.color = UIColor.lightGrayColor()
+                            loadIndicator.startAnimating()
+                            viewController.mediaContainer.addSubview(loadIndicator)
+                            
+                            //start the image load process
+                            weak var weakSelf : LocalTableViewController? = self
+                            
+                            dispatch_async(self.backgroundQueue, { () -> Void in
+                                
+                                let url = NSURL(string: urlString)!
+                                var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                                var err : NSError?
+                                var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+                                
+                                if err == nil {
+                                    
+                                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                                        
+                                        var itemImage = UIImage(data:imageData!)
+                                        itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height))
+                                        
+                                        Yellr.println(itemImage!.size.width)
+                                        Yellr.println(itemImage!.size.height)
+                                        
+                                        let currentIndex = indexPath
+                                        
+                                        if currentIndex.item == capturedIndex!.item {
+                                            
+                                            let imageView = UIImageView(image: itemImage!)
+                                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 60.0)
+                                            //imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                                            //                                    imageView.autoresizingMask =
+                                            //                                        (UIViewAutoresizing.FlexibleLeftMargin
+                                            //                                            | UIViewAutoresizing.FlexibleRightMargin
+                                            //                                            | UIViewAutoresizing.FlexibleTopMargin
+                                            //                                            | UIViewAutoresizing.FlexibleWidth)
+                                            imageView.hidden = false
+                                            
+                                            //add the image view
+                                            viewController.mediaContainer.addSubview(imageView)
+                                            
+                                            //remove the activity indicator
+                                            loadIndicator.removeFromSuperview()
+                                            
+                                            //cell.imageView.image = itemImage
+                                            //cell.setNeedsLayout()
+                                        }
+                                        weakSelf!.imageCache.setObject(itemImage!, forKey: urlString)
+                                    })
+                                }
+                            })
+                        }
+                        
+                        //MARK: Version 1 - Download Image, No Cache
+                        //                dispatch_async(self.backgroundQueue, { () -> Void in
+                        //
+                        //                    /* capture the index of the cell that is requesting this image download operation */
+                        //                    var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                        //
+                        //                    var err : NSError?
+                        //                    /* get url for image and download raw data */
+                        //                    let url = NSURL(string: urlString)!
+                        //                    var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+                        //
+                        //                    if err == nil {
+                        //
+                        //                        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                        //                            
+                        //                            /* create a UIImage object from the downloaded data */
+                        //                            let itemImage = UIImage(data:imageData!)
+                        //                            /* get the index of one of the cells that is currently being displayed */
+                        //                            let currentIndex = self.tableView.indexPathForCell(cell)
+                        //                            
+                        //                            // compare the captured cell index to some current cell index       //
+                        //                            // if the captured cell index is equal to some current cell index   //
+                        //                            // then the cell that requested the image is still on the screen so //
+                        //                            // we present the downloaded image else we do nothing               //
+                        //                            if currentIndex?.item == capturedIndex!.item {
+                        //                                let imageView = UIImageView(image: itemImage!)
+                        //                                imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
+                        //                                imageView.hidden = false
+                        //                                cell.mediaContainer.addSubview(imageView)
+                        //                                cell.setNeedsLayout()
+                        //                            }
+                        //                        })
+                        //                    }
+                        //                })
+                        
+                    }
+                } else {
+                    
+                }
+                
+                //viewController.mediaContainer.
+            })
+            
+        }
     }
     
     func initWebActivityIndicator() {

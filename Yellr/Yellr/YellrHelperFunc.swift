@@ -534,3 +534,18 @@ func fetchBackgroundDataAndShowNotification() -> Void{
 //    }
 
 }
+
+//init code for the upvote and down vote buttons
+func initVoteButtons(downVoteBtn: UIButton, upVoteBtn: UIButton) ->Void {
+    downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.light_grey), forState: .Normal)
+    downVoteBtn.setFontAwesome(fontAwesome: "f0dd", forState: .Normal)
+    
+    downVoteBtn.titleLabel?.textAlignment = .Center
+    downVoteBtn.titleLabel?.numberOfLines = 1
+    
+    upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.light_grey), forState: .Normal)
+    upVoteBtn.setFontAwesome(fontAwesome: "f0de", forState: .Normal)
+    
+    upVoteBtn.titleLabel?.textAlignment = .Center
+    upVoteBtn.titleLabel?.numberOfLines = 1
+}
