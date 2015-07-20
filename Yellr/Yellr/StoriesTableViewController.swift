@@ -35,7 +35,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
         //application is becoming active again
@@ -112,6 +112,11 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     //when add post button is tapped in UINavBar
     func addPostTapped(sender:UIButton) {
         self.performSegueWithIdentifier("StoryToPost", sender: self)
+    }
+    
+    //when Yellr button is tapped
+    func yellrTapped(sender:UIButton) {
+        self.tabBarController?.selectedIndex = 0
     }
     
     //class fucntion to return count of new stories fetched

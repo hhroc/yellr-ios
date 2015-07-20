@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  Yellr
+//  TestCoreData
 //
-//  Created by Debjit Saha on 5/29/15.
-//  Copyright (c) 2015 wxxi. All rights reserved.
+//  Created by Debjit Saha on 7/19/15.
+//  Copyright (c) 2015 com. All rights reserved.
 //
 
 import UIKit
@@ -17,63 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        
-        //nav bar customisation
-        initNavBarStyle()
-        
-        //local notifications
-        if (iOS8) {
-            let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil)
-            UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
-        } else {
-            UIApplication.sharedApplication().registerForRemoteNotificationTypes(UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound | UIRemoteNotificationType.Alert)
-        }
-//        if (iOS8) {
-//            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
-//        }
-        
         return true
-    }
-    
-    //needed to start the background service for checking new assignment / story data
-    func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        Yellr.println("Background Data")
-        completionHandler(UIBackgroundFetchResult.NewData)
-        fetchBackgroundDataAndShowNotification()
-    }
-    
-    //to take care of stuff after the app becomes active from local notify / or not
-    //for iOS7
-    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
-        
-        Yellr.println("thisihs1")
-        
-        if (application.applicationState == UIApplicationState.Inactive ) {
-            //The application received the notification from an inactive state, i.e. the user tapped the "View" button for the alert.
-            //If the visible view controller in your view controller stack isn't the one you need then show the right one.
-            Yellr.println("thisihs2")
-            //show correct VC based on userinfo
-            Yellr.println(notification.userInfo)
-            
-        }
-        
-        if(application.applicationState == UIApplicationState.Active ) {
-            //The application received a notification in the active state, so you can display an alert view or do something appropriate.
-            Yellr.println("thisihs3")
-            Yellr.println(notification.userInfo)
-        }
-        
-    }
-    
-    //to take care of stuff after the app becomes active from local notify / or not
-    //for iOS8
-    //Part A - when app is opened from the notification (App was in inactive state)
-    //Part B - when app is already opened, case for iOS8 handled above
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        
-        Yellr.println("thisihs")
-        
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -92,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        
     }
 
     func applicationWillTerminate(application: UIApplication) {
@@ -100,26 +43,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
     }
-    
+
     // MARK: - Core Data stack
-    
+
     lazy var applicationDocumentsDirectory: NSURL = {
         // The directory the application uses to store the Core Data store file. This code uses a directory named "com.test.TestCoreData" in the application's documents Application Support directory.
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
         return urls[urls.count-1] as! NSURL
-        }()
-    
+    }()
+
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
-        let modelURL = NSBundle.mainBundle().URLForResource("LocalPostStoredDataModel", withExtension: "momd")!
+        let modelURL = NSBundle.mainBundle().URLForResource("TestCoreData", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
-        }()
-    
+    }()
+
     lazy var persistentStoreCoordinator: NSPersistentStoreCoordinator? = {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
-        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("Yellr.sqlite")
+        let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent("TestCoreData.sqlite")
         var error: NSError? = nil
         var failureReason = "There was an error creating or loading the application's saved data."
         if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
@@ -137,8 +80,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return coordinator
-        }()
-    
+    }()
+
     lazy var managedObjectContext: NSManagedObjectContext? = {
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
@@ -148,10 +91,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var managedObjectContext = NSManagedObjectContext()
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
-        }()
-    
+    }()
+
     // MARK: - Core Data Saving support
-    
+
     func saveContext () {
         if let moc = self.managedObjectContext {
             var error: NSError? = nil

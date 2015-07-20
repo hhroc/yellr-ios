@@ -27,8 +27,6 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet weak var addPostDesc: UILabel!
     @IBOutlet weak var postContent: UITextField!
     
-    @IBOutlet weak var postingIndicator: UIActivityIndicatorView!
-    
     var chosenMediaType = 0 //0 - pic, 1 - video, 2 - audio
     var postId: Int = 0
     var postTitle: String!
@@ -75,6 +73,9 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         vdoBtn.titleLabel?.textAlignment = .Center
         vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
+        //temp change for app store submission
+        vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        vdoBtn.enabled = false
         vdoBtn.layer.cornerRadius = 20
         
         recordBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
@@ -82,6 +83,9 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         recordBtn.titleLabel?.textAlignment = .Center
         recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
+        //temp change for app store submission
+        recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        recordBtn.enabled = false
         recordBtn.layer.cornerRadius = 20
         
         if (postTitle != nil) {

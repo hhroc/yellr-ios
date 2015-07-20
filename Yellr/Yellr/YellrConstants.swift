@@ -50,6 +50,12 @@ struct YellrConstants {
         static let AnonymousUser = "anonymous_user"
     }
     
+    struct LocalPostDetail {
+        static let ReportTitle = "local_post_detail_title"
+        static let ReportMessage = "local_post_detail_message"
+        static let ReportOkay = "local_post_detail_okay"
+    }
+    
     struct Assignments {
         static let Title = "assignments_title"
     }

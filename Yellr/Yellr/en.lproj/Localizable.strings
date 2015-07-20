@@ -37,3 +37,6 @@ new_post_first_time_alert_okay="Okay";
 location_error_title="Location Error";
 location_error_message="Could not get your current location. Yellr needs your current location to show stories.";
 location_error_okay="Okay";
+local_post_detail_title="Reported!";
+local_post_detail_message="We have received your report.";
+local_post_detail_okay="Okay";

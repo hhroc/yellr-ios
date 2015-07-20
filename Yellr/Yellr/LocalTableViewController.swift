@@ -40,7 +40,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
 
     }
@@ -155,6 +155,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     //when add post button is tapped in UINavBar
     func addPostTapped(sender:UIButton) {
         self.performSegueWithIdentifier("LocalToPost", sender: self)
+    }
+    
+    //when Yellr button is tapped 
+    func yellrTapped(sender:UIButton) {
+        self.tabBarController?.selectedIndex = 0
     }
     
     //starts the tableviewload process
@@ -555,6 +560,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             var localPostItem:LocalPostDataModel = self.dataSource[indexPath.row]
             var viewController = segue.destinationViewController as! LocalPostDetailViewController
             viewController.title = localPostItem.lp_media_text as? String
+            viewController.storyId = localPostItem.lp_post_id as? Int
             
             dispatch_async(dispatch_get_main_queue()!, { () -> Void in
                 //for the questionmark
@@ -722,41 +728,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                 }
                             })
                         }
-                        
-                        //MARK: Version 1 - Download Image, No Cache
-                        //                dispatch_async(self.backgroundQueue, { () -> Void in
-                        //
-                        //                    /* capture the index of the cell that is requesting this image download operation */
-                        //                    var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
-                        //
-                        //                    var err : NSError?
-                        //                    /* get url for image and download raw data */
-                        //                    let url = NSURL(string: urlString)!
-                        //                    var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
-                        //
-                        //                    if err == nil {
-                        //
-                        //                        dispatch_sync(dispatch_get_main_queue(), { () -> Void in
-                        //                            
-                        //                            /* create a UIImage object from the downloaded data */
-                        //                            let itemImage = UIImage(data:imageData!)
-                        //                            /* get the index of one of the cells that is currently being displayed */
-                        //                            let currentIndex = self.tableView.indexPathForCell(cell)
-                        //                            
-                        //                            // compare the captured cell index to some current cell index       //
-                        //                            // if the captured cell index is equal to some current cell index   //
-                        //                            // then the cell that requested the image is still on the screen so //
-                        //                            // we present the downloaded image else we do nothing               //
-                        //                            if currentIndex?.item == capturedIndex!.item {
-                        //                                let imageView = UIImageView(image: itemImage!)
-                        //                                imageView.frame = CGRect(x: 0, y: 0, width: 200, height: 80)
-                        //                                imageView.hidden = false
-                        //                                cell.mediaContainer.addSubview(imageView)
-                        //                                cell.setNeedsLayout()
-                        //                            }
-                        //                        })
-                        //                    }
-                        //                })
                         
                     }
                 } else {

@@ -19,6 +19,8 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         tabBar.barTintColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
         tabBar.selectedImageTintColor = UIColor.blackColor()
         tabBar.translucent = false
+        //set tab bar item positioning / spacing
+        tabBar.itemPositioning = UITabBarItemPositioning.Fill
         //tabBar.items
         self.delegate = self
         
