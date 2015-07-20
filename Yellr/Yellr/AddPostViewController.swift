@@ -603,8 +603,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted"), message:
                     NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
                 alertController.addAction(UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeOkay, comment: "Okay"), style: UIAlertActionStyle.Default, handler: { (action) in
-                    //dismiss the add post view on pressing okay
-                    self.dismissViewControllerAnimated(true, completion: nil)
+                        //dismiss the add post view on pressing okay
+                        self.dismissViewControllerAnimated(true, completion: nil)
                     }
                     ))
                 

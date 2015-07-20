@@ -178,6 +178,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         
+        //remove media container image view
         for view in cell.mediaContainer.subviews{
             view.removeFromSuperview()
         }
@@ -561,6 +562,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             var viewController = segue.destinationViewController as! LocalPostDetailViewController
             viewController.title = localPostItem.lp_media_text as? String
             viewController.storyId = localPostItem.lp_post_id as? Int
+            viewController.lat = self.lat
+            viewController.long = self.long
             
             dispatch_async(dispatch_get_main_queue()!, { () -> Void in
                 //for the questionmark
