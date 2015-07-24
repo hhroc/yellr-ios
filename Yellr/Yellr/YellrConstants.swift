@@ -43,6 +43,7 @@ struct YellrConstants {
         static let StoredAssignmentsCount = "stored_assignments_count_key"
         static let CUIDKeyName = "ycuid"
         static let RepliedToAssignments = "replied_to_assignments"
+        static let PostListKeyName = "post_list_key"
     }
     
     struct LocalPosts {

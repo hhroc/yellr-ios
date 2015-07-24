@@ -21,6 +21,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     var urlSession = NSURLSession.sharedSession()
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
+    var postListString = ""
     
     var lat: String = ""
     var long: String = ""
@@ -168,9 +169,27 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         self.localPostsUrlEndpoint = buildUrl("get_local_posts.json", latitude, longitude)
         self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //Yellr.println("1")
             
+            self.dataSource = items!
+            
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                self.tableView.reloadData()
+                self.webActivityIndicator.hidden = true
+            })
+            
+            
+            
+            let preferences = NSUserDefaults.standardUserDefaults()
+            let postListKey = YellrConstants.Keys.PostListKeyName
+            if preferences.objectForKey(postListKey) == nil {
+                self.postListString = NSUUID().UUIDString.lowercaseString
+                preferences.setValue(self.postListString, forKey: postListKey)
+                //  Save to disk
+                let didSave = preferences.synchronize()
+                if !didSave {}
+            } else {
+                self.postListString = preferences.stringForKey(postListKey)!.lowercaseString
+            }
         })
     }
     
@@ -698,7 +717,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                     dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                                         
                                         var itemImage = UIImage(data:imageData!)
-                                        itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height))
+                                        //itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height))
                                         
                                         Yellr.println(itemImage!.size.width)
                                         Yellr.println(itemImage!.size.height)
@@ -760,14 +779,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             //Yellr.println(error)
             
             if (error == nil) {
-                self.dataSource = self.localPostItems(data)
-                
-                dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                    self.tableView.reloadData()
-                    self.webActivityIndicator.hidden = true
-                })
-                
-                responseHandler( error: nil, items: nil)
+                responseHandler( error: nil, items: self.localPostItems(data))
             } else {
                 Yellr.println(error)
             }
@@ -779,6 +791,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     func localPostItems(data: NSData) -> (Array<LocalPostDataModel>) {
         var jsonParseError: NSError?
         var refinedLocalPostItems : Array<LocalPostDataModel> = []
+        var postListString : String
         
         if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
          
@@ -821,6 +834,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     lp_up_vote_count : itemDict["up_vote_count"] )
                 
                 refinedLocalPostItems.append(item)
+                //postListString = "[" + (itemDict["post_id"] as? String)! + "]"
             }
             
         } else {
