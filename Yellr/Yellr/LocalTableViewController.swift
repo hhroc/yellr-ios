@@ -314,7 +314,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
                     imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
-                    //imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                    imageView.clipsToBounds = true
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
                     cell.setNeedsLayout()
@@ -342,7 +343,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
         
                                 var itemImage = UIImage(data:imageData!)
-                                itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height))
+                                //itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height))
                                 
                                 Yellr.println(itemImage!.size.width)
                                 Yellr.println(itemImage!.size.height)
@@ -353,12 +354,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                     
                                     let imageView = UIImageView(image: itemImage!)
                                     imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
-                                    //imageView.contentMode = UIViewContentMode.ScaleAspectFit
-//                                    imageView.autoresizingMask =
-//                                        (UIViewAutoresizing.FlexibleLeftMargin
-//                                            | UIViewAutoresizing.FlexibleRightMargin
-//                                            | UIViewAutoresizing.FlexibleTopMargin
-//                                            | UIViewAutoresizing.FlexibleWidth)
+                                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                                    imageView.clipsToBounds = true
                                     imageView.hidden = false
                                     
                                     //add the image view
@@ -688,10 +685,12 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         if self.imageCache.objectForKey(urlString) != nil {
                             let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                             let imageView = UIImageView(image: itemImage!)
-                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 60.0)
-                            //imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 160.0)
+                            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                            imageView.clipsToBounds = true
                             imageView.hidden = false
                             viewController.mediaContainer.addSubview(imageView)
+                            Yellr.println("here44")
                             //cell.setNeedsLayout()
                         }
                         else {
@@ -726,8 +725,14 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                         
                                         if currentIndex.item == capturedIndex!.item {
                                             
-                                            let imageView = UIImageView(image: itemImage!)
-                                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 60.0)
+                                            //let imageView = UIImageView(image: itemImage!)
+                                            let imageView = UIImageView()
+                                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 160.0)
+                                            
+                                            imageView.contentMode = .ScaleAspectFit
+                                            imageView.image = itemImage
+                                            imageView.clipsToBounds = true
+                                            
                                             //imageView.contentMode = UIViewContentMode.ScaleAspectFit
                                             //                                    imageView.autoresizingMask =
                                             //                                        (UIViewAutoresizing.FlexibleLeftMargin
