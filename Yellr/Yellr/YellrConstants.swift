@@ -13,7 +13,7 @@ struct YellrConstants {
     struct AppInfo {
         static let Name = "Yellr"
         static let version = "0.1.8"
-        static let DevMode = true
+        static let DevMode = false
     }
     
     struct Direction {
@@ -44,11 +44,17 @@ struct YellrConstants {
         static let CUIDKeyName = "ycuid"
         static let RepliedToAssignments = "replied_to_assignments"
         static let PostListKeyName = "post_list_key"
+        static let FirstTimeUserKey = "first_time_user_key"
     }
     
     struct LocalPosts {
         static let Title = "local_post_title"
         static let AnonymousUser = "anonymous_user"
+        
+        //first time alert
+        static let FirstTimeTitle = "new_user_welcome_title"
+        static let FirstTimeMessage = "new_user_welcome_message"
+        static let FirstTimeOkay = "new_user_welcome_okay"
     }
     
     struct LocalPostDetail {

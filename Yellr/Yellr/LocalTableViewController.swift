@@ -43,6 +43,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         //left barbutton item
         var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
+        
+        //show message to first time user
+        self.messageForFirstTimer()
 
     }
     
@@ -621,14 +624,17 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 if let hasVoted = localPostItem.lp_has_voted as? Bool {
                     if (hasVoted) {
                         var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                        viewController.hasVoted = "Yes"
                         if (isUpVote) {
                             viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
                             viewController.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
                             viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                            viewController.isUpVote = "Yes"
                         } else {
                             viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
                             viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
                             viewController.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
+                            viewController.isUpVote = "No"
                         }
                     } else {
                         viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
@@ -880,6 +886,48 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
+    }
+    
+    func messageForFirstTimer() {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let name = defaults.stringForKey(YellrConstants.Keys.FirstTimeUserKey) {
+            
+            //Not a first time user
+            
+        } else {
+            
+            //first time user of the app
+            if(iOS8) {
+                
+                let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.LocalPosts.FirstTimeTitle, comment: "LocalPosts Screen - Succesfully Posted"), message:
+                    NSLocalizedString(YellrConstants.LocalPosts.FirstTimeMessage, comment: "LocalPosts Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: NSLocalizedString(YellrConstants.LocalPosts.FirstTimeOkay, comment: "Okay"), style: UIAlertActionStyle.Default, handler: { (action) in
+                    //dismiss the add post view on pressing okay
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    ))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertView()
+                alert.tag = 0
+                alert.delegate = self
+                alert.title = NSLocalizedString(YellrConstants.LocalPosts.FirstTimeTitle, comment: "LocalPosts Screen - Succesfully Posted")
+                alert.message = NSLocalizedString(YellrConstants.LocalPosts.FirstTimeMessage, comment: "LocalPosts Screen Message Succesful")
+                alert.addButtonWithTitle(NSLocalizedString(YellrConstants.LocalPosts.FirstTimeOkay, comment: "Okay"))
+                alert.show()
+                
+            }
+            
+            defaults.setObject("NO", forKey: YellrConstants.Keys.FirstTimeUserKey)
+            defaults.synchronize()
+            
+        }
+        
     }
     
     
