@@ -177,7 +177,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            responseHandler( error: nil, items: self.assignmentItems(data))
+            if (error == nil) {
+                responseHandler( error: nil, items: self.assignmentItems(data))
+            } else {
+                Yellr.println(error)
+            }
         })
         task.resume()
     }

@@ -74,7 +74,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         } else {
             
         }
-        
+
         locationManager.startUpdatingLocation()
         startLocation = nil
         

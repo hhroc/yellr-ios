@@ -182,7 +182,11 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            responseHandler( error: nil, items: self.storyItems(data))
+            if (error == nil) {
+                responseHandler( error: nil, items: self.storyItems(data))
+            } else {
+                Yellr.println(error)
+            }
         })
         task.resume()
     }
