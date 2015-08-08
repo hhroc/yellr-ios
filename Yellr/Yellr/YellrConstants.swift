@@ -13,7 +13,7 @@ struct YellrConstants {
     struct AppInfo {
         static let Name = "Yellr"
         static let version = "0.1.8"
-        static let DevMode = false
+        static let DevMode = true
     }
     
     struct Direction {
@@ -126,6 +126,7 @@ struct YellrConstants {
         static let yellow:UInt = 0xFFD40C;
         static let dark_yellow:UInt = 0xF2BF00;
         static let light_yellow:UInt = 0xFFF22A;
+        static let very_light_yellow:UInt = 0xFFEE9E;
         static let white:UInt = 0xffffff;
         static let black:UInt = 0x2f2f2f;
         static let red:UInt = 0xff6347;
