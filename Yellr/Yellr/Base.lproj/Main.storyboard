@@ -982,12 +982,23 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CxM-tQ-pQ9">
+                                <rect key="frame" x="292" y="130" width="84" height="30"/>
+                                <state key="normal" title="Tap to verify">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapToVerifyPressed:" destination="eiH-uA-qGm" eventType="touchUpInside" id="nXX-uQ-NGN"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="y0V-3A-l9Q" firstAttribute="top" secondItem="w9m-61-IBX" secondAttribute="topMargin" constant="348" id="0gF-Hk-GoD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="y0V-3A-l9Q" secondAttribute="trailing" constant="30" id="2oH-IX-u5D"/>
                             <constraint firstItem="W5m-rh-C4o" firstAttribute="top" secondItem="y0V-3A-l9Q" secondAttribute="bottom" constant="26" id="322-L8-Cl8"/>
+                            <constraint firstItem="CxM-tQ-pQ9" firstAttribute="leading" secondItem="rBQ-dK-0zd" secondAttribute="trailing" constant="19" id="8E1-CU-Sfu"/>
+                            <constraint firstItem="CxM-tQ-pQ9" firstAttribute="top" secondItem="SnP-bB-mAW" secondAttribute="bottom" constant="15" id="FpG-bb-qHU"/>
                             <constraint firstItem="cHB-Cm-ik2" firstAttribute="top" secondItem="W5m-rh-C4o" secondAttribute="bottom" constant="26" id="KaS-JF-pLn"/>
                             <constraint firstAttribute="centerX" secondItem="lUZ-mw-h9O" secondAttribute="centerX" constant="-15" id="Kiw-Nm-y7V"/>
                             <constraint firstItem="rBQ-dK-0zd" firstAttribute="leading" secondItem="p70-aT-Ngo" secondAttribute="trailing" constant="45" id="Lde-mK-SCJ"/>
@@ -1022,14 +1033,52 @@
                         <outlet property="postsViewedLabel" destination="3H5-la-DRF" id="nyC-tb-Lv3"/>
                         <outlet property="postsViewedLogo" destination="uFR-U9-GT8" id="VnK-Vg-xqY"/>
                         <outlet property="resetCuidButton" destination="kOM-zK-Urn" id="D37-rr-5EP"/>
+                        <outlet property="tapToVerify" destination="CxM-tQ-pQ9" id="twr-km-suA"/>
                         <outlet property="userLogo" destination="p70-aT-Ngo" id="08w-Vg-w5z"/>
                         <outlet property="userName" destination="SnP-bB-mAW" id="koz-Gv-ldS"/>
                         <outlet property="verified" destination="rBQ-dK-0zd" id="Hlz-kU-eRa"/>
+                        <segue destination="gmj-dI-WvK" kind="show" id="wvL-31-RiE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lGe-of-Fhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-578" y="1310"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="ZLU-h5-rtc">
+            <objects>
+                <viewController id="gmj-dI-WvK" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="CYY-W5-Xqr"/>
+                        <viewControllerLayoutGuide type="bottom" id="Zfr-ah-dr5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oFt-pj-0wD">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-yQ-8oT">
+                                <rect key="frame" x="279" y="94" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UUx-3C-XIe">
+                                <rect key="frame" x="252" y="158" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f01-7Q-j34">
+                                <rect key="frame" x="252" y="216" width="97" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rv5-es-tGH" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="170" y="1310"/>
         </scene>
         <!--Stories-->
         <scene sceneID="LvO-wT-iEg">

@@ -1,16 +1,16 @@
 //
-//  ProfileViewController.swift
+//  VerifyUserViewController.swift
 //  Yellr
 //
-//  Created by Debjit Saha on 6/15/15.
+//  Created by Debjit Saha on 8/10/15.
 //  Copyright (c) 2015 wxxi. All rights reserved.
 //
 
 import UIKit
 import CoreLocation
 
-class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
-
+class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
+    
     @IBOutlet weak var resetCuidButton: UIBarButtonItem!
     @IBOutlet weak var cancelButton: UIBarButtonItem!
     @IBOutlet weak var cuidValue: UILabel!
@@ -28,7 +28,6 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
     @IBOutlet weak var postsCount: UILabel!
     @IBOutlet weak var postsViewedCount: UILabel!
     @IBOutlet weak var postsUsedCount: UILabel!
-    @IBOutlet weak var tapToVerify: UIButton!
     
     var latitude:String = ""
     var longitude:String = ""
@@ -96,7 +95,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
     @IBAction func cancelPressed(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil);
     }
-
+    
     func resetCuidTapped(sender: UIBarButtonItem) {
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Profile.ResetDialogTitle, comment: "Reset Dialog Title")
@@ -129,14 +128,9 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         task.resume()
     }
     
-    
-    @IBAction func tapToVerifyPressed(sender: UIButton) {
-        self.performSegueWithIdentifier("VerifyUserSegue", sender: sender)
-    }
-    
     func profileItems(data: NSData) -> Void {
         var jsonParseError: NSError?
-
+        
         if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
             
             //var pr_first_name = jsonResult["first_name"] as! String
@@ -159,7 +153,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         } else {
             
         }
-
+        
     }
     
     //MARK: Location Delegate functions
@@ -204,18 +198,18 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
             //first time post notify
             switch buttonIndex{
                 
-                case 0:
-                    //reset the cuid
-                    var cuid = resetCUID()
-                    dispatch_async(dispatch_get_main_queue()){
-                        self.cuidValue.text = "CUID: " + cuid
-                        self.postsCount.text = String("0")
-                        self.postsViewedCount.text = String("0")
-                        self.postsUsedCount.text = String("0")
-                    }
-                    break;
-                default:
-                    break;
+            case 0:
+                //reset the cuid
+                var cuid = resetCUID()
+                dispatch_async(dispatch_get_main_queue()){
+                    self.cuidValue.text = "CUID: " + cuid
+                    self.postsCount.text = String("0")
+                    self.postsViewedCount.text = String("0")
+                    self.postsUsedCount.text = String("0")
+                }
+                break;
+            default:
+                break;
                 
             }
             
