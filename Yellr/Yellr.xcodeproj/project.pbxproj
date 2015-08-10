@@ -20,7 +20,7 @@
 		263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */; };
 		263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */; };
 		263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */; };
-		264185CE1B7657030066265C /* SSRadioButtonController in Resources */ = {isa = PBXBuildFile; fileRef = 264185CD1B7657030066265C /* SSRadioButtonController */; };
+		264185D01B7816820066265C /* PollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264185CF1B7816820066265C /* PollViewController.swift */; };
 		264543671B21E5C500B8EA79 /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543661B21E5C500B8EA79 /* LocalViewModel.swift */; };
 		264543691B21F51500B8EA79 /* LocalPostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543681B21F51500B8EA79 /* LocalPostDataModel.swift */; };
 		264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645436F1B2230AE00B8EA79 /* AssignmentsViewModel.swift */; };
@@ -77,7 +77,7 @@
 		263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
 		263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewController.swift; sourceTree = "<group>"; };
 		263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTableViewController.swift; sourceTree = "<group>"; };
-		264185CD1B7657030066265C /* SSRadioButtonController */ = {isa = PBXFileReference; lastKnownFileType = folder; path = SSRadioButtonController; sourceTree = "<group>"; };
+		264185CF1B7816820066265C /* PollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollViewController.swift; sourceTree = "<group>"; };
 		264543661B21E5C500B8EA79 /* LocalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
 		264543681B21F51500B8EA79 /* LocalPostDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPostDataModel.swift; sourceTree = "<group>"; };
 		2645436F1B2230AE00B8EA79 /* AssignmentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsViewModel.swift; sourceTree = "<group>"; };
@@ -168,6 +168,7 @@
 				2616AC811B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld */,
 				26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */,
 				2604889D1B1E541900D781FE /* AddPostViewController.swift */,
+				264185CF1B7816820066265C /* PollViewController.swift */,
 				267964B51B2FCBEF00735925 /* ProfileViewController.swift */,
 				263E1B701B18D36A0063E9C6 /* Main.storyboard */,
 				263E1B731B18D36A0063E9C6 /* Images.xcassets */,
@@ -184,7 +185,6 @@
 		263E1B681B18D36A0063E9C6 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				264185CD1B7657030066265C /* SSRadioButtonController */,
 				2645437A1B23244A00B8EA79 /* FontAwesome.otf */,
 				267964BB1B3392A300735925 /* PrintlnMagic.swift */,
 				264543781B22BFB100B8EA79 /* Font-Awesome.swift */,
@@ -374,7 +374,6 @@
 				2661C8ED1B2A3B3A00CC681F /* 37x-Checkmark.png in Resources */,
 				2661C8F01B2C737600CC681F /* Debjit.jpg in Resources */,
 				263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */,
-				264185CE1B7657030066265C /* SSRadioButtonController in Resources */,
 				269A10DB1B1CCAB90001577D /* Localizable.strings in Resources */,
 				263E1B771B18D36A0063E9C6 /* LaunchScreen.xib in Resources */,
 				26CDFD291B388792005997D5 /* Images-2.xcassets in Resources */,
@@ -417,6 +416,7 @@
 				2661C87F1B27530500CC681F /* VoteButton.swift in Sources */,
 				267964B61B2FCBEF00735925 /* ProfileViewController.swift in Sources */,
 				2661C8E91B2A353200CC681F /* MBProgressHUD.m in Sources */,
+				264185D01B7816820066265C /* PollViewController.swift in Sources */,
 				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
 				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
 				264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */,

@@ -74,7 +74,6 @@
                                     <outlet property="assgnTitle" destination="8gm-3W-kp0" id="o6s-R3-YAj"/>
                                     <outlet property="postedBy" destination="JfK-FM-U8e" id="vxI-e9-mer"/>
                                     <outlet property="postedOn" destination="6AX-RF-XTb" id="kuh-NJ-FkG"/>
-                                    <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentDetail" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="LcY-8d-K1h"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -90,11 +89,77 @@
                     <connections>
                         <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentToPost" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="Yl4-7o-WYg"/>
                         <segue destination="ZJw-dO-OqD" kind="presentation" identifier="AssignmentToProfile" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="4Dz-8N-i6t"/>
+                        <segue destination="3Zu-Oy-ZSU" kind="presentation" identifier="AssignmentToPoll" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="k2h-cP-mvI"/>
+                        <segue destination="xzy-qb-zDw" kind="presentation" identifier="AssignmentDetail" modalPresentationStyle="fullScreen" modalTransitionStyle="coverVertical" id="EZG-nc-6du"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZpS-qY-pN9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1605" y="-686"/>
+        </scene>
+        <!--Poll View Controller Main-->
+        <scene sceneID="LZf-8P-G19">
+            <objects>
+                <viewController title="Poll View Controller Main" id="UoN-1c-fcC" customClass="PollViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="JVP-R0-hC3"/>
+                        <viewControllerLayoutGuide type="bottom" id="aQj-rT-WTt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WXh-np-KWJ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gyY-ns-zGH">
+                                <rect key="frame" x="17" y="172" width="564" height="368"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JyH-3w-9fJ">
+                                <rect key="frame" x="17" y="77" width="552" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Choose one from the options below" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4gO-Gr-0Xi">
+                                <rect key="frame" x="17" y="137" width="274" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="JyH-3w-9fJ" secondAttribute="trailing" constant="15" id="FW0-c6-zr2"/>
+                            <constraint firstItem="gyY-ns-zGH" firstAttribute="leading" secondItem="WXh-np-KWJ" secondAttribute="leadingMargin" constant="1" id="Lcm-QQ-xbo"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gyY-ns-zGH" secondAttribute="trailing" constant="3" id="nlv-oe-Ij8"/>
+                            <constraint firstItem="gyY-ns-zGH" firstAttribute="top" secondItem="JVP-R0-hC3" secondAttribute="bottom" constant="108" id="o3M-P5-Jqe"/>
+                            <constraint firstItem="JyH-3w-9fJ" firstAttribute="leading" secondItem="WXh-np-KWJ" secondAttribute="leadingMargin" constant="1" id="q6H-dE-ZsN"/>
+                            <constraint firstItem="JyH-3w-9fJ" firstAttribute="top" secondItem="JVP-R0-hC3" secondAttribute="bottom" constant="13" id="qfi-qB-ID7"/>
+                            <constraint firstItem="aQj-rT-WTt" firstAttribute="top" secondItem="gyY-ns-zGH" secondAttribute="bottom" constant="16" id="tzg-fp-lBX"/>
+                        </constraints>
+                    </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Poll" id="EEj-vF-On6">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="vaZ-bD-gB4"/>
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="zcv-dj-7KI">
+                            <connections>
+                                <action selector="cancelTapped:" destination="UoN-1c-fcC" id="1pV-oz-jqf"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Submit" id="h3Q-qp-hFs">
+                            <connections>
+                                <action selector="submitTapped:" destination="UoN-1c-fcC" id="925-Hp-1c9"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="mediaContainer" destination="gyY-ns-zGH" id="Idt-15-2BF"/>
+                        <outlet property="pollQuestionLabel" destination="JyH-3w-9fJ" id="Gky-UZ-5Q4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="tLy-Lt-2Ld" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3150" y="-1408"/>
         </scene>
         <!--Add New Post-->
         <scene sceneID="9DE-XD-wMk">
@@ -504,7 +569,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KUV-jc-zO1">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KUV-jc-zO1">
                                 <rect key="frame" x="48" y="126" width="516" height="83"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -567,6 +632,7 @@
                             <constraint firstItem="L9f-9U-kYR" firstAttribute="leading" secondItem="FFm-RU-cDR" secondAttribute="leading" id="vyX-BR-mLA"/>
                             <constraint firstItem="KUV-jc-zO1" firstAttribute="top" secondItem="ALE-dt-std" secondAttribute="bottom" constant="8" id="ydx-VP-AyB"/>
                             <constraint firstItem="L9f-9U-kYR" firstAttribute="leading" secondItem="8fy-jx-UJJ" secondAttribute="leading" id="z7v-xD-v8f"/>
+                            <constraint firstAttribute="bottom" secondItem="KUV-jc-zO1" secondAttribute="bottom" constant="391" id="zCg-nm-G4K"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -1023,9 +1089,27 @@
             </objects>
             <point key="canvasLocation" x="-578" y="454"/>
         </scene>
+        <!--Poll View Controller-->
+        <scene sceneID="UQo-Q6-Oa6">
+            <objects>
+                <navigationController title="Poll View Controller" automaticallyAdjustsScrollViewInsets="NO" id="3Zu-Oy-ZSU" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="c9v-tK-aAD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UoN-1c-fcC" kind="relationship" relationship="rootViewController" id="clc-bl-qmZ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="9au-fL-VuO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2430" y="-1408"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="hEe-pR-idg"/>
-        <segue reference="GUf-3E-6Jk"/>
+        <segue reference="EZG-nc-6du"/>
+        <segue reference="4Dz-8N-i6t"/>
     </inferredMetricsTieBreakers>
 </document>

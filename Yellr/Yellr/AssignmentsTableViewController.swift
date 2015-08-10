@@ -88,10 +88,20 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if (self.dataSource[indexPath.row].postType == "poll") {
+            self.performSegueWithIdentifier("AssignmentToPoll", sender: self)
+        } else if (self.dataSource[indexPath.row].postType == "post") {
+            self.performSegueWithIdentifier("AssignmentDetail", sender: self)
+        }
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+        
+        var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+        
         if (segue.identifier == "AssignmentDetail") {
-            
-            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
             
             //silly mistake that I was making- http://stackoverflow.com/questions/28573635/
             let nav = segue.destinationViewController as! UINavigationController
@@ -103,6 +113,13 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             addPostViewController.postId = self.dataSource[indexPath.row].postID;
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
+        } else if (segue.identifier == "AssignmentToPoll") {
+            let nav = segue.destinationViewController as! UINavigationController
+            let pollViewController = nav.topViewController as! PollViewController
+            
+            pollViewController.pollQuestion = self.dataSource[indexPath.row].postTitle;
+            //pollViewController.pollOptions = self.dataSource[indexPath.row].postDesc;
+            //pollViewController.postId = self.dataSource[indexPath.row].postID;
         }
     }
     
@@ -202,6 +219,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
                     as_description : itemDict["description"],
                     as_organization : itemDict["organization"],
                     as_post_count : itemDict["post_count"],
+                    as_post_type : "poll", //poll or post
                     as_post_ID : itemDict["assignment_id"])
                 
                 assignmentsCount++

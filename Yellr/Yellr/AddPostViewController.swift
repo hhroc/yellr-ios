@@ -27,7 +27,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     @IBOutlet weak var addPostDesc: UILabel!
     @IBOutlet weak var postContent: UITextField!
     
-    var chosenMediaType = 0 //0 - pic, 1 - video, 2 - audio
+    var chosenMediaType = 3 //0 - pic, 1 - video, 2 - audio, 3 - text
     var postId: Int = 0
     var postTitle: String!
     var postDesc: String!
@@ -37,6 +37,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     var latitude:String = ""
     var longitude:String = ""
     var pollOptionsTrack = [Int:Bool]()
+    var videoPathString = ""
     
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
@@ -75,8 +76,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         vdoBtn.titleLabel?.textAlignment = .Center
         vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         //temp change for app store submission
-        vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
-        vdoBtn.enabled = false
+        //vdoBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        //vdoBtn.enabled = false
         vdoBtn.layer.cornerRadius = 20
         
         recordBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.black), forState: .Normal)
@@ -85,8 +86,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         recordBtn.titleLabel?.textAlignment = .Center
         recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.yellow)
         //temp change for app store submission
-        recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
-        recordBtn.enabled = false
+        //recordBtn.backgroundColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+        //recordBtn.enabled = false
         recordBtn.layer.cornerRadius = 20
         
         if (postTitle != nil) {
@@ -104,7 +105,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         }
         
         postContent.delegate = self
-        self.setupPoll()        
+        //self.setupPoll()
         
     }
     
@@ -449,12 +450,52 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 spinningActivity.labelText = "Posting"
                 spinningActivity.userInteractionEnabled = false
                 
-                if let imagePick = self.contentView.viewWithTag(YellrConstants.TagIds.AddPostImageView) as? UIImageView {
+                Yellr.println("ChosenMedia:" + String(self.chosenMediaType))
+                
+                if (self.chosenMediaType == 0) {
+                    //image data type
                     
-                    let imageData:NSData = NSData(data: UIImageJPEGRepresentation(imagePick.image, 1.0))
+                    if let imagePick = self.contentView.viewWithTag(YellrConstants.TagIds.AddPostImageView) as? UIImageView {
+                        
+                        
+                        let imageData:NSData = NSData(data: UIImageJPEGRepresentation(imagePick.image, 1.0))
+                        
+                        postImage(["media_type":"image", "media_caption":postCont], imageData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                            Yellr.println("Image Uploaded : " + msg)
+                            
+                            if (msg != "NOTHING" && msg != "Error") {
+                                
+                                post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                                    Yellr.println("Post Added : " + msg)
+                                    if (msg != "NOTHING") {
+                                        
+                                        if (self.asgPost != nil) {
+                                            self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+                                        } else {
+                                            self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                                        }
+                                        
+                                    } else {
+                                        //fail toast
+                                        postFail = true
+                                        self.processPostFailed(postFail)
+                                    }
+                                }
+                            } else {
+                                postFail = true
+                                self.processPostFailed(postFail)
+                            }
+                            
+                        }
+                        
+                    }
                     
-                    postImage(["media_type":"image", "media_caption":postCont], imageData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
-                        Yellr.println("Image Uploaded : " + msg)
+                } else if (self.chosenMediaType == 1) {
+                    
+                    //video data type
+                    let videoData:NSData = NSData(contentsOfMappedFile: self.videoPathString)!
+                    postImage(["media_type":"video", "media_caption":postCont], videoData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                        Yellr.println("Video Uploaded : " + msg)
                         
                         if (msg != "NOTHING" && msg != "Error") {
                             
@@ -470,14 +511,20 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                                     
                                 } else {
                                     //fail toast
+                                    Yellr.println("Video + Text Upload failed")
                                     postFail = true
+                                    self.processPostFailed(postFail)
                                 }
                             }
                         } else {
+                            Yellr.println("Video Upload failed")
                             postFail = true
+                            self.processPostFailed(postFail)
                         }
                         
                     }
+                    
+                } else if (self.chosenMediaType == 2) {
                     
                 } else {
                     
@@ -512,26 +559,16 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                                 } else {
                                     //fail toast
                                     postFail = true
+                                    self.processPostFailed(postFail)
                                 }
                             }
                         } else {
                             postFail = true
+                            self.processPostFailed(postFail)
                         }
                         
                     }
                     
-                }
-                
-                if (postFail) {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                        let spinningActivityFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        spinningActivityFail.customView = UIView()
-                        spinningActivityFail.mode = MBProgressHUDMode.CustomView
-                        spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
-                        spinningActivityFail.yOffset = iOS8 ? 225 : 175
-                        spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
-                    }
                 }
             
             }
@@ -547,6 +584,22 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         }
         
 
+    }
+    
+    func processPostFailed(postFail : Bool) {
+        Yellr.println("Post Failed block reached")
+        if (postFail) {
+            Yellr.println("Post Failed")
+            dispatch_async(dispatch_get_main_queue()) {
+                MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                let spinningActivityFail = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                spinningActivityFail.customView = UIView()
+                spinningActivityFail.mode = MBProgressHUDMode.CustomView
+                spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
+                spinningActivityFail.yOffset = iOS8 ? 225 : 175
+                spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
+            }
+        }
     }
     
     func processSuccesfulPostResults(versionStringKey : String) {
@@ -759,6 +812,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             let pathString = tempImage.relativePath
             startPlayingVideo(tempImage)
             Yellr.println(pathString)
+            self.videoPathString = pathString!
         }
         dismissViewControllerAnimated(true, completion: nil)
         
@@ -799,44 +853,6 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         postContent.resignFirstResponder()
         return true
-    }
-    
-    //MARK: poll setup functions
-    func setupPoll() {
-        var button: UIButton!
-        var buttonPaddingTop: CGFloat
-        var buttonWidth: CGFloat = UIScreen.mainScreen().bounds.size.width - 25.0
-        Yellr.println(buttonWidth)
-        for i in 1...10 {
-            buttonPaddingTop = 50.0 * CGFloat(i)
-            button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
-            button.setTitle("Button " + String(i), forState: UIControlState.Normal)
-            button.frame = CGRectMake(0.0, buttonPaddingTop, buttonWidth, 40.0)
-            button.addTarget(self, action: Selector("pollButtonTouched:"), forControlEvents: UIControlEvents.TouchUpInside)
-            button.tag = 100200 + i
-            pollOptionsTrack[button.tag] = false
-            button.layer.cornerRadius = 5
-            button.layer.borderWidth = 1
-            button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-            button.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_yellow)
-            button.layer.borderColor = UIColorFromRGB(YellrConstants.Colors.very_light_yellow).CGColor
-
-            self.contentView.addSubview(button)
-            
-            //CGRectMake
-        }
-    }
-    
-    func pollButtonTouched(sender: UIButton!) {
-        for (tag,status) in pollOptionsTrack {
-            var tmpButton = self.view.viewWithTag(tag) as? UIButton
-            tmpButton!.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_yellow)
-            tmpButton!.layer.borderColor = UIColorFromRGB(YellrConstants.Colors.very_light_yellow).CGColor
-            pollOptionsTrack[tag] = false
-        }
-        pollOptionsTrack[sender.tag] = true
-        sender.backgroundColor = UIColorFromRGB(YellrConstants.Colors.dark_yellow)
-        sender.layer.borderColor = UIColorFromRGB(YellrConstants.Colors.dark_yellow).CGColor
     }
     
     //MARK: Video playing routines - mostly taken from http://git.io/vtaLK
