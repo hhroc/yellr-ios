@@ -131,7 +131,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
     
     
     @IBAction func tapToVerifyPressed(sender: UIButton) {
-        self.performSegueWithIdentifier("VerifyUserSegue", sender: sender)
+        self.performSegueWithIdentifier("ProfileVerifySegue", sender: sender)
     }
     
     func profileItems(data: NSData) -> Void {

@@ -169,6 +169,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         setSessionPlayback()
         askForNotifications()
         
+        self.chosenMediaType = 2
+        
         self.audioRecordView = UIView(frame:CGRectMake(0, 0, 400, 300))
         self.audioRecordView.addSubview(abRecord)
         self.audioRecordView.addSubview(abStop)
@@ -525,6 +527,39 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     }
                     
                 } else if (self.chosenMediaType == 2) {
+                    
+                    //audio data type
+                    Yellr.println(soundFileURL)
+                    let audioData:NSData = NSData(contentsOfURL: self.soundFileURL!)!
+                    postImage(["media_type":"audio", "media_caption":postCont], audioData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                        Yellr.println("Audio Uploaded : " + msg)
+                        
+                        if (msg != "NOTHING" && msg != "Error") {
+                            
+                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                                Yellr.println("Post Added : " + msg)
+                                if (msg != "NOTHING") {
+                                    
+                                    if (self.asgPost != nil) {
+                                        self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnceAs)
+                                    } else {
+                                        self.processSuccesfulPostResults(YellrConstants.AddPost.checkVersionOnce)
+                                    }
+                                    
+                                } else {
+                                    //fail toast
+                                    Yellr.println("Video + Text Upload failed")
+                                    postFail = true
+                                    self.processPostFailed(postFail)
+                                }
+                            }
+                        } else {
+                            Yellr.println("Video Upload failed")
+                            postFail = true
+                            self.processPostFailed(postFail)
+                        }
+                        
+                    }
                     
                 } else {
                     

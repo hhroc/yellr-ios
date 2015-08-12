@@ -11,23 +11,7 @@ import CoreLocation
 
 class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
     
-    @IBOutlet weak var resetCuidButton: UIBarButtonItem!
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var cuidValue: UILabel!
-    
-    @IBOutlet weak var userName: UILabel!
-    @IBOutlet weak var verified: UILabel!
-    @IBOutlet weak var userLogo: UILabel!
-    
-    @IBOutlet weak var postsLogo: UILabel!
-    @IBOutlet weak var postsViewedLogo: UILabel!
-    @IBOutlet weak var postsUsedLogo: UILabel!
-    @IBOutlet weak var postsLabel: UILabel!
-    @IBOutlet weak var postsViewedLabel: UILabel!
-    @IBOutlet weak var postsUsedLabel: UILabel!
-    @IBOutlet weak var postsCount: UILabel!
-    @IBOutlet weak var postsViewedCount: UILabel!
-    @IBOutlet weak var postsUsedCount: UILabel!
+    @IBOutlet weak var screenTitle: UILabel!
     
     var latitude:String = ""
     var longitude:String = ""
@@ -42,28 +26,6 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.title = NSLocalizedString(YellrConstants.Profile.Title, comment: "Profile Screen title")
-        self.cancelButton.title =  NSLocalizedString(YellrConstants.Common.BackButton, comment: "Profile Screen back button")
-        self.resetCuidButton.title = NSLocalizedString(YellrConstants.Profile.ResetCUIDButton, comment: "Profile Screen Reset CUID button")
-        
-        self.cuidValue.text = "CUID: " + getCUID()
-        
-        self.postsLogo.font = UIFont.fontAwesome(size: 14)
-        self.postsLogo.text =  "\(String.fontAwesome(unicode: 0xf0e5)) "
-        self.postsViewedLogo.font = UIFont.fontAwesome(size: 14)
-        self.postsViewedLogo.text =  "\(String.fontAwesome(unicode: 0xf06e)) "
-        self.postsUsedLogo.font = UIFont.fontAwesome(size: 14)
-        self.postsUsedLogo.text =  "\(String.fontAwesome(unicode: 0xf075)) "
-        
-        self.verified.font = UIFont.fontAwesome(size: 13)
-        self.verified.text =  "\(String.fontAwesome(unicode: 0xf00d))  " + NSLocalizedString(YellrConstants.Profile.Unverified, comment: "Profile Screen Unverified")
-        
-        self.userLogo.font = UIFont.fontAwesome(size: 44)
-        self.userLogo.text =  "\(String.fontAwesome(unicode: 0xf21b)) "
-        self.userLogo.backgroundColor = UIColorFromRGB(YellrConstants.Colors.dark_yellow)
-        
-        self.postsLabel.text = NSLocalizedString(YellrConstants.Profile.PostsLabel, comment: "Profile Screen Posts")
-        self.postsViewedLabel.text = NSLocalizedString(YellrConstants.Profile.PostsViewedLabel, comment: "Profile Screen Posts Viewed")
-        self.postsUsedLabel.text = NSLocalizedString(YellrConstants.Profile.PostsUsedLabel, comment: "Profile Screen Posts Used")
         
         var resetCuidBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f084", target: self, action: "resetCuidTapped:")
         self.navigationItem.setRightBarButtonItems([resetCuidBarButtonItem], animated: true)
@@ -144,9 +106,7 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
             //var pr_email = jsonResult["email"] as! String
             
             dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                self.postsCount.text = String(pr_post_count)
-                self.postsUsedCount.text = String(pr_post_used_count)
-                self.postsViewedCount.text = String(pr_post_view_count)
+
             })
             
             
@@ -202,10 +162,7 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
                 //reset the cuid
                 var cuid = resetCUID()
                 dispatch_async(dispatch_get_main_queue()){
-                    self.cuidValue.text = "CUID: " + cuid
-                    self.postsCount.text = String("0")
-                    self.postsViewedCount.text = String("0")
-                    self.postsUsedCount.text = String("0")
+
                 }
                 break;
             default:

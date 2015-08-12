@@ -219,7 +219,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
                     as_description : itemDict["description"],
                     as_organization : itemDict["organization"],
                     as_post_count : itemDict["post_count"],
-                    as_post_type : "poll", //poll or post
+                    as_post_type : "post", //poll or post
                     as_post_ID : itemDict["assignment_id"])
                 
                 assignmentsCount++

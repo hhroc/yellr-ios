@@ -1037,17 +1037,17 @@
                         <outlet property="userLogo" destination="p70-aT-Ngo" id="08w-Vg-w5z"/>
                         <outlet property="userName" destination="SnP-bB-mAW" id="koz-Gv-ldS"/>
                         <outlet property="verified" destination="rBQ-dK-0zd" id="Hlz-kU-eRa"/>
-                        <segue destination="gmj-dI-WvK" kind="show" id="wvL-31-RiE"/>
+                        <segue destination="gmj-dI-WvK" kind="show" identifier="ProfileVerifySegue" id="wvL-31-RiE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lGe-of-Fhv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-578" y="1310"/>
         </scene>
-        <!--View Controller-->
+        <!--Verify User View Controller-->
         <scene sceneID="ZLU-h5-rtc">
             <objects>
-                <viewController id="gmj-dI-WvK" sceneMemberID="viewController">
+                <viewController id="gmj-dI-WvK" customClass="VerifyUserViewController" customModule="Yellr" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CYY-W5-Xqr"/>
                         <viewControllerLayoutGuide type="bottom" id="Zfr-ah-dr5"/>
@@ -1056,25 +1056,62 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-yQ-8oT">
-                                <rect key="frame" x="279" y="94" width="42" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Verify Your Profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-yQ-8oT">
+                                <rect key="frame" x="233" y="94" width="135" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UUx-3C-XIe">
-                                <rect key="frame" x="252" y="158" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your first name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="UUx-3C-XIe">
+                                <rect key="frame" x="36" y="147" width="528" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f01-7Q-j34">
-                                <rect key="frame" x="252" y="216" width="97" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your last name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f01-7Q-j34">
+                                <rect key="frame" x="36" y="197" width="528" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your e-mail" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lR5-Ac-WW3">
+                                <rect key="frame" x="36" y="249" width="528" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="g6l-BM-ft7">
+                                <rect key="frame" x="36" y="300" width="528" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5dH-WJ-y8k">
+                                <rect key="frame" x="277" y="354" width="49" height="30"/>
+                                <state key="normal" title="Submit">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="f01-7Q-j34" firstAttribute="leading" secondItem="lR5-Ac-WW3" secondAttribute="leading" id="3CF-C2-odd"/>
+                            <constraint firstItem="g6l-BM-ft7" firstAttribute="top" secondItem="lR5-Ac-WW3" secondAttribute="bottom" constant="21" id="DgL-IS-SFa"/>
+                            <constraint firstItem="UUx-3C-XIe" firstAttribute="leading" secondItem="oFt-pj-0wD" secondAttribute="leadingMargin" constant="20" id="I5M-pd-Fbm"/>
+                            <constraint firstItem="UUx-3C-XIe" firstAttribute="top" secondItem="hG6-yQ-8oT" secondAttribute="bottom" constant="32" id="Jza-Xs-g1v"/>
+                            <constraint firstItem="hG6-yQ-8oT" firstAttribute="centerX" secondItem="UUx-3C-XIe" secondAttribute="centerX" id="Nxg-6j-FmB"/>
+                            <constraint firstItem="f01-7Q-j34" firstAttribute="top" secondItem="UUx-3C-XIe" secondAttribute="bottom" constant="20" id="Yhx-l1-syC"/>
+                            <constraint firstItem="hG6-yQ-8oT" firstAttribute="top" secondItem="CYY-W5-Xqr" secondAttribute="bottom" constant="30" id="bKN-np-Uvu"/>
+                            <constraint firstItem="hG6-yQ-8oT" firstAttribute="centerX" secondItem="f01-7Q-j34" secondAttribute="centerX" id="bfZ-Hs-YRC"/>
+                            <constraint firstItem="g6l-BM-ft7" firstAttribute="trailing" secondItem="lR5-Ac-WW3" secondAttribute="trailing" id="bxL-tL-HFY"/>
+                            <constraint firstItem="f01-7Q-j34" firstAttribute="leading" secondItem="UUx-3C-XIe" secondAttribute="leading" id="mdc-I3-2rm"/>
+                            <constraint firstItem="g6l-BM-ft7" firstAttribute="leading" secondItem="lR5-Ac-WW3" secondAttribute="leading" id="mx3-TL-aIp"/>
+                            <constraint firstItem="hG6-yQ-8oT" firstAttribute="centerX" secondItem="lR5-Ac-WW3" secondAttribute="centerX" id="uUN-eA-KYh"/>
+                            <constraint firstItem="lR5-Ac-WW3" firstAttribute="top" secondItem="f01-7Q-j34" secondAttribute="bottom" constant="22" id="uof-kp-jPc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UUx-3C-XIe" secondAttribute="trailing" constant="20" id="vV2-0z-qTQ"/>
+                        </constraints>
                     </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="screenTitle" destination="hG6-yQ-8oT" id="LEN-gb-PwI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rv5-es-tGH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -818,6 +818,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 for itemDictMedia in mediaItems {
                     lpfname = itemDictMedia["file_name"]!
+                    Yellr.println("File Namee: " + lpfname)
                     lpmtext = itemDictMedia["media_text"]!
                     lpmtname = itemDictMedia["media_type_name"]!
                     lppfname = itemDictMedia["preview_file_name"]!
