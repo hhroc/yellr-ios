@@ -223,7 +223,11 @@ func post(params : Dictionary<String, String>, method : String, latitude:String,
                         } else if (method == "create_response_message") {
                             
                         } else if (method == "verify_user") {
-                            
+                            if let verifieduserid = parseJSON["verfied_user_id"] as? String {
+                                msg = verifieduserid
+                            } else {
+                                msg = "-1"
+                            }
                         } else if (method == "upload_media") {
                             if let mediaId = parseJSON["media_id"] as? String {
                                 msg =  mediaId

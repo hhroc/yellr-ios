@@ -47,7 +47,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         self.resetCuidButton.title = NSLocalizedString(YellrConstants.Profile.ResetCUIDButton, comment: "Profile Screen Reset CUID button")
         
         self.cuidValue.text = "CUID: " + getCUID()
-        
+        self.tapToVerify.hidden = true
         self.postsLogo.font = UIFont.fontAwesome(size: 14)
         self.postsLogo.text =  "\(String.fontAwesome(unicode: 0xf0e5)) "
         self.postsViewedLogo.font = UIFont.fontAwesome(size: 14)
@@ -153,6 +153,11 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
                 self.postsCount.text = String(pr_post_count)
                 self.postsUsedCount.text = String(pr_post_used_count)
                 self.postsViewedCount.text = String(pr_post_view_count)
+                if (pr_verified) {
+                    self.tapToVerify.hidden = true
+                } else {
+                    self.tapToVerify.hidden = false
+                }
             })
             
             

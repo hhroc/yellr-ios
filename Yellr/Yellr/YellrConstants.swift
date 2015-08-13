@@ -83,6 +83,10 @@ struct YellrConstants {
         static let ResetDialogConfirm = "profile_reset_dialog_confirm"
     }
     
+    struct VerifyProfile {
+        static let Title = "verify_profile_title"
+    }
+    
     struct AddPost {
         static let Title = "new_post_title"
         static let FailMsg = "new_post_failed"

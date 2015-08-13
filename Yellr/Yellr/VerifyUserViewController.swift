@@ -16,6 +16,12 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
     var latitude:String = ""
     var longitude:String = ""
     
+    @IBOutlet weak var pv_fname: UITextField!
+    @IBOutlet weak var pv_lname: UITextField!
+    @IBOutlet weak var pv_email: UITextField!
+    @IBOutlet weak var pv_pwd: UITextField!
+    @IBOutlet weak var pv_uname: UITextField!
+    
     var profileUrlEndpoint: String = ""
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     var urlSession = NSURLSession.sharedSession()
@@ -25,10 +31,7 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = NSLocalizedString(YellrConstants.Profile.Title, comment: "Profile Screen title")
-        
-        var resetCuidBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f084", target: self, action: "resetCuidTapped:")
-        self.navigationItem.setRightBarButtonItems([resetCuidBarButtonItem], animated: true)
+        self.title = NSLocalizedString(YellrConstants.VerifyProfile.Title, comment: "Verify Profile Screen title")
         
     }
     
@@ -53,67 +56,22 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
         
     }
     
-    //dismiss the profilemodal on pressing cancel
-    @IBAction func cancelPressed(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil);
-    }
-    
-    func resetCuidTapped(sender: UIBarButtonItem) {
-        let alert = UIAlertView()
-        alert.title = NSLocalizedString(YellrConstants.Profile.ResetDialogTitle, comment: "Reset Dialog Title")
-        alert.message = NSLocalizedString(YellrConstants.Profile.ResetDialogMessage, comment: "Reset Dialog Message")
-        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Profile.ResetDialogConfirm, comment: "Yes"))
-        alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Common.CancelButton, comment: "Cancel"))
-        alert.cancelButtonIndex = 1
-        alert.tag=213
-        alert.delegate = self
-        alert.show()
-    }
-    
-    // MARK: - Networking
-    func requestProfile(endPointURL : String, responseHandler : (error : NSError? , items : Array<LocalPostDataModel>?) -> () ) -> () {
-        
-        let url:NSURL = NSURL(string: endPointURL)!
-        let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
-            
-            //Yellr.println(response)
-            //Yellr.println(error)
-            
-            if (error == nil) {
-                self.profileItems(data)
-                responseHandler( error: nil, items: nil)
-            } else {
-                Yellr.println(error)
-            }
-            
-        })
-        task.resume()
-    }
-    
-    func profileItems(data: NSData) -> Void {
-        var jsonParseError: NSError?
-        
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
-            
-            //var pr_first_name = jsonResult["first_name"] as! String
-            //var pr_last_name = jsonResult["last_name"] as! String
-            var pr_verified = jsonResult["verified"] as! Bool
-            var pr_success = jsonResult["success"] as! Bool
-            var pr_post_count = jsonResult["post_count"] as! Int
-            var pr_post_view_count = jsonResult["post_view_count"] as! Int
-            var pr_organization = jsonResult["organization"] as! String
-            var pr_post_used_count = jsonResult["post_used_count"] as! Int
-            //var pr_email = jsonResult["email"] as! String
-            
-            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+    //submit button pressed
+    @IBAction func submitPressed(sender: UIButton) {
+        if (pv_fname != "" && pv_lname != "" && pv_pwd != "" && pv_uname != "") {
+            post(["username":pv_uname.text, "password":pv_pwd.text, "first_name":pv_fname.text, "last_name":pv_lname.text, "email":pv_email.text], "verify_user", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                Yellr.println("Profile Verification: " + msg)
+                
+                if (msg != "NOTHING" && msg != "Error") {
+                    
+                } else {
 
-            })
-            
-            
+                }
+                
+            }
         } else {
-            
+            //Show incomplete
         }
-        
     }
     
     //MARK: Location Delegate functions
@@ -129,13 +87,6 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
         defaults.setObject(self.longitude, forKey: YellrConstants.Direction.Longitude)
         defaults.synchronize()
         
-        self.profileUrlEndpoint = buildUrl("get_profile.json", self.latitude, self.longitude)
-        self.requestProfile(self.profileUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //Yellr.println("1")
-            
-        })
-        
         locationManager.stopUpdatingLocation()
         
     }
@@ -147,31 +98,6 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
-    }
-    
-    //MARK: Alert View Delegates
-    func alertView(View: UIAlertView!, clickedButtonAtIndex buttonIndex: Int){
-        Yellr.println(View.tag)
-        //identifier for the reset dialog
-        if (View.tag == 213) {
-            Yellr.println(buttonIndex)
-            //first time post notify
-            switch buttonIndex{
-                
-            case 0:
-                //reset the cuid
-                var cuid = resetCUID()
-                dispatch_async(dispatch_get_main_queue()){
-
-                }
-                break;
-            default:
-                break;
-                
-            }
-            
-        }
-        
     }
     
 }
