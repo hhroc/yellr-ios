@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MediaPlayer
 
 class LocalTableViewController: UITableViewController, CLLocationManagerDelegate {
     
@@ -27,6 +28,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     var long: String = ""
     
     var containerWidth: CGFloat = 0.0
+    var moviePlayer:MPMoviePlayerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -286,7 +288,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
             }
             
-            if (postType == "image") {
+            if (postType == "image" || postType == "audio" || postType == "video") {
                 
                 cell.mediaContainer.hidden = false
                 
@@ -302,8 +304,17 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 cell.mediaContainer.addSubview(textView)
                 
                 //url of image
-                var urlString : String = localPostItem.lp_file_name as! String
+                //var urlString : String = localPostItem.lp_file_name as! String
+                var urlString : String = localPostItem.lp_preview_file_name as! String
                 urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                
+                //work around temp
+                if (postType == "audio") {
+                    urlString = "http://i.imgur.com/WUzhfKp.jpg"
+                }
+                if (postType == "video") {
+                    urlString = "http://i.imgur.com/XgGMT85.png"
+                }
                 
                 //MARK: Version 2 - With Image Cache
                 
@@ -579,6 +590,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
             var localPostItem:LocalPostDataModel = self.dataSource[indexPath.row]
             var viewController = segue.destinationViewController as! LocalPostDetailViewController
+            viewController.localPostItem = localPostItem
             viewController.title = localPostItem.lp_media_text as? String
             viewController.storyId = localPostItem.lp_post_id as? Int
             viewController.lat = self.lat
@@ -658,6 +670,62 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         textView.textAlignment = NSTextAlignment.Left
                         viewController.mediaContainer.addSubview(textView)
                         viewController.mediaContainer.hidden = false
+                        
+                    }
+                    
+                    if (postType == "audio") {
+                        
+                        viewController.mediaContainer.hidden = false
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_caption as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        
+                    }
+                    
+                    if (postType == "video") {
+                        
+                        viewController.mediaContainer.hidden = false
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_caption as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        
+                        var urlString = localPostItem.lp_file_name as! String
+                        urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                        
+                        var url:NSURL = NSURL(string: urlString)!
+                        Yellr.println(urlString)
+                        
+                        HttpDownloader.loadFileAsync(url, completion:{(path:String, error:NSError!) in
+                            Yellr.println("downloaded to: \(path)")
+                            
+                            self.moviePlayer = MPMoviePlayerController(contentURL: NSURL(string: path)!)
+                            self.moviePlayer.movieSourceType = MPMovieSourceType.Unknown
+                            self.moviePlayer.view.frame = viewController.mediaContainer.bounds
+                            self.moviePlayer.scalingMode = MPMovieScalingMode.AspectFill
+                            self.moviePlayer.controlStyle = MPMovieControlStyle.Embedded
+                            self.moviePlayer.shouldAutoplay = true
+                            viewController.mediaContainer.addSubview(self.moviePlayer.view)
+                            self.moviePlayer.prepareToPlay()
+                            self.moviePlayer.play()
+                            
+                            
+                        })
                         
                     }
                     
@@ -818,7 +886,6 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 for itemDictMedia in mediaItems {
                     lpfname = itemDictMedia["file_name"]!
-                    Yellr.println("File Namee: " + lpfname)
                     lpmtext = itemDictMedia["media_text"]!
                     lpmtname = itemDictMedia["media_type_name"]!
                     lppfname = itemDictMedia["preview_file_name"]!

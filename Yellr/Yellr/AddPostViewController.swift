@@ -479,11 +479,13 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                                         
                                     } else {
                                         //fail toast
+                                        Yellr.println("Image + Text Upload failed")
                                         postFail = true
                                         self.processPostFailed(postFail)
                                     }
                                 }
                             } else {
+                                Yellr.println("Image Text Upload failed")
                                 postFail = true
                                 self.processPostFailed(postFail)
                             }
@@ -548,13 +550,13 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                                     
                                 } else {
                                     //fail toast
-                                    Yellr.println("Video + Text Upload failed")
+                                    Yellr.println("Audio + Text Upload failed")
                                     postFail = true
                                     self.processPostFailed(postFail)
                                 }
                             }
                         } else {
-                            Yellr.println("Video Upload failed")
+                            Yellr.println("Audio Upload failed")
                             postFail = true
                             self.processPostFailed(postFail)
                         }
@@ -593,11 +595,13 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                                     
                                 } else {
                                     //fail toast
+                                    Yellr.println("Text + Text Upload failed")
                                     postFail = true
                                     self.processPostFailed(postFail)
                                 }
                             }
                         } else {
+                            Yellr.println("Text Upload failed")
                             postFail = true
                             self.processPostFailed(postFail)
                         }
@@ -631,7 +635,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                 spinningActivityFail.customView = UIView()
                 spinningActivityFail.mode = MBProgressHUDMode.CustomView
                 spinningActivityFail.labelText = NSLocalizedString(YellrConstants.AddPost.FailMsg, comment: "Add Post Fail")
-                spinningActivityFail.yOffset = iOS8 ? 225 : 175
+                //spinningActivityFail.yOffset = iOS8 ? 225 : 175
                 spinningActivityFail.hide(true, afterDelay: NSTimeInterval(2.5))
             }
         }
@@ -847,6 +851,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             let pathString = tempImage.relativePath
             startPlayingVideo(tempImage)
             Yellr.println(pathString)
+            Yellr.println(tempImage)
             self.videoPathString = pathString!
         }
         dismissViewControllerAnimated(true, completion: nil)

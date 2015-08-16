@@ -21,6 +21,7 @@ class LocalPostDetailViewController: UIViewController {
     var long: String = ""
     var hasVoted: String = ""
     var isUpVote: String = ""
+    var localPostItem: LocalPostDataModel!
 
     @IBOutlet weak var postedBy: UILabel!
     @IBOutlet weak var postTitle: UILabel!

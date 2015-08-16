@@ -99,10 +99,9 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
         
-        var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
-        
         if (segue.identifier == "AssignmentDetail") {
             
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
             //silly mistake that I was making- http://stackoverflow.com/questions/28573635/
             let nav = segue.destinationViewController as! UINavigationController
             let addPostViewController = nav.topViewController as! AddPostViewController
@@ -114,6 +113,8 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
         } else if (segue.identifier == "AssignmentToPoll") {
+            
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
             let nav = segue.destinationViewController as! UINavigationController
             let pollViewController = nav.topViewController as! PollViewController
             

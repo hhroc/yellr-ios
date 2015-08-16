@@ -10,10 +10,19 @@ import Foundation
 
 struct YellrConstants {
     
+    //Before Publishing to app store, change:
+    //1. DevMode to false
+    //2. endPoint to production endpoint
+    
     struct AppInfo {
         static let Name = "Yellr"
         static let version = "0.1.8"
         static let DevMode = true
+    }
+    
+    struct API {
+        //static let endPoint = "https://yellr.net"
+        static let endPoint = "http://yellr.mycodespace.net"
     }
     
     struct Direction {
@@ -113,11 +122,6 @@ struct YellrConstants {
         static let Title = "location_error_title"
         static let Message = "location_error_message"
         static let Okay = "location_error_okay"
-    }
-    
-    struct API {
-        //static let endPoint = "https://yellr.net"
-        static let endPoint = "http://yellr.mycodespace.net"
     }
     
     struct ApiMethods {
