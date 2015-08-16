@@ -731,51 +731,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         viewController.mediaContainer.addSubview(self.moviePlayer.view)
                         self.moviePlayer.play()
                         
-//                            [[MPMoviePlayerController alloc] initWithContentURL: myURL];
-//                        [player prepareToPlay];
-//                        [player.view setFrame: myView.bounds];  // player's frame must match parent's
-//                        [myView addSubview: player.view];
-//                        // ...
-//                        [player play];
-                        
+                        //TODO: Download and then play video
 //                        HttpDownloader.loadFileAsync(url, completion:{(path:String, error:NSError!) in
 //                            Yellr.println("downloaded to: \(path)")
 //                            Yellr.println(NSURL(string: path)!)
-//                            self.moviePlayer = MPMoviePlayerController(contentURL: NSURL(string: path)!)
-//                            self.moviePlayer.view.frame = viewController.mediaContainer.bounds
-//                            viewController.mediaContainer.addSubview(self.moviePlayer.view)
-//                            self.moviePlayer.prepareToPlay()
-//                            self.moviePlayer.movieSourceType = MPMovieSourceType.File
-//                            self.moviePlayer.contentURL = NSURL(string: path)!;
-//                            self.moviePlayer.scalingMode = MPMovieScalingMode.AspectFill
-//                            self.moviePlayer.controlStyle = MPMovieControlStyle.Embedded
-//                            self.moviePlayer.shouldAutoplay = true
-//                            self.moviePlayer.play()
-//                            
-//                            
-//                            //self.moviePlayer.play()
-//                            
-//                            //self.startPlayingVideo(NSURL(string: path)!, uiview:viewController.mediaContainer)
-//                            
-//                            
+//
 //                        })
                         
-//                        Yellr.println("Successfully instantiated the movie player")
-//                        
-//                        //player.view.setTranslatesAutoresizingMaskIntoConstraints(true)
-//                        player.scalingMode = .AspectFit
-//                        player.prepareToPlay()
-//                        //player.movieSourceType = MPMovieSourceType.Streaming
-//                        player.contentURL = url
-//                        player.controlStyle = MPMovieControlStyle.Embedded
-//                        player.scalingMode = MPMovieScalingMode.AspectFill
-//                        player.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: uiview.frame.size.width, height: uiview.frame.size.height))
-//                        //player.setFullscreen(true, animated: false)
-//                        //player.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
-//                        //player.view.autoresizesSubviews = true
-//                        player.view.tag = YellrConstants.TagIds.AddPostVideoView
-//                        uiview.addSubview(player.view)
-//                        //player.play()
                         
                     }
                     
