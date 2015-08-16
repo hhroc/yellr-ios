@@ -570,7 +570,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KUV-jc-zO1">
-                                <rect key="frame" x="48" y="126" width="516" height="83"/>
+                                <rect key="frame" x="48" y="126" width="516" height="374"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="83" id="a3a-CN-jbJ"/>
@@ -632,7 +632,7 @@
                             <constraint firstItem="L9f-9U-kYR" firstAttribute="leading" secondItem="FFm-RU-cDR" secondAttribute="leading" id="vyX-BR-mLA"/>
                             <constraint firstItem="KUV-jc-zO1" firstAttribute="top" secondItem="ALE-dt-std" secondAttribute="bottom" constant="8" id="ydx-VP-AyB"/>
                             <constraint firstItem="L9f-9U-kYR" firstAttribute="leading" secondItem="8fy-jx-UJJ" secondAttribute="leading" id="z7v-xD-v8f"/>
-                            <constraint firstAttribute="bottom" secondItem="KUV-jc-zO1" secondAttribute="bottom" constant="391" id="zCg-nm-G4K"/>
+                            <constraint firstAttribute="bottom" secondItem="KUV-jc-zO1" secondAttribute="bottom" constant="100" id="zCg-nm-G4K"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">

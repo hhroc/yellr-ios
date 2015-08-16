@@ -90,9 +90,9 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if (self.dataSource[indexPath.row].postType == "poll") {
+        if (self.dataSource[indexPath.row].postType == 2) {
             self.performSegueWithIdentifier("AssignmentToPoll", sender: self)
-        } else if (self.dataSource[indexPath.row].postType == "post") {
+        } else if (self.dataSource[indexPath.row].postType == 1) {
             self.performSegueWithIdentifier("AssignmentDetail", sender: self)
         }
     }

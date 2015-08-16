@@ -47,9 +47,9 @@ class AssignmentsDataModel: NSObject {
         }
     }
     
-    var postType:String {
+    var postType:Int {
         get {
-            return as_question_type_id as! String
+            return as_question_type_id as! Int
         }
     }
     

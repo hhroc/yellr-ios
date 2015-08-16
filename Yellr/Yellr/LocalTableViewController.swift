@@ -688,6 +688,19 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         textView.textAlignment = NSTextAlignment.Left
                         viewController.mediaContainer.addSubview(textView)
                         
+                        var urlString = localPostItem.lp_file_name as! String
+                        urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                        
+                        var url:NSURL = NSURL(string: urlString)!
+                        Yellr.println(urlString)
+                        
+                        self.moviePlayer = MPMoviePlayerController(contentURL: url)
+                        self.moviePlayer.prepareToPlay()
+                        self.moviePlayer.contentURL = url
+                        self.moviePlayer.view.frame = viewController.mediaContainer.bounds
+                        viewController.mediaContainer.addSubview(self.moviePlayer.view)
+                        self.moviePlayer.play()
+                        
                     }
                     
                     if (postType == "video") {
@@ -711,21 +724,58 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         var url:NSURL = NSURL(string: urlString)!
                         Yellr.println(urlString)
                         
-                        HttpDownloader.loadFileAsync(url, completion:{(path:String, error:NSError!) in
-                            Yellr.println("downloaded to: \(path)")
-                            
-                            self.moviePlayer = MPMoviePlayerController(contentURL: NSURL(string: path)!)
-                            self.moviePlayer.movieSourceType = MPMovieSourceType.Unknown
-                            self.moviePlayer.view.frame = viewController.mediaContainer.bounds
-                            self.moviePlayer.scalingMode = MPMovieScalingMode.AspectFill
-                            self.moviePlayer.controlStyle = MPMovieControlStyle.Embedded
-                            self.moviePlayer.shouldAutoplay = true
-                            viewController.mediaContainer.addSubview(self.moviePlayer.view)
-                            self.moviePlayer.prepareToPlay()
-                            self.moviePlayer.play()
-                            
-                            
-                        })
+                        self.moviePlayer = MPMoviePlayerController(contentURL: url)
+                        self.moviePlayer.prepareToPlay()
+                        self.moviePlayer.contentURL = url
+                        self.moviePlayer.view.frame = viewController.mediaContainer.bounds
+                        viewController.mediaContainer.addSubview(self.moviePlayer.view)
+                        self.moviePlayer.play()
+                        
+//                            [[MPMoviePlayerController alloc] initWithContentURL: myURL];
+//                        [player prepareToPlay];
+//                        [player.view setFrame: myView.bounds];  // player's frame must match parent's
+//                        [myView addSubview: player.view];
+//                        // ...
+//                        [player play];
+                        
+//                        HttpDownloader.loadFileAsync(url, completion:{(path:String, error:NSError!) in
+//                            Yellr.println("downloaded to: \(path)")
+//                            Yellr.println(NSURL(string: path)!)
+//                            self.moviePlayer = MPMoviePlayerController(contentURL: NSURL(string: path)!)
+//                            self.moviePlayer.view.frame = viewController.mediaContainer.bounds
+//                            viewController.mediaContainer.addSubview(self.moviePlayer.view)
+//                            self.moviePlayer.prepareToPlay()
+//                            self.moviePlayer.movieSourceType = MPMovieSourceType.File
+//                            self.moviePlayer.contentURL = NSURL(string: path)!;
+//                            self.moviePlayer.scalingMode = MPMovieScalingMode.AspectFill
+//                            self.moviePlayer.controlStyle = MPMovieControlStyle.Embedded
+//                            self.moviePlayer.shouldAutoplay = true
+//                            self.moviePlayer.play()
+//                            
+//                            
+//                            //self.moviePlayer.play()
+//                            
+//                            //self.startPlayingVideo(NSURL(string: path)!, uiview:viewController.mediaContainer)
+//                            
+//                            
+//                        })
+                        
+//                        Yellr.println("Successfully instantiated the movie player")
+//                        
+//                        //player.view.setTranslatesAutoresizingMaskIntoConstraints(true)
+//                        player.scalingMode = .AspectFit
+//                        player.prepareToPlay()
+//                        //player.movieSourceType = MPMovieSourceType.Streaming
+//                        player.contentURL = url
+//                        player.controlStyle = MPMovieControlStyle.Embedded
+//                        player.scalingMode = MPMovieScalingMode.AspectFill
+//                        player.view.frame = CGRect(origin: CGPoint(x: 0, y: 0), size: CGSize(width: uiview.frame.size.width, height: uiview.frame.size.height))
+//                        //player.setFullscreen(true, animated: false)
+//                        //player.view.autoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight
+//                        //player.view.autoresizesSubviews = true
+//                        player.view.tag = YellrConstants.TagIds.AddPostVideoView
+//                        uiview.addSubview(player.view)
+//                        //player.play()
                         
                     }
                     
@@ -759,7 +809,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         if self.imageCache.objectForKey(urlString) != nil {
                             let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                             let imageView = UIImageView(image: itemImage!)
-                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 160.0)
+                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height)
                             imageView.contentMode = UIViewContentMode.ScaleAspectFill
                             imageView.clipsToBounds = true
                             imageView.hidden = false
@@ -801,7 +851,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                                             
                                             //let imageView = UIImageView(image: itemImage!)
                                             let imageView = UIImageView()
-                                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height + 160.0)
+                                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height)
                                             
                                             imageView.contentMode = .ScaleAspectFit
                                             imageView.image = itemImage
