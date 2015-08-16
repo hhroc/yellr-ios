@@ -220,8 +220,19 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
                     as_description : itemDict["description"],
                     as_organization : itemDict["organization"],
                     as_post_count : itemDict["post_count"],
-                    as_post_type : "post", //poll or post
-                    as_post_ID : itemDict["assignment_id"])
+                    as_post_ID : itemDict["assignment_id"],
+                    as_question_type_id : itemDict["question_type_id"], //poll or post
+                    has_responded : itemDict["has_responded"],
+                    answer0 : itemDict["answer0"],
+                    answer1 : itemDict["answer1"],
+                    answer2 : itemDict["answer2"],
+                    answer3 : itemDict["answer3"],
+                    answer4 : itemDict["answer4"],
+                    answer5 : itemDict["answer5"],
+                    answer6 : itemDict["answer6"],
+                    answer7 : itemDict["answer7"],
+                    answer8 : itemDict["answer8"],
+                    answer9 : itemDict["answer9"])
                 
                 assignmentsCount++
                 refinedAssignmentItems.append(item)
