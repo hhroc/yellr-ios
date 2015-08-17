@@ -20,6 +20,8 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     var urlSession = NSURLSession.sharedSession()
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
+    var aslat = ""
+    var aslong = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -118,9 +120,25 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             let nav = segue.destinationViewController as! UINavigationController
             let pollViewController = nav.topViewController as! PollViewController
             
-            pollViewController.pollQuestion = self.dataSource[indexPath.row].postTitle;
+            pollViewController.pollQuestion = "effg hh kjhkjh kjhkjh jkhkj h jkhkj hjkh jkh jkh kjh kjhkjh kjhkjh kjhkjh jkhkjh" + self.dataSource[indexPath.row].postTitle;
+            
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer0 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer1 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer2 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer3 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer4 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer5 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer6 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer7 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer8 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer9 as! String)
             //pollViewController.pollOptions = self.dataSource[indexPath.row].postDesc;
             //pollViewController.postId = self.dataSource[indexPath.row].postID;
+            
+            pollViewController.latitude = aslat
+            pollViewController.longitude = aslong
+            pollViewController.pollId = self.dataSource[indexPath.row].postID
+            
         }
     }
     
@@ -215,7 +233,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             
             
             for itemDict in rawAssignmentItems {
-                
+
                 var item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
                     as_description : itemDict["description"],
                     as_organization : itemDict["organization"],
@@ -263,6 +281,8 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
         var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        self.aslat = latitude
+        self.aslong = longitude
         
         //store lat long in prefs
         let defaults = NSUserDefaults.standardUserDefaults()
