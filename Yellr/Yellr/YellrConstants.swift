@@ -54,6 +54,7 @@ struct YellrConstants {
         static let RepliedToAssignments = "replied_to_assignments"
         static let PostListKeyName = "post_list_key"
         static let FirstTimeUserKey = "first_time_user_key"
+        static let SeenAssignments = "seen_assignments"
     }
     
     struct LocalPosts {

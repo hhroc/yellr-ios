@@ -14,6 +14,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     let assgnViewModel = AssignmentsViewModel()
     
     var repliedToAssignments : NSString = ""
+    var seenAssignmentIds : NSString = ""
     var assignmentsUrlEndpoint: String = ""
     var dataSource : Array<AssignmentsDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
@@ -114,6 +115,9 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             addPostViewController.postId = self.dataSource[indexPath.row].postID;
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
+            seenAssignmentSaveById(self.dataSource[indexPath.row].postID)
+            
+            
         } else if (segue.identifier == "AssignmentToPoll") {
             
             var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
@@ -138,7 +142,44 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             pollViewController.latitude = aslat
             pollViewController.longitude = aslong
             pollViewController.pollId = self.dataSource[indexPath.row].postID
+            seenAssignmentSaveById(self.dataSource[indexPath.row].postID)
             
+        }
+    }
+    
+    //save assignment id in seen assignments string
+    func seenAssignmentSaveById(assignmentId: Int) {
+        let asdefaults = NSUserDefaults.standardUserDefaults()
+        var shouldISave : Bool = false
+        if asdefaults.objectForKey(YellrConstants.Keys.SeenAssignments) == nil {
+            //seen assignments is blank, so populate it anyways
+            shouldISave = true
+        } else {
+            self.seenAssignmentIds = asdefaults.stringForKey(YellrConstants.Keys.SeenAssignments)!
+            if (iOS8) {
+                if (self.seenAssignmentIds.containsString("[" + String(assignmentId) + "]")) {
+                    //already saved this assignment ID in the seen assignments
+                    //list so do not save it in the same list again
+                } else {
+                    //save it
+                    shouldISave = true
+                }
+            } else {
+                //for ios7
+                var range : NSRange = self.seenAssignmentIds.rangeOfString("[" + String(assignmentId) + "]")
+                if (range.length != 0) {
+                    //already saved this assignment ID in the seen assignments
+                    //list so do not save it in the same list again
+                } else {
+                    //save it
+                    shouldISave = true
+                }
+            }
+        }
+        
+        if (shouldISave) {
+            asdefaults.setObject((self.seenAssignmentIds as String) + "[" + String(assignmentId) + "]", forKey: YellrConstants.Keys.SeenAssignments)
+            asdefaults.synchronize()
         }
     }
     
@@ -258,7 +299,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             
             //save assignments count
             let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
             defaults.synchronize()
             
         } else {
