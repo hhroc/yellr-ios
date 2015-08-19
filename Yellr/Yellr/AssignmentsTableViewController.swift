@@ -14,12 +14,15 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     let assgnViewModel = AssignmentsViewModel()
     
     var repliedToAssignments : NSString = ""
+    var seenAssignmentIds : NSString = ""
     var assignmentsUrlEndpoint: String = ""
     var dataSource : Array<AssignmentsDataModel> = []
     var webActivityIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
     var urlSession = NSURLSession.sharedSession()
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
+    var aslat = ""
+    var aslong = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +37,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
     }
@@ -43,11 +46,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         super.viewDidAppear(animated)
         let subViews = self.tabBarController!.tabBar.subviews
         for subview in subViews{
-            if (subview.tag == 1201) {
+            if (subview.tag == YellrConstants.TagIds.BottomTabLocal) {
                 (subview as? UIView)!.hidden = true
-            } else if (subview.tag == 1202) {
+            } else if (subview.tag == YellrConstants.TagIds.BottomTabAssignments) {
                 (subview as? UIView)!.hidden = false
-            } else if (subview.tag == 1203) {
+            } else if (subview.tag == YellrConstants.TagIds.BottomTabStories) {
                 (subview as? UIView)!.hidden = true
             }
         }
@@ -88,11 +91,20 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        if (self.dataSource[indexPath.row].postType == 2) {
+            self.performSegueWithIdentifier("AssignmentToPoll", sender: self)
+        } else if (self.dataSource[indexPath.row].postType == 1) {
+            self.performSegueWithIdentifier("AssignmentDetail", sender: self)
+        }
+    }
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+        
         if (segue.identifier == "AssignmentDetail") {
             
             var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
-            
             //silly mistake that I was making- http://stackoverflow.com/questions/28573635/
             let nav = segue.destinationViewController as! UINavigationController
             let addPostViewController = nav.topViewController as! AddPostViewController
@@ -103,6 +115,71 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             addPostViewController.postId = self.dataSource[indexPath.row].postID;
             //addPostViewController.postAssignmentID = self.dataSource[indexPath.row].postID;
             
+            seenAssignmentSaveById(self.dataSource[indexPath.row].postID)
+            
+            
+        } else if (segue.identifier == "AssignmentToPoll") {
+            
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            let nav = segue.destinationViewController as! UINavigationController
+            let pollViewController = nav.topViewController as! PollViewController
+            
+            pollViewController.pollQuestion = "effg hh kjhkjh kjhkjh jkhkj h jkhkj hjkh jkh jkh kjh kjhkjh kjhkjh kjhkjh jkhkjh" + self.dataSource[indexPath.row].postTitle;
+            
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer0 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer1 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer2 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer3 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer4 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer5 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer6 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer7 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer8 as! String)
+            pollViewController.pollOptions.append(self.dataSource[indexPath.row].answer9 as! String)
+            //pollViewController.pollOptions = self.dataSource[indexPath.row].postDesc;
+            //pollViewController.postId = self.dataSource[indexPath.row].postID;
+            
+            pollViewController.latitude = aslat
+            pollViewController.longitude = aslong
+            pollViewController.pollId = self.dataSource[indexPath.row].postID
+            seenAssignmentSaveById(self.dataSource[indexPath.row].postID)
+            
+        }
+    }
+    
+    //save assignment id in seen assignments string
+    func seenAssignmentSaveById(assignmentId: Int) {
+        let asdefaults = NSUserDefaults.standardUserDefaults()
+        var shouldISave : Bool = false
+        if asdefaults.objectForKey(YellrConstants.Keys.SeenAssignments) == nil {
+            //seen assignments is blank, so populate it anyways
+            shouldISave = true
+        } else {
+            self.seenAssignmentIds = asdefaults.stringForKey(YellrConstants.Keys.SeenAssignments)!
+            if (iOS8) {
+                if (self.seenAssignmentIds.containsString("[" + String(assignmentId) + "]")) {
+                    //already saved this assignment ID in the seen assignments
+                    //list so do not save it in the same list again
+                } else {
+                    //save it
+                    shouldISave = true
+                }
+            } else {
+                //for ios7
+                var range : NSRange = self.seenAssignmentIds.rangeOfString("[" + String(assignmentId) + "]")
+                if (range.length != 0) {
+                    //already saved this assignment ID in the seen assignments
+                    //list so do not save it in the same list again
+                } else {
+                    //save it
+                    shouldISave = true
+                }
+            }
+        }
+        
+        if (shouldISave) {
+            asdefaults.setObject((self.seenAssignmentIds as String) + "[" + String(assignmentId) + "]", forKey: YellrConstants.Keys.SeenAssignments)
+            asdefaults.synchronize()
         }
     }
     
@@ -114,6 +191,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     //when add post button is tapped in UINavBar
     func addPostTapped(sender:UIButton) {
         self.performSegueWithIdentifier("AssignmentToPost", sender: self)
+    }
+    
+    //when Yellr button is tapped
+    func yellrTapped(sender:UIButton) {
+        self.tabBarController?.selectedIndex = 0
     }
     
     //starts the tableviewload process
@@ -172,7 +254,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            responseHandler( error: nil, items: self.assignmentItems(data))
+            if (error == nil) {
+                responseHandler( error: nil, items: self.assignmentItems(data))
+            } else {
+                Yellr.println(error)
+            }
         })
         task.resume()
     }
@@ -188,12 +274,24 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             
             
             for itemDict in rawAssignmentItems {
-                
+
                 var item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
                     as_description : itemDict["description"],
                     as_organization : itemDict["organization"],
                     as_post_count : itemDict["post_count"],
-                    as_post_ID : itemDict["assignment_id"])
+                    as_post_ID : itemDict["assignment_id"],
+                    as_question_type_id : itemDict["question_type_id"], //poll or post
+                    has_responded : itemDict["has_responded"],
+                    answer0 : itemDict["answer0"],
+                    answer1 : itemDict["answer1"],
+                    answer2 : itemDict["answer2"],
+                    answer3 : itemDict["answer3"],
+                    answer4 : itemDict["answer4"],
+                    answer5 : itemDict["answer5"],
+                    answer6 : itemDict["answer6"],
+                    answer7 : itemDict["answer7"],
+                    answer8 : itemDict["answer8"],
+                    answer9 : itemDict["answer9"])
                 
                 assignmentsCount++
                 refinedAssignmentItems.append(item)
@@ -201,7 +299,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             
             //save assignments count
             let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
             defaults.synchronize()
             
         } else {
@@ -224,6 +322,8 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
         var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        self.aslat = latitude
+        self.aslong = longitude
         
         //store lat long in prefs
         let defaults = NSUserDefaults.standardUserDefaults()

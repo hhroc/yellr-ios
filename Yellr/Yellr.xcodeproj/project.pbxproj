@@ -11,6 +11,7 @@
 		260488A81B1EE73B00D781FE /* AssignmentsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260488A71B1EE73B00D781FE /* AssignmentsTableViewCell.swift */; };
 		260488AC1B1EF0D800D781FE /* StoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260488AB1B1EF0D800D781FE /* StoriesTableViewCell.swift */; };
 		26157ECA1B1A245700615428 /* LocalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26157EC91B1A245700615428 /* LocalTableViewCell.swift */; };
+		2616AC831B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2616AC811B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld */; };
 		263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */; };
 		263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B701B18D36A0063E9C6 /* Main.storyboard */; };
 		263E1B741B18D36A0063E9C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B731B18D36A0063E9C6 /* Images.xcassets */; };
@@ -19,6 +20,8 @@
 		263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */; };
 		263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */; };
 		263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */; };
+		264185D01B7816820066265C /* PollViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264185CF1B7816820066265C /* PollViewController.swift */; };
+		264185D21B78EFFA0066265C /* VerifyUserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264185D11B78EFFA0066265C /* VerifyUserViewController.swift */; };
 		264543671B21E5C500B8EA79 /* LocalViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543661B21E5C500B8EA79 /* LocalViewModel.swift */; };
 		264543691B21F51500B8EA79 /* LocalPostDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 264543681B21F51500B8EA79 /* LocalPostDataModel.swift */; };
 		264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2645436F1B2230AE00B8EA79 /* AssignmentsViewModel.swift */; };
@@ -45,6 +48,8 @@
 		26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */; };
 		26CA8D451B1D05980094BFC3 /* YellrTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */; };
 		26CDFD291B388792005997D5 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26CDFD281B388792005997D5 /* Images-2.xcassets */; };
+		26F72A1C1B802124004D21CB /* HttpDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F72A1B1B802124004D21CB /* HttpDownloader.swift */; };
+		26F72A1E1B802EA5004D21CB /* VideoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F72A1D1B802EA5004D21CB /* VideoUtils.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,6 +67,7 @@
 		260488A71B1EE73B00D781FE /* AssignmentsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewCell.swift; sourceTree = "<group>"; };
 		260488AB1B1EF0D800D781FE /* StoriesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTableViewCell.swift; sourceTree = "<group>"; };
 		26157EC91B1A245700615428 /* LocalTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewCell.swift; sourceTree = "<group>"; };
+		2616AC821B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocalPostStoredDataModel.xcdatamodel; sourceTree = "<group>"; };
 		263E1B651B18D36A0063E9C6 /* Yellr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yellr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		263E1B691B18D36A0063E9C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -74,6 +80,8 @@
 		263E1B8E1B18E72B0063E9C6 /* LocalTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewController.swift; sourceTree = "<group>"; };
 		263E1B901B18E7600063E9C6 /* AssignmentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsTableViewController.swift; sourceTree = "<group>"; };
 		263E1B921B18E76F0063E9C6 /* StoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTableViewController.swift; sourceTree = "<group>"; };
+		264185CF1B7816820066265C /* PollViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PollViewController.swift; sourceTree = "<group>"; };
+		264185D11B78EFFA0066265C /* VerifyUserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VerifyUserViewController.swift; sourceTree = "<group>"; };
 		264543661B21E5C500B8EA79 /* LocalViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalViewModel.swift; sourceTree = "<group>"; };
 		264543681B21F51500B8EA79 /* LocalPostDataModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalPostDataModel.swift; sourceTree = "<group>"; };
 		2645436F1B2230AE00B8EA79 /* AssignmentsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssignmentsViewModel.swift; sourceTree = "<group>"; };
@@ -110,6 +118,8 @@
 		26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrHelperFunc.swift; sourceTree = "<group>"; };
 		26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrTabBarController.swift; sourceTree = "<group>"; };
 		26CDFD281B388792005997D5 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
+		26F72A1B1B802124004D21CB /* HttpDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDownloader.swift; sourceTree = "<group>"; };
+		26F72A1D1B802EA5004D21CB /* VideoUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,9 +171,12 @@
 				264543801B24CD0D00B8EA79 /* DetailViewControllers */,
 				2645436E1B221D0E00B8EA79 /* TableViewCells */,
 				263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */,
+				2616AC811B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld */,
 				26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */,
 				2604889D1B1E541900D781FE /* AddPostViewController.swift */,
+				264185CF1B7816820066265C /* PollViewController.swift */,
 				267964B51B2FCBEF00735925 /* ProfileViewController.swift */,
+				264185D11B78EFFA0066265C /* VerifyUserViewController.swift */,
 				263E1B701B18D36A0063E9C6 /* Main.storyboard */,
 				263E1B731B18D36A0063E9C6 /* Images.xcassets */,
 				263E1B751B18D36A0063E9C6 /* LaunchScreen.xib */,
@@ -186,6 +199,8 @@
 				26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */,
 				263E1B691B18D36A0063E9C6 /* Info.plist */,
 				267964B71B31C19100735925 /* YellrDeviceDetect.swift */,
+				26F72A1B1B802124004D21CB /* HttpDownloader.swift */,
+				26F72A1D1B802EA5004D21CB /* VideoUtils.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -390,11 +405,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				26CA8D451B1D05980094BFC3 /* YellrTabBarController.swift in Sources */,
+				26F72A1E1B802EA5004D21CB /* VideoUtils.swift in Sources */,
 				263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */,
 				26157ECA1B1A245700615428 /* LocalTableViewCell.swift in Sources */,
 				267964BC1B3392A300735925 /* PrintlnMagic.swift in Sources */,
 				267964B81B31C19100735925 /* YellrDeviceDetect.swift in Sources */,
 				26CA8D411B1CD3090094BFC3 /* StoryDetailViewController.swift in Sources */,
+				2616AC831B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld in Sources */,
 				264543691B21F51500B8EA79 /* LocalPostDataModel.swift in Sources */,
 				2645437F1B24CC7200B8EA79 /* StoriesDataModel.swift in Sources */,
 				260488A81B1EE73B00D781FE /* AssignmentsTableViewCell.swift in Sources */,
@@ -404,12 +421,15 @@
 				2661C8851B2874FC00CC681F /* LocalPostDetailViewController.swift in Sources */,
 				2645437D1B24CC4D00B8EA79 /* AssignmentsDataModel.swift in Sources */,
 				269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */,
+				26F72A1C1B802124004D21CB /* HttpDownloader.swift in Sources */,
 				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				2604889E1B1E541900D781FE /* AddPostViewController.swift in Sources */,
 				2661C87F1B27530500CC681F /* VoteButton.swift in Sources */,
 				267964B61B2FCBEF00735925 /* ProfileViewController.swift in Sources */,
 				2661C8E91B2A353200CC681F /* MBProgressHUD.m in Sources */,
+				264185D01B7816820066265C /* PollViewController.swift in Sources */,
 				263E1B911B18E7600063E9C6 /* AssignmentsTableViewController.swift in Sources */,
+				264185D21B78EFFA0066265C /* VerifyUserViewController.swift in Sources */,
 				263E1B931B18E76F0063E9C6 /* StoriesTableViewController.swift in Sources */,
 				264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */,
 				260488AC1B1EF0D800D781FE /* StoriesTableViewCell.swift in Sources */,
@@ -562,6 +582,7 @@
 				PROVISIONING_PROFILE = "2b673e67-0ed1-4638-8144-ce7b451e5587";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yellr/Yellr-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -579,6 +600,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "2b673e67-0ed1-4638-8144-ce7b451e5587";
 				SWIFT_OBJC_BRIDGING_HEADER = "Yellr/Yellr-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -647,6 +669,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		2616AC811B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				2616AC821B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodel */,
+			);
+			currentVersion = 2616AC821B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodel */;
+			path = LocalPostStoredDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 263E1B5D1B18D36A0063E9C6 /* Project object */;
 }

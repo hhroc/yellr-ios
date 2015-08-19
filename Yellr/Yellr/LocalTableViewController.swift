@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import MediaPlayer
 
 class LocalTableViewController: UITableViewController, CLLocationManagerDelegate {
     
@@ -21,11 +22,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     var urlSession = NSURLSession.sharedSession()
     var locationManager: CLLocationManager = CLLocationManager()
     var startLocation: CLLocation!
+    var postListString = ""
     
     var lat: String = ""
     var long: String = ""
     
     var containerWidth: CGFloat = 0.0
+    var moviePlayer:MPMoviePlayerController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,8 +43,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: nil, action: nil)
+        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
+        
+        //show message to first time user
+        self.messageForFirstTimer()
 
     }
     
@@ -50,11 +56,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         super.viewDidAppear(animated)
         let subViews = self.tabBarController!.tabBar.subviews
         for subview in subViews{
-            if (subview.tag == 1201) {
+            if (subview.tag == YellrConstants.TagIds.BottomTabLocal) {
                 (subview as? UIView)!.hidden = false
-            } else if (subview.tag == 1202) {
+            } else if (subview.tag == YellrConstants.TagIds.BottomTabAssignments) {
                 (subview as? UIView)!.hidden = true
-            } else if (subview.tag == 1203) {
+            } else if (subview.tag == YellrConstants.TagIds.BottomTabStories) {
                 (subview as? UIView)!.hidden = true
             }
         }
@@ -70,7 +76,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         } else {
             
         }
-        
+
         locationManager.startUpdatingLocation()
         startLocation = nil
         
@@ -112,57 +118,39 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         if let text = localPostItem.lp_media_text as? String {
             if (count(text) == 0) {
-                height += 140.0
+                //this is an image so check for caption
+                
+                if let mediaCaption = localPostItem.lp_media_caption as? String {
+                    if (count(mediaCaption) == 0) {
+                        //there is no caption
+                        height += 140.0
+                    } else {
+                        //there is a caption
+                        var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                        calculationView.attributedText = NSAttributedString(string: mediaCaption, attributes: attrs)
+                        var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                        
+                        height += size.height
+                        
+                        height += 140.0
+                    }
+                }
             } else {
 
                 var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
                 calculationView.attributedText = NSAttributedString(string: text, attributes: attrs)
+                calculationView.sizeToFit()
                 var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                 height += size.height
             }
             
         }
-        
-        return height + 0
-        
-        
-        
-        
-//        var sizingCell : LocalTableViewCell
-//        var onceToken : dispatch_once_t
-//
-//        dispatch_once(&onceToken, { () -> Void in
-//            sizingCell = tableView.dequeueReusableCellWithIdentifier("LocalTVCIdentifier", forIndexPath: indexPath) as! LocalTableViewCell
-//        })
-//        
-//        var mo : ModelObject = self.model[indexPath.row]
-//        
-//        // 3
-//        CGFloat (^calcCellHeight)(MyTableViewCell *, NSString *) = ^ CGFloat(MyTableViewCell *sizingCell, NSString *labelText){
-//            
-//            sizingCell.customLabel.text = labelText;
-//            
-//            return [sizingCell.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize].height + 1;
-//        };
-//        
-//        NSUInteger ix = indexPath.row;
-//        
-//        // 4
-//        if ([self.cachedHeights[ix] isEqual:[NSNull null]]){
-//            
-//            CGFloat cellHeight = calcCellHeight(sizingCell, mo.customStringProperty);
-//            
-//            self.cachedHeights[ix] = @(cellHeight);
-//        }
-//        
-//        // 5  
-//        return ([self.cachedHeights[ix] floatValue] < MyMinimumCellHeight) ?
-//            MyMinimumCellHeight : [self.cachedHeights[ix] floatValue];
-
-        
-        
-        
-        
+        return height
+    }
+    
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        Yellr.println("Here")
+        self.performSegueWithIdentifier("LocalPostDetailSegue", sender: self)
     }
     
     //when profile button is tapped in UINavBar
@@ -175,15 +163,38 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.performSegueWithIdentifier("LocalToPost", sender: self)
     }
     
+    //when Yellr button is tapped 
+    func yellrTapped(sender:UIButton) {
+        self.tabBarController?.selectedIndex = 0
+    }
+    
     //starts the tableviewload process
     //api call and then populate
     func loadLocalPostsTableView(latitude : String, longitude : String) {
         
         self.localPostsUrlEndpoint = buildUrl("get_local_posts.json", latitude, longitude)
         self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
-            //TODO: update UI code here
-            //Yellr.println("1")
             
+            self.dataSource = items!
+            
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                self.tableView.reloadData()
+                self.webActivityIndicator.hidden = true
+            })
+            
+            
+            
+            let preferences = NSUserDefaults.standardUserDefaults()
+            let postListKey = YellrConstants.Keys.PostListKeyName
+            if preferences.objectForKey(postListKey) == nil {
+                self.postListString = NSUUID().UUIDString.lowercaseString
+                preferences.setValue(self.postListString, forKey: postListKey)
+                //  Save to disk
+                let didSave = preferences.synchronize()
+                if !didSave {}
+            } else {
+                self.postListString = preferences.stringForKey(postListKey)!.lowercaseString
+            }
         })
     }
     
@@ -191,6 +202,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         
+        //remove media container image view
         for view in cell.mediaContainer.subviews{
             view.removeFromSuperview()
         }
@@ -276,12 +288,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
             }
             
-            if (postType == "image") {
+            if (postType == "image" || postType == "audio" || postType == "video") {
                 
                 cell.mediaContainer.hidden = false
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_caption as? String
+                textView.font = UIFont(name: "ArialMT", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false
@@ -291,16 +304,32 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 cell.mediaContainer.addSubview(textView)
                 
                 //url of image
-                var urlString : String = localPostItem.lp_file_name as! String
+                //var urlString : String = localPostItem.lp_file_name as! String
+                var urlString : String = localPostItem.lp_preview_file_name as! String
                 urlString = YellrConstants.API.endPoint + "/media/" + urlString
                 
+                //work around temp
+                if (postType == "audio") {
+                    urlString = "http://i.imgur.com/WUzhfKp.jpg"
+                }
+                if (postType == "video") {
+                    urlString = "http://i.imgur.com/XgGMT85.png"
+                }
+                
                 //MARK: Version 2 - With Image Cache
-        
+                
+                //to get the height of the text view holding the caption
+                var calculationView : UITextView = UITextView()
+                var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                calculationView.attributedText = NSAttributedString(string: textView.text, attributes: attrs)
+                var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                
                 if self.imageCache.objectForKey(urlString) != nil {
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
                     let imageView = UIImageView(image: itemImage!)
-                    imageView.frame = CGRect(x: 0, y: 30, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
-                    imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                    imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
+                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                    imageView.clipsToBounds = true
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
                     cell.setNeedsLayout()
@@ -327,19 +356,20 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
                             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
         
-                                let itemImage = UIImage(data:imageData!)
+                                var itemImage = UIImage(data:imageData!)
+                                //itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height))
+                                
+                                Yellr.println(itemImage!.size.width)
+                                Yellr.println(itemImage!.size.height)
+                                
                                 let currentIndex = self.tableView.indexPathForCell(cell)
         
                                 if currentIndex?.item == capturedIndex!.item {
                                     
                                     let imageView = UIImageView(image: itemImage!)
-                                    imageView.frame = CGRect(x: 0, y: 30, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
-                                    imageView.contentMode = UIViewContentMode.ScaleAspectFit
-//                                    imageView.autoresizingMask =
-//                                        (UIViewAutoresizing.FlexibleLeftMargin
-//                                            | UIViewAutoresizing.FlexibleRightMargin
-//                                            | UIViewAutoresizing.FlexibleTopMargin
-//                                            | UIViewAutoresizing.FlexibleWidth)
+                                    imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
+                                    imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                                    imageView.clipsToBounds = true
                                     imageView.hidden = false
                                     
                                     //add the image view
@@ -399,7 +429,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         }
         
         //show small arrow towards the right of each cell
-        //cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        cell.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
     
     }
     
@@ -554,6 +584,275 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
+        if (segue.identifier == "LocalPostDetailSegue") {
+            
+            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            var localPostItem:LocalPostDataModel = self.dataSource[indexPath.row]
+            var viewController = segue.destinationViewController as! LocalPostDetailViewController
+            viewController.localPostItem = localPostItem
+            viewController.title = localPostItem.lp_media_text as? String
+            viewController.storyId = localPostItem.lp_post_id as? Int
+            viewController.lat = self.lat
+            viewController.long = self.long
+            
+            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                //for the questionmark
+                var attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
+                var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
+                
+                if let postTitle = localPostItem.lp_question_text as? String {
+                    
+                    viewController.postTitle?.text = "\(String.fontAwesome(unicode: 0xf059)) " + postTitle
+                    viewController.postTitle?.lineBreakMode = NSLineBreakMode.ByWordWrapping
+                    viewController.postTitle?.numberOfLines = 0
+                    viewController.postTitle?.sizeToFit()
+                    
+                } else {
+                    viewController.postTitle?.text = ""
+                }
+                
+                if let author = localPostItem.lp_first_name as? String {
+                    viewController.postedBy?.text = author
+                } else {
+                    viewController.postedBy?.font = UIFont.fontAwesome(size: 13)
+                    viewController.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) " + NSLocalizedString(YellrConstants.LocalPosts.AnonymousUser, comment: "Anonymous User")
+                }
+                
+                var postedOn:String = (localPostItem.lp_post_datetime as? String)!
+                viewController.postedOn?.font = UIFont.fontAwesome(size: 13)
+                viewController.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
+                
+                viewController.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
+                //add - (negative to downvote counts)
+                var downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
+                var downVoteCountString = NSString(format:"%d", (stringInterpolationSegment: downVoteCount)) as String
+                if (downVoteCount != 0) {
+                    downVoteCountString = "-" + downVoteCountString
+                }
+                viewController.downVoteCount?.text = downVoteCountString
+                
+                //set vote count colors based on whether or not user has voted
+                if let hasVoted = localPostItem.lp_has_voted as? Bool {
+                    if (hasVoted) {
+                        var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                        viewController.hasVoted = "Yes"
+                        if (isUpVote) {
+                            viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
+                            viewController.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
+                            viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                            viewController.isUpVote = "Yes"
+                        } else {
+                            viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                            viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.down_vote_red)
+                            viewController.downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.down_vote_red), forState: .Normal)
+                            viewController.isUpVote = "No"
+                        }
+                    } else {
+                        viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                        viewController.downVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.light_grey)
+                    }
+                } else {
+                    
+                }
+                
+                if let postType = localPostItem.lp_media_type_name as? String {
+                    if (postType == "text") {
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_text as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        viewController.mediaContainer.hidden = false
+                        
+                    }
+                    
+                    if (postType == "audio") {
+                        
+                        viewController.mediaContainer.hidden = false
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_caption as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        
+                        var urlString = localPostItem.lp_file_name as! String
+                        urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                        
+                        var url:NSURL = NSURL(string: urlString)!
+                        Yellr.println(urlString)
+                        
+                        self.moviePlayer = MPMoviePlayerController(contentURL: url)
+                        self.moviePlayer.prepareToPlay()
+                        self.moviePlayer.contentURL = url
+                        self.moviePlayer.view.frame = viewController.mediaContainer.bounds
+                        viewController.mediaContainer.addSubview(self.moviePlayer.view)
+                        self.moviePlayer.play()
+                        
+                    }
+                    
+                    if (postType == "video") {
+                        
+                        viewController.mediaContainer.hidden = false
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_caption as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        
+                        var urlString = localPostItem.lp_file_name as! String
+                        urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                        
+                        var url:NSURL = NSURL(string: urlString)!
+                        Yellr.println(urlString)
+                        
+                        self.moviePlayer = MPMoviePlayerController(contentURL: url)
+                        self.moviePlayer.prepareToPlay()
+                        self.moviePlayer.contentURL = url
+                        self.moviePlayer.view.frame = viewController.mediaContainer.bounds
+                        viewController.mediaContainer.addSubview(self.moviePlayer.view)
+                        self.moviePlayer.play()
+                        
+                        //TODO: Download and then play video
+//                        HttpDownloader.loadFileAsync(url, completion:{(path:String, error:NSError!) in
+//                            Yellr.println("downloaded to: \(path)")
+//                            Yellr.println(NSURL(string: path)!)
+//
+//                        })
+                        
+                        
+                    }
+                    
+                    if (postType == "image") {
+                        
+                        viewController.mediaContainer.hidden = false
+                        
+                        let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, viewController.mediaContainer.frame.height))
+                        textView.text = localPostItem.lp_media_caption as? String
+                        textView.font = UIFont(name: "ArialMT", size: 17.0)
+                        textView.hidden = false
+                        textView.sizeToFit()
+                        textView.scrollEnabled = false
+                        textView.editable = false
+                        textView.selectable = false
+                        textView.textAlignment = NSTextAlignment.Left
+                        viewController.mediaContainer.addSubview(textView)
+                        
+                        //url of image
+                        var urlString : String = localPostItem.lp_file_name as! String
+                        urlString = YellrConstants.API.endPoint + "/media/" + urlString
+                        
+                        //MARK: Version 2 - With Image Cache
+                        
+                        //to get the height of the text view holding the caption
+                        var calculationView : UITextView = UITextView()
+                        var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                        calculationView.attributedText = NSAttributedString(string: textView.text, attributes: attrs)
+                        var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                        
+                        if self.imageCache.objectForKey(urlString) != nil {
+                            let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
+                            let imageView = UIImageView(image: itemImage!)
+                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height)
+                            imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                            imageView.clipsToBounds = true
+                            imageView.hidden = false
+                            viewController.mediaContainer.addSubview(imageView)
+                            Yellr.println("here44")
+                            //cell.setNeedsLayout()
+                        }
+                        else {
+                            
+                            //start a loader animation
+                            var loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+                            loadIndicator.color = UIColor.lightGrayColor()
+                            loadIndicator.startAnimating()
+                            viewController.mediaContainer.addSubview(loadIndicator)
+                            
+                            //start the image load process
+                            weak var weakSelf : LocalTableViewController? = self
+                            
+                            dispatch_async(self.backgroundQueue, { () -> Void in
+                                
+                                let url = NSURL(string: urlString)!
+                                var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                                var err : NSError?
+                                var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+                                
+                                if err == nil {
+                                    
+                                    dispatch_sync(dispatch_get_main_queue(), { () -> Void in
+                                        
+                                        var itemImage = UIImage(data:imageData!)
+                                        //itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height))
+                                        
+                                        Yellr.println(itemImage!.size.width)
+                                        Yellr.println(itemImage!.size.height)
+                                        
+                                        let currentIndex = indexPath
+                                        
+                                        if currentIndex.item == capturedIndex!.item {
+                                            
+                                            //let imageView = UIImageView(image: itemImage!)
+                                            let imageView = UIImageView()
+                                            imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height)
+                                            
+                                            imageView.contentMode = .ScaleAspectFit
+                                            imageView.image = itemImage
+                                            imageView.clipsToBounds = true
+                                            
+                                            //imageView.contentMode = UIViewContentMode.ScaleAspectFit
+                                            //                                    imageView.autoresizingMask =
+                                            //                                        (UIViewAutoresizing.FlexibleLeftMargin
+                                            //                                            | UIViewAutoresizing.FlexibleRightMargin
+                                            //                                            | UIViewAutoresizing.FlexibleTopMargin
+                                            //                                            | UIViewAutoresizing.FlexibleWidth)
+                                            imageView.hidden = false
+                                            
+                                            //add the image view
+                                            viewController.mediaContainer.addSubview(imageView)
+                                            
+                                            //remove the activity indicator
+                                            loadIndicator.removeFromSuperview()
+                                            
+                                            //cell.imageView.image = itemImage
+                                            //cell.setNeedsLayout()
+                                        }
+                                        weakSelf!.imageCache.setObject(itemImage!, forKey: urlString)
+                                    })
+                                }
+                            })
+                        }
+                        
+                    }
+                } else {
+                    
+                }
+                
+                //viewController.mediaContainer.
+            })
+            
+        }
+    }
+    
     func initWebActivityIndicator() {
         self.webActivityIndicator.color = UIColor.lightGrayColor()
         self.webActivityIndicator.startAnimating()
@@ -571,14 +870,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             //Yellr.println(error)
             
             if (error == nil) {
-                self.dataSource = self.localPostItems(data)
-                
-                dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                    self.tableView.reloadData()
-                    self.webActivityIndicator.hidden = true
-                })
-                
-                responseHandler( error: nil, items: nil)
+                responseHandler( error: nil, items: self.localPostItems(data))
             } else {
                 Yellr.println(error)
             }
@@ -590,6 +882,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     func localPostItems(data: NSData) -> (Array<LocalPostDataModel>) {
         var jsonParseError: NSError?
         var refinedLocalPostItems : Array<LocalPostDataModel> = []
+        var postListString : String
         
         if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
          
@@ -632,6 +925,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     lp_up_vote_count : itemDict["up_vote_count"] )
                 
                 refinedLocalPostItems.append(item)
+                //postListString = "[" + (itemDict["post_id"] as? String)! + "]"
             }
             
         } else {
@@ -672,6 +966,48 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         alert.message = NSLocalizedString(YellrConstants.Location.Message, comment: "Location Error Message")
         alert.addButtonWithTitle(NSLocalizedString(YellrConstants.Location.Okay, comment: "Okay"))
         alert.show()
+    }
+    
+    func messageForFirstTimer() {
+        
+        let defaults = NSUserDefaults.standardUserDefaults()
+        
+        if let name = defaults.stringForKey(YellrConstants.Keys.FirstTimeUserKey) {
+            
+            //Not a first time user
+            
+        } else {
+            
+            //first time user of the app
+            if(iOS8) {
+                
+                let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.LocalPosts.FirstTimeTitle, comment: "LocalPosts Screen - Succesfully Posted"), message:
+                    NSLocalizedString(YellrConstants.LocalPosts.FirstTimeMessage, comment: "LocalPosts Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
+                alertController.addAction(UIAlertAction(title: NSLocalizedString(YellrConstants.LocalPosts.FirstTimeOkay, comment: "Okay"), style: UIAlertActionStyle.Default, handler: { (action) in
+                    //dismiss the add post view on pressing okay
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                    }
+                    ))
+                
+                self.presentViewController(alertController, animated: true, completion: nil)
+                
+            } else {
+                
+                let alert = UIAlertView()
+                alert.tag = 0
+                alert.delegate = self
+                alert.title = NSLocalizedString(YellrConstants.LocalPosts.FirstTimeTitle, comment: "LocalPosts Screen - Succesfully Posted")
+                alert.message = NSLocalizedString(YellrConstants.LocalPosts.FirstTimeMessage, comment: "LocalPosts Screen Message Succesful")
+                alert.addButtonWithTitle(NSLocalizedString(YellrConstants.LocalPosts.FirstTimeOkay, comment: "Okay"))
+                alert.show()
+                
+            }
+            
+            defaults.setObject("NO", forKey: YellrConstants.Keys.FirstTimeUserKey)
+            defaults.synchronize()
+            
+        }
+        
     }
     
     

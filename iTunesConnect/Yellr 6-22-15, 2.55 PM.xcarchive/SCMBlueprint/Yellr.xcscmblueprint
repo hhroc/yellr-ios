@@ -1,0 +1,25 @@
+{
+  "DVTSourceControlWorkspaceBlueprintLocationsKey" : {
+    "0F921C53FF990CD8215C133691797DB7ABB5A452" : {
+      "DVTSourceControlBranchIdentifierKey" : "master",
+      "DVTSourceControlLocationRevisionKey" : "f2aa8352b5914153a7c72124f0300685801f74ad",
+      "DVTSourceControlBranchOptionsKey" : 48,
+      "DVTSourceControlWorkspaceBlueprintLocationTypeKey" : "DVTSourceControlBranch"
+    }
+  },
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "0F921C53FF990CD8215C133691797DB7ABB5A452",
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "D7C11D63-E65D-4EC7-BBA2-0925B1007470",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "0F921C53FF990CD8215C133691797DB7ABB5A452" : "yellr-ios\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "Yellr",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 203,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Yellr\/Yellr.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/dkd903\/yellr-ios.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "0F921C53FF990CD8215C133691797DB7ABB5A452"
+    }
+  ]
+}

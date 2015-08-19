@@ -10,10 +10,19 @@ import Foundation
 
 struct YellrConstants {
     
+    //Before Publishing to app store, change:
+    //1. DevMode to false
+    //2. endPoint to production endpoint
+    
     struct AppInfo {
         static let Name = "Yellr"
-        static let version = "0.1.7"
-        static let DevMode = false
+        static let version = "0.1.8"
+        static let DevMode = true
+    }
+    
+    struct API {
+        //static let endPoint = "https://yellr.net"
+        static let endPoint = "http://yellr.mycodespace.net"
     }
     
     struct Direction {
@@ -25,16 +34,43 @@ struct YellrConstants {
         static let CancelButton = "cancel_button_text"
         static let BackButton = "back_button_text"
     }
+    
+    struct TagIds {
+        static let AddPostImageView = 221
+        static let AddPostVideoView = 222
+        static let AddPostAudioView = 223
+        static let BottomTabLocal = 1201
+        static let BottomTabAssignments = 1202
+        static let BottomTabStories = 1203
+        static let AddPostAudioButtonRecord = 331
+        static let AddPostAudioButtonPlay = 332
+        static let AddPostAudioButtonStop = 333
+    }
+    
     struct Keys {
         static let StoredStoriesCount = "stored_stories_count_key"
         static let StoredAssignmentsCount = "stored_assignments_count_key"
         static let CUIDKeyName = "ycuid"
         static let RepliedToAssignments = "replied_to_assignments"
+        static let PostListKeyName = "post_list_key"
+        static let FirstTimeUserKey = "first_time_user_key"
+        static let SeenAssignments = "seen_assignments"
     }
     
     struct LocalPosts {
         static let Title = "local_post_title"
         static let AnonymousUser = "anonymous_user"
+        
+        //first time alert
+        static let FirstTimeTitle = "new_user_welcome_title"
+        static let FirstTimeMessage = "new_user_welcome_message"
+        static let FirstTimeOkay = "new_user_welcome_okay"
+    }
+    
+    struct LocalPostDetail {
+        static let ReportTitle = "local_post_detail_title"
+        static let ReportMessage = "local_post_detail_message"
+        static let ReportOkay = "local_post_detail_okay"
     }
     
     struct Assignments {
@@ -55,6 +91,10 @@ struct YellrConstants {
         static let ResetDialogTitle = "profile_reset_dialog_title"
         static let ResetDialogMessage = "profile_reset_dialog_message"
         static let ResetDialogConfirm = "profile_reset_dialog_confirm"
+    }
+    
+    struct VerifyProfile {
+        static let Title = "verify_profile_title"
     }
     
     struct AddPost {
@@ -85,11 +125,6 @@ struct YellrConstants {
         static let Okay = "location_error_okay"
     }
     
-    struct API {
-        static let endPoint = "https://yellr.net"
-        //static let endPoint = "http://yellr.mycodespace.net"
-    }
-    
     struct ApiMethods {
         static let get = ""
     }
@@ -100,6 +135,7 @@ struct YellrConstants {
         static let yellow:UInt = 0xFFD40C;
         static let dark_yellow:UInt = 0xF2BF00;
         static let light_yellow:UInt = 0xFFF22A;
+        static let very_light_yellow:UInt = 0xFFEE9E;
         static let white:UInt = 0xffffff;
         static let black:UInt = 0x2f2f2f;
         static let red:UInt = 0xff6347;

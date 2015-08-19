@@ -223,7 +223,11 @@ func post(params : Dictionary<String, String>, method : String, latitude:String,
                         } else if (method == "create_response_message") {
                             
                         } else if (method == "verify_user") {
-                            
+                            if let verifieduserid = parseJSON["verfied_user_id"] as? String {
+                                msg = verifieduserid
+                            } else {
+                                msg = "-1"
+                            }
                         } else if (method == "upload_media") {
                             if let mediaId = parseJSON["media_id"] as? String {
                                 msg =  mediaId
@@ -281,13 +285,13 @@ func getCUID() -> String {
     var cuid = ""
     let cuidKey = YellrConstants.Keys.CUIDKeyName
     if preferences.objectForKey(cuidKey) == nil {
-        cuid = NSUUID().UUIDString
+        cuid = NSUUID().UUIDString.lowercaseString
         preferences.setValue(cuid, forKey: cuidKey)
         //  Save to disk
         let didSave = preferences.synchronize()
         if !didSave {}
     } else {
-        cuid = preferences.stringForKey(cuidKey)!
+        cuid = preferences.stringForKey(cuidKey)!.lowercaseString
     }
     return cuid
 }
@@ -297,7 +301,7 @@ func getCUID() -> String {
  */
 func resetCUID() -> String {
     let preferences = NSUserDefaults.standardUserDefaults()
-    var cuid = NSUUID().UUIDString
+    var cuid = NSUUID().UUIDString.lowercaseString
     let cuidKey = "ycuid"
     preferences.setValue(cuid, forKey: cuidKey)
     //  Save to disk
@@ -533,4 +537,19 @@ func fetchBackgroundDataAndShowNotification() -> Void{
 //        
 //    }
 
+}
+
+//init code for the upvote and down vote buttons
+func initVoteButtons(downVoteBtn: UIButton, upVoteBtn: UIButton) ->Void {
+    downVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.light_grey), forState: .Normal)
+    downVoteBtn.setFontAwesome(fontAwesome: "f0dd", forState: .Normal)
+    
+    downVoteBtn.titleLabel?.textAlignment = .Center
+    downVoteBtn.titleLabel?.numberOfLines = 1
+    
+    upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.light_grey), forState: .Normal)
+    upVoteBtn.setFontAwesome(fontAwesome: "f0de", forState: .Normal)
+    
+    upVoteBtn.titleLabel?.textAlignment = .Center
+    upVoteBtn.titleLabel?.numberOfLines = 1
 }
