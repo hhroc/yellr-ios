@@ -12,6 +12,7 @@
 		260488AC1B1EF0D800D781FE /* StoriesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 260488AB1B1EF0D800D781FE /* StoriesTableViewCell.swift */; };
 		26157ECA1B1A245700615428 /* LocalTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26157EC91B1A245700615428 /* LocalTableViewCell.swift */; };
 		2616AC831B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 2616AC811B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodeld */; };
+		263546D81B87E30000B4E6D4 /* RegexString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263546D71B87E30000B4E6D4 /* RegexString.swift */; };
 		263E1B6B1B18D36A0063E9C6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */; };
 		263E1B721B18D36A0063E9C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B701B18D36A0063E9C6 /* Main.storyboard */; };
 		263E1B741B18D36A0063E9C6 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 263E1B731B18D36A0063E9C6 /* Images.xcassets */; };
@@ -68,6 +69,7 @@
 		260488AB1B1EF0D800D781FE /* StoriesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StoriesTableViewCell.swift; sourceTree = "<group>"; };
 		26157EC91B1A245700615428 /* LocalTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalTableViewCell.swift; sourceTree = "<group>"; };
 		2616AC821B5C3FB200CB5808 /* LocalPostStoredDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocalPostStoredDataModel.xcdatamodel; sourceTree = "<group>"; };
+		263546D71B87E30000B4E6D4 /* RegexString.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegexString.swift; sourceTree = "<group>"; };
 		263E1B651B18D36A0063E9C6 /* Yellr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yellr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		263E1B691B18D36A0063E9C6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		263E1B6A1B18D36A0063E9C6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 				267964B71B31C19100735925 /* YellrDeviceDetect.swift */,
 				26F72A1B1B802124004D21CB /* HttpDownloader.swift */,
 				26F72A1D1B802EA5004D21CB /* VideoUtils.swift */,
+				263546D71B87E30000B4E6D4 /* RegexString.swift */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				264543701B2230AE00B8EA79 /* AssignmentsViewModel.swift in Sources */,
 				260488AC1B1EF0D800D781FE /* StoriesTableViewCell.swift in Sources */,
 				263E1B8F1B18E72B0063E9C6 /* LocalTableViewController.swift in Sources */,
+				263546D81B87E30000B4E6D4 /* RegexString.swift in Sources */,
 				264543791B22BFB100B8EA79 /* Font-Awesome.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -102,11 +102,35 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             addPostDesc.lineBreakMode = NSLineBreakMode.ByWordWrapping
             addPostDesc.numberOfLines = 0
             addPostDesc.sizeToFit()
+            
+            //add clickable event desc
+            addPostDesc.userInteractionEnabled = true
+            //let tapGesture = UITapGestureRecognizer(target: self, action: "klikPlay:")
+            addPostDesc.addGestureRecognizer(UITapGestureRecognizer(target: self, action: "descTapped:"))
+            //view.addGestureRecognizer(tapGesture)
         }
         
         postContent.delegate = self
         //self.setupPoll()
         
+    }
+    
+    //on tapping desc label, open url if any
+    func descTapped(sender:UITapGestureRecognizer){
+        
+        Yellr.println(postDesc)
+        let res = "http?://([-\\w\\.]+)+(:\\d+)?(/([\\w/_\\.]*(\\?\\S+)?)?)?".getMatchesFine(postDesc)
+        Yellr.println(res)
+        
+        if (res.count >= 1) {
+            if let checkURL = NSURL(string: res[0]) {
+                if UIApplication.sharedApplication().openURL(checkURL) {
+                    //url successfully opened
+                }
+            } else {
+                //invalid url
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {

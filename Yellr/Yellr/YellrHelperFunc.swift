@@ -312,7 +312,7 @@ func resetCUID() -> String {
 }
 
 //function to fetch background data and show notification
-func fetchBackgroundDataAndShowNotification() -> Void{
+func fetchBackgroundDataAndShowNotification() -> Bool{
     
     //using sendSynchronousRequest instead of sendAsynchronousRequest
     //as async is not working in background for iOS7
@@ -401,7 +401,10 @@ func fetchBackgroundDataAndShowNotification() -> Void{
             
             for itemDict in rawAssignmentItems {
                 
+                //get seenAssignments list and compare it to the array
+                //and then increment it
                 assignmentsCount++
+                
             }
             
         } else {
@@ -422,11 +425,13 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     //setup notifications
     var localNotification:UILocalNotification = UILocalNotification()
     var screenToShow = "assignments"
+    var scheduleNotifications = false
     //localNotification.alertAction = "New notifications on Yellr"
     
     //TODO: Localization
     if (hasNewAssignments && hasNewStories) {
         localNotification.alertBody = "You have new stories and assignments."
+        scheduleNotifications = true
     } else if (hasNewAssignments && !hasNewStories) {
         if (hasNewAssignmentsCount > 1) {
             //localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments"
@@ -434,6 +439,7 @@ func fetchBackgroundDataAndShowNotification() -> Void{
         } else {
             localNotification.alertBody = "You have a new assignment to view"
         }
+        scheduleNotifications = true
     } else if (!hasNewAssignments && hasNewStories) {
         if (hasNewAssignmentsCount > 1) {
             localNotification.alertBody = "You have new stories to view"
@@ -441,10 +447,19 @@ func fetchBackgroundDataAndShowNotification() -> Void{
             localNotification.alertBody = "You have a new story to view"
         }
         screenToShow = "stories"
+        scheduleNotifications = true
     }
-    localNotification.userInfo = ["screen" : screenToShow]
-    localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
-    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+    
+    //schedule a notification only if it is apt to show
+    if (scheduleNotifications) {
+        //localNotification.alertBody = "You have new stories and assignments."
+        localNotification.userInfo = ["screen" : screenToShow]
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        return true
+    }
+
+    return false
     
     //for iOS8
     

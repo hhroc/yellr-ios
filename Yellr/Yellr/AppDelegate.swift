@@ -13,8 +13,7 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
@@ -25,13 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if (iOS8) {
             let settings = UIUserNotificationSettings(forTypes: UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(settings)
-            UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+            //UIApplication.sharedApplication().setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
         } else {
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(UIRemoteNotificationType.Alert | UIRemoteNotificationType.Sound | UIRemoteNotificationType.Alert)
         }
-//        if (iOS8) {
-//            application.registerUserNotificationSettings(UIUserNotificationSettings(forTypes: .Alert | .Badge | .Sound, categories: nil))
-//        }
+
+        
+        //set interval for background fetch
+        //application.setMinimumBackgroundFetchInterval(UIApplicationBackgroundFetchIntervalMinimum)
+        application.setMinimumBackgroundFetchInterval(20.0) //3600 seconds = 1hr
         
         return true
     }
@@ -39,40 +40,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     //needed to start the background service for checking new assignment / story data
     func application(application: UIApplication, performFetchWithCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         Yellr.println("Background Data")
-        completionHandler(UIBackgroundFetchResult.NewData)
-        fetchBackgroundDataAndShowNotification()
+        if(fetchBackgroundDataAndShowNotification()) {
+            completionHandler(UIBackgroundFetchResult.NewData)
+        } else {
+            completionHandler(UIBackgroundFetchResult.NoData)
+        }
+    }
+    
+    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
+        Yellr.println(identifier)
     }
     
     //to take care of stuff after the app becomes active from local notify / or not
-    //for iOS7
     func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
         
-        Yellr.println("thisihs1")
+        let screenToShow = notification.userInfo!["screen"] as? NSString
+        
+        if (screenToShow != nil) {
+            //user arrived from our notification
+            if (screenToShow as! String == "assignments") {
+                Yellr.println("Open Assignments")
+            } else if (screenToShow as! String == "stories") {
+                Yellr.println("Open Stories")
+            }
+            
+        } else {
+            
+        }
         
         if (application.applicationState == UIApplicationState.Inactive ) {
             //The application received the notification from an inactive state, i.e. the user tapped the "View" button for the alert.
             //If the visible view controller in your view controller stack isn't the one you need then show the right one.
-            Yellr.println("thisihs2")
-            //show correct VC based on userinfo
-            Yellr.println(notification.userInfo)
-            
+
         }
         
         if(application.applicationState == UIApplicationState.Active ) {
             //The application received a notification in the active state, so you can display an alert view or do something appropriate.
-            Yellr.println("thisihs3")
-            Yellr.println(notification.userInfo)
+
         }
-        
-    }
-    
-    //to take care of stuff after the app becomes active from local notify / or not
-    //for iOS8
-    //Part A - when app is opened from the notification (App was in inactive state)
-    //Part B - when app is already opened, case for iOS8 handled above
-    func application(application: UIApplication, handleActionWithIdentifier identifier: String?, forLocalNotification notification: UILocalNotification, completionHandler: () -> Void) {
-        
-        Yellr.println("thisihs")
         
     }
 
