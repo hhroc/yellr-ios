@@ -154,9 +154,9 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
                 self.postsUsedCount.text = String(pr_post_used_count)
                 self.postsViewedCount.text = String(pr_post_view_count)
                 if (pr_verified) {
-                    self.tapToVerify.hidden = true
+                    //self.tapToVerify.hidden = true
                 } else {
-                    self.tapToVerify.hidden = false
+                    //self.tapToVerify.hidden = false
                 }
             })
             
