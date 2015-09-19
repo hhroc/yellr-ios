@@ -329,6 +329,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     let imageView = UIImageView(image: itemImage!)
                     imageView.frame = CGRect(x: 0, y: size.height, width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height + 60.0)
                     imageView.contentMode = UIViewContentMode.ScaleAspectFill
+                    //to make the ScaleAspectFill work perfectly, need to set the clipsToBounds property
                     imageView.clipsToBounds = true
                     imageView.hidden = false
                     cell.mediaContainer.addSubview(imageView)
