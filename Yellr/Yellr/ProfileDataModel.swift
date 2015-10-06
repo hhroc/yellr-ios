@@ -51,15 +51,15 @@ class ProfileDataModel: NSObject {
         }
     }
     
-    init(var pr_first_name : AnyObject?,
-        var pr_last_name : AnyObject?,
-        var pr_verified : AnyObject?,
-        var pr_success : AnyObject?,
-        var pr_post_count : AnyObject?,
-        var pr_post_view_count : AnyObject?,
-        var pr_organization : AnyObject?,
-        var pr_post_used_count : AnyObject?,
-        var pr_email : AnyObject?) {
+    init(pr_first_name : AnyObject?,
+        pr_last_name : AnyObject?,
+        pr_verified : AnyObject?,
+        pr_success : AnyObject?,
+        pr_post_count : AnyObject?,
+        pr_post_view_count : AnyObject?,
+        pr_organization : AnyObject?,
+        pr_post_used_count : AnyObject?,
+        pr_email : AnyObject?) {
             self.pr_first_name = pr_first_name
             self.pr_last_name = pr_last_name
             self.pr_verified = pr_verified

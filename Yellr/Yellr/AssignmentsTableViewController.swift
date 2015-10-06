@@ -30,14 +30,14 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         self.title = NSLocalizedString(YellrConstants.Assignments.Title, comment: "Assignments Screen title")
         
         //right side bar button items
-        var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
-        var fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        let profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         fixedSpace.width = 30.0
-        var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
+        let addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
+        let yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
     }
@@ -61,7 +61,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         //this check is needed to add the additional
         //location methods for ios8
-        if iOS8 {
+        if #available(iOS 8.0, *) {
             locationManager.requestWhenInUseAuthorization()
         } else {
             
@@ -104,7 +104,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         if (segue.identifier == "AssignmentDetail") {
             
-            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            let indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow!
             //silly mistake that I was making- http://stackoverflow.com/questions/28573635/
             let nav = segue.destinationViewController as! UINavigationController
             let addPostViewController = nav.topViewController as! AddPostViewController
@@ -120,7 +120,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             
         } else if (segue.identifier == "AssignmentToPoll") {
             
-            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
+            let indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow!
             let nav = segue.destinationViewController as! UINavigationController
             let pollViewController = nav.topViewController as! PollViewController
             
@@ -156,7 +156,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
             shouldISave = true
         } else {
             self.seenAssignmentIds = asdefaults.stringForKey(YellrConstants.Keys.SeenAssignments)!
-            if (iOS8) {
+            if #available(iOS 8.0, *) {
                 if (self.seenAssignmentIds.containsString("[" + String(assignmentId) + "]")) {
                     //already saved this assignment ID in the seen assignments
                     //list so do not save it in the same list again
@@ -166,7 +166,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
                 }
             } else {
                 //for ios7
-                var range : NSRange = self.seenAssignmentIds.rangeOfString("[" + String(assignmentId) + "]")
+                let range : NSRange = self.seenAssignmentIds.rangeOfString("[" + String(assignmentId) + "]")
                 if (range.length != 0) {
                     //already saved this assignment ID in the seen assignments
                     //list so do not save it in the same list again
@@ -204,7 +204,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         self.initWebActivityIndicator()
         
-        self.assignmentsUrlEndpoint = buildUrl("get_assignments.json", latitude, longitude)
+        self.assignmentsUrlEndpoint = buildUrl("get_assignments.json", latitude: latitude, longitude: longitude)
         self.requestAssignments(self.assignmentsUrlEndpoint, responseHandler: { (error, items) -> () in
             
             self.dataSource = items!
@@ -219,16 +219,16 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
 
     func configureCell(cell:AssignmentsTableViewCell, atIndexPath indexPath:NSIndexPath) {
         
-        var assignmentItem : AssignmentsDataModel = self.dataSource[indexPath.row]
-        var postID = assignmentItem.as_post_ID as? Int
+        let assignmentItem : AssignmentsDataModel = self.dataSource[indexPath.row]
+        let postID = assignmentItem.as_post_ID as? Int
         
-        if (iOS8) {
+        if #available(iOS 8.0, *) {
             if (self.repliedToAssignments.containsString("[" + String(stringInterpolationSegment: postID!) + "]")) {
                 cell.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_grey)
             }
         } else {
             //for ios7
-            var range : NSRange = self.repliedToAssignments.rangeOfString("[" + String(stringInterpolationSegment: postID!) + "]")
+            let range : NSRange = self.repliedToAssignments.rangeOfString("[" + String(stringInterpolationSegment: postID!) + "]")
             if (range.length != 0) {
                 cell.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_grey)
             }
@@ -237,12 +237,12 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         
         cell.assgnTitle.text = assignmentItem.as_question_text as? String
         
-        var postedBy:String = (assignmentItem.as_organization as? String)!
+        let postedBy:String = (assignmentItem.as_organization as? String)!
         cell.postedBy?.font = UIFont.fontAwesome(size: 13)
         cell.postedBy?.text =  "\(String.fontAwesome(unicode: 0xf007)) " + postedBy
         
         //number of comments - variable name is bad, i know
-        var postedOn:String = NSString(format:"%d", (stringInterpolationSegment: (assignmentItem.as_post_count as? Int)!)) as String
+        let postedOn:String = NSString(format:"%d", (stringInterpolationSegment: (assignmentItem.as_post_count as? Int)!)) as String
         cell.postedOn?.font = UIFont.fontAwesome(size: 13)
         cell.postedOn?.text =  "\(String.fontAwesome(unicode: 0xf086)) " + postedOn
         
@@ -255,7 +255,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
             if (error == nil) {
-                responseHandler( error: nil, items: self.assignmentItems(data))
+                responseHandler( error: nil, items: self.assignmentItems(data!))
             } else {
                 Yellr.println(error)
             }
@@ -267,42 +267,45 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         var jsonParseError: NSError?
         var refinedAssignmentItems : Array<AssignmentsDataModel> = []
         var assignmentsCount = 0
-        
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
-         
-            var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
-            
-            
-            for itemDict in rawAssignmentItems {
-
-                var item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
-                    as_description : itemDict["description"],
-                    as_organization : itemDict["organization"],
-                    as_post_count : itemDict["post_count"],
-                    as_post_ID : itemDict["assignment_id"],
-                    as_question_type_id : itemDict["question_type_id"], //poll or post
-                    has_responded : itemDict["has_responded"],
-                    answer0 : itemDict["answer0"],
-                    answer1 : itemDict["answer1"],
-                    answer2 : itemDict["answer2"],
-                    answer3 : itemDict["answer3"],
-                    answer4 : itemDict["answer4"],
-                    answer5 : itemDict["answer5"],
-                    answer6 : itemDict["answer6"],
-                    answer7 : itemDict["answer7"],
-                    answer8 : itemDict["answer8"],
-                    answer9 : itemDict["answer9"])
+        do {
+            if let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+             
+                let rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
                 
-                assignmentsCount++
-                refinedAssignmentItems.append(item)
+                
+                for itemDict in rawAssignmentItems {
+
+                    let item : AssignmentsDataModel = AssignmentsDataModel(as_question_text: itemDict["question_text"],
+                        as_description : itemDict["description"],
+                        as_organization : itemDict["organization"],
+                        as_post_count : itemDict["post_count"],
+                        as_post_ID : itemDict["assignment_id"],
+                        as_question_type_id : itemDict["question_type_id"], //poll or post
+                        has_responded : itemDict["has_responded"],
+                        answer0 : itemDict["answer0"],
+                        answer1 : itemDict["answer1"],
+                        answer2 : itemDict["answer2"],
+                        answer3 : itemDict["answer3"],
+                        answer4 : itemDict["answer4"],
+                        answer5 : itemDict["answer5"],
+                        answer6 : itemDict["answer6"],
+                        answer7 : itemDict["answer7"],
+                        answer8 : itemDict["answer8"],
+                        answer9 : itemDict["answer9"])
+                    
+                    assignmentsCount++
+                    refinedAssignmentItems.append(item)
+                }
+                
+                //save assignments count
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
+                defaults.synchronize()
+                
+            } else {
+                
             }
-            
-            //save assignments count
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
-            defaults.synchronize()
-            
-        } else {
+        } catch _ {
             
         }
         return refinedAssignmentItems
@@ -317,11 +320,11 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
     }
     
     //MARK: Location Delegate functions
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var latestLocation: AnyObject = locations[locations.count - 1]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
         
-        var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
-        var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        let latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
+        let longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
         self.aslat = latitude
         self.aslong = longitude
         
@@ -335,7 +338,7 @@ class AssignmentsTableViewController: UITableViewController, CLLocationManagerDe
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")

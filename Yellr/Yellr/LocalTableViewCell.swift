@@ -22,13 +22,13 @@ class LocalTableViewCell: UITableViewCell {
 
     @IBAction func upVoteClicked(sender: UIButton) {
         //voteProcess(sender, 1)
-        var cell: UITableViewCell = sender.superview?.superview as! UITableViewCell
-        var table: UITableView = cell.superview as! UITableView
+        let cell: UITableViewCell = sender.superview?.superview as! UITableViewCell
+        //var table: UITableView = cell.superview as! UITableView
         //let textFieldIndexPath = table.indexPathForCell(cell)
         //Yellr.println(textFieldIndexPath?.row)
         Yellr.println(cell)
 
-        var postID : String = String(sender.tag)
+        //var postID : String = String(sender.tag)
         //post(["post_id":postID, "is_up_vote":"1"], "register_vote") { (succeeded: Bool, msg: String) -> () in
 //            var alert = UIAlertView(title: "Success!", message: msg, delegate: nil, cancelButtonTitle: "Okay.")
 //            if(succeeded) {
@@ -59,7 +59,7 @@ class LocalTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        initVoteButtons(downVoteBtn, upVoteBtn)
+        initVoteButtons(downVoteBtn, upVoteBtn: upVoteBtn)
         
     }
     

@@ -24,8 +24,9 @@ import Foundation
 */
 public func println<T>(object: T, _ file: String = __FILE__, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
 {
-    var enabled = YellrConstants.AppInfo.DevMode
-    let filename = file.lastPathComponent.stringByDeletingPathExtension
+    let enabled = YellrConstants.AppInfo.DevMode
+    //let filename = file.lastPathComponent.stringByDeletingPathExtension
+    let filename = NSURL(fileURLWithPath: file).URLByDeletingPathExtension?.lastPathComponent
     if (enabled) {
         print("\n")
         print("\(filename).\(function)[\(line)]: \(object)\n")
@@ -48,7 +49,8 @@ This functional also augments the original function with the filename, function 
 */
 public func magic<T>(object: T, _ file: String = __FILE__, _ function: String = __FUNCTION__, _ line: Int = __LINE__)
 {
-    let filename = file.lastPathComponent.stringByDeletingPathExtension
+    //let filename = file.lastPathComponent.stringByDeletingPathExtension
+    let filename = NSURL(fileURLWithPath: file).URLByDeletingPathExtension?.lastPathComponent
     print("\(filename).\(function)[\(line)]: \(object)\n")
 }
 

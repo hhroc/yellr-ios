@@ -80,19 +80,19 @@ extension NSMutableData {
  * Post method for uploading Images
  */
 
-func postImage(params : Dictionary<String, String>, image:NSData, latitude:String, longitude:String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
+func postImage(params : [String:String?], image:NSData, latitude:String, longitude:String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
-    var fieldName: String = "media_file"
-    var url: String = buildUrl("upload_media" + ".json", latitude, longitude)
+    //var fieldName: String = "media_file"
+    let url: String = buildUrl("upload_media" + ".json", latitude: latitude, longitude: longitude)
     
-    var request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    let request = NSMutableURLRequest(URL: NSURL(string: url)!)
     //var request = NSMutableURLRequest(URL: NSURL(string: "http://exa.ms/abc.php")!)
-    var session = NSURLSession.sharedSession()
+    let session = NSURLSession.sharedSession()
     
-    let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
+    //let uniqueId = NSProcessInfo.processInfo().globallyUniqueString
     
 
-    var boundary:String = "Boundary-\(NSUUID().UUIDString)"
+    let boundary:String = "Boundary-\(NSUUID().UUIDString)"
     
     request.HTTPMethod = "POST"
     request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
@@ -121,134 +121,255 @@ func postImage(params : Dictionary<String, String>, image:NSData, latitude:Strin
     
     request.HTTPBody = body
     
-    var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-
-        var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        Yellr.println("Body: \(strData)")
-        var err: NSError?
-        var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-        
-        var msg = "NOTHING"
-        
-        if(err != nil) {
-            Yellr.println(err!.localizedDescription)
-            let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-            Yellr.println("Error could not parse JSON: '\(jsonStr)'")
-            postCompleted(succeeded: false, msg: "Error")
-        }
-        else {
-            if let parseJSON = json {
-                // check if successful
-                if let success = parseJSON["success"] as? Bool {
+    let task =  NSURLSession.sharedSession().dataTaskWithRequest(request,
+        completionHandler: {
+            (data, response, error) -> Void in
+            if let data = data {
+                println(data.length)
+                // you can use data here
+                do {
                     
-                    if (success) {
-                        
-                        if let mediaId = parseJSON["media_id"] as? String {
-                            msg =  mediaId
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves) as? NSDictionary
+                    var msg = "NOTHING"
+                    
+                    if let parseJSON = json {
+                        // check if successful
+                        if let success = parseJSON["success"] as? Bool {
+                            
+                            if (success) {
+                                
+                                if let mediaId = parseJSON["media_id"] as? String {
+                                    msg =  mediaId
+                                }
+                                
+                            } else {
+                            }
+                            postCompleted(succeeded: success, msg: msg)
                         }
-                        
-                    } else {
+                        return
                     }
-                    postCompleted(succeeded: success, msg: msg)
+                    else {
+                        let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                        Yellr.println("Error could not parse JSON: \(jsonStr)")
+                        postCompleted(succeeded: false, msg: "Error")
+                    }
+                    
+                } catch _ {
+                    postCompleted(succeeded: false, msg: "Error")
                 }
-                return
-            }
-            else {
-                let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                Yellr.println("Error could not parse JSON: \(jsonStr)")
+                
+            } else if let error = error {
+                Yellr.println(error.description)
                 postCompleted(succeeded: false, msg: "Error")
             }
-        }
     })
-    
     task.resume()
+    
+//    let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+//
+//        let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//        Yellr.println("Body: \(strData)")
+//        let err: NSError?
+//        do {
+//        
+//            let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves) as? NSDictionary
+//            
+//            var msg = "NOTHING"
+//
+//                if let parseJSON = json {
+//                    // check if successful
+//                    if let success = parseJSON["success"] as? Bool {
+//                        
+//                        if (success) {
+//                            
+//                            if let mediaId = parseJSON["media_id"] as? String {
+//                                msg =  mediaId
+//                            }
+//                            
+//                        } else {
+//                        }
+//                        postCompleted(succeeded: success, msg: msg)
+//                    }
+//                    return
+//                }
+//                else {
+//                    let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//                    Yellr.println("Error could not parse JSON: \(jsonStr)")
+//                    postCompleted(succeeded: false, msg: "Error")
+//                }
+//            
+//            
+//        } catch err {
+//            if(err != nil) {
+//                Yellr.println(err!.localizedDescription)
+//                let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//                Yellr.println("Error could not parse JSON: '\(jsonStr)'")
+//                postCompleted(succeeded: false, msg: "Error")
+//            }
+//        }
+//        
+//    })
+//    
+//    task.resume()
     
 }
 
 /**
  * Post method for sending API adds
  */
-func post(params : Dictionary<String, String>, method : String, latitude:String, longitude:String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
+func post(params : [String:String?], method : String, latitude:String, longitude:String, postCompleted : (succeeded: Bool, msg: String) -> ()) {
     
-    var url: String = buildUrl(method + ".json", latitude, longitude)
-    var request = NSMutableURLRequest(URL: NSURL(string: url)!)
-    var session = NSURLSession.sharedSession()
+    let url: String = buildUrl(method + ".json", latitude: latitude, longitude: longitude)
+    let request = NSMutableURLRequest(URL: NSURL(string: url)!)
+    //let session = NSURLSession.sharedSession()
     request.HTTPMethod = "POST"
     
-    var err: NSError?
+    //let err: NSError?
     var requestData : String = ""
     
     //build the request data string
     for (key, value) in params {
-        requestData += key + "=" + value + "&"
+        requestData += key + "=" + value! + "&"
     }
-    requestData = dropLast(requestData)
+    requestData = String(requestData.characters.dropLast())
     
     request.HTTPBody = (requestData as NSString).dataUsingEncoding(NSUTF8StringEncoding)
     request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
     
     //Yellr.println(request)
     
-    var task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-        //Yellr.println("Response: \(response)")
-        var strData = NSString(data: data, encoding: NSUTF8StringEncoding)
-        Yellr.println("Body: \(strData)")
-        var err: NSError?
-        var json = NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves, error: &err) as? NSDictionary
-        
-        var msg = "NOTHING"
-        
-        if(err != nil) {
-            Yellr.println(err!.localizedDescription)
-            let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-            Yellr.println("Error could not parse JSON: '\(jsonStr)'")
-            postCompleted(succeeded: false, msg: "Error")
-        }
-        else {
-            if let parseJSON = json {
-                // check if successful
-                if let success = parseJSON["success"] as? Bool {
+    let task =  NSURLSession.sharedSession().dataTaskWithRequest(request,
+        completionHandler: {
+            (data, response, error) -> Void in
+            if let data = data {
+                println(data.length)
+                // you can use data here
+                do {
                     
-                    if (success) {
-
-                        if (method == "publish_post") {
-                            if let postId = parseJSON["post_id"] as? Int {
-                                msg =  NSString(format:"%d", (stringInterpolationSegment: postId)) as String
+                    let json = try NSJSONSerialization.JSONObjectWithData(data, options: .MutableLeaves) as? NSDictionary
+        
+                    var msg = "NOTHING"
+        
+        
+                        if let parseJSON = json {
+                            // check if successful
+                            if let success = parseJSON["success"] as? Bool {
+        
+                                if (success) {
+        
+                                    if (method == "publish_post") {
+                                        if let postId = parseJSON["post_id"] as? Int {
+                                            msg =  NSString(format:"%d", (stringInterpolationSegment: postId)) as String
+                                        }
+                                    } else if (method == "register_vote") {
+                                        if let voteId = parseJSON["vote_id"] as? Int {
+                                            msg =  NSString(format:"%d", (stringInterpolationSegment: voteId)) as String
+                                        }
+        
+                                    } else if (method == "create_response_message") {
+        
+                                    } else if (method == "verify_user") {
+                                        if let verifieduserid = parseJSON["verfied_user_id"] as? String {
+                                            msg = verifieduserid
+                                        } else {
+                                            msg = "-1"
+                                        }
+                                    } else if (method == "upload_media") {
+                                        if let mediaId = parseJSON["media_id"] as? String {
+                                            msg =  mediaId
+                                        }
+                                    }
+                                    
+                                } else {
+                                }
+                                postCompleted(succeeded: success, msg: msg)
                             }
-                        } else if (method == "register_vote") {
-                            if let voteId = parseJSON["vote_id"] as? Int {
-                                msg =  NSString(format:"%d", (stringInterpolationSegment: voteId)) as String
-                            }
-                            
-                        } else if (method == "create_response_message") {
-                            
-                        } else if (method == "verify_user") {
-                            if let verifieduserid = parseJSON["verfied_user_id"] as? String {
-                                msg = verifieduserid
-                            } else {
-                                msg = "-1"
-                            }
-                        } else if (method == "upload_media") {
-                            if let mediaId = parseJSON["media_id"] as? String {
-                                msg =  mediaId
-                            }
+                            return
                         }
-                        
-                    } else {
-                    }
-                    postCompleted(succeeded: success, msg: msg)
+                        else {
+                            let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
+                            Yellr.println("Error could not parse JSON: \(jsonStr)")
+                            postCompleted(succeeded: false, msg: "Error")
+                        }
+                    
+                } catch _ {
+                    postCompleted(succeeded: false, msg: "Error")
                 }
-                return
-            }
-            else {
-                let jsonStr = NSString(data: data, encoding: NSUTF8StringEncoding)
-                Yellr.println("Error could not parse JSON: \(jsonStr)")
+                
+            } else if let error = error {
                 postCompleted(succeeded: false, msg: "Error")
             }
-        }
     })
-    
     task.resume()
+    
+//    let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
+//        //Yellr.println("Response: \(response)")
+//        let strData = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//        Yellr.println("Body: \(strData)")
+//        let err: NSError?
+//        
+//        do {
+//        
+//            let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves) as? NSDictionary
+//        
+//            var msg = "NOTHING"
+//            
+//            
+//                if let parseJSON = json {
+//                    // check if successful
+//                    if let success = parseJSON["success"] as? Bool {
+//                        
+//                        if (success) {
+//                            
+//                            if (method == "publish_post") {
+//                                if let postId = parseJSON["post_id"] as? Int {
+//                                    msg =  NSString(format:"%d", (stringInterpolationSegment: postId)) as String
+//                                }
+//                            } else if (method == "register_vote") {
+//                                if let voteId = parseJSON["vote_id"] as? Int {
+//                                    msg =  NSString(format:"%d", (stringInterpolationSegment: voteId)) as String
+//                                }
+//                                
+//                            } else if (method == "create_response_message") {
+//                                
+//                            } else if (method == "verify_user") {
+//                                if let verifieduserid = parseJSON["verfied_user_id"] as? String {
+//                                    msg = verifieduserid
+//                                } else {
+//                                    msg = "-1"
+//                                }
+//                            } else if (method == "upload_media") {
+//                                if let mediaId = parseJSON["media_id"] as? String {
+//                                    msg =  mediaId
+//                                }
+//                            }
+//                            
+//                        } else {
+//                        }
+//                        postCompleted(succeeded: success, msg: msg)
+//                    }
+//                    return
+//                }
+//                else {
+//                    let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//                    Yellr.println("Error could not parse JSON: \(jsonStr)")
+//                    postCompleted(succeeded: false, msg: "Error")
+//                }
+//            
+//            
+//        } catch err {
+//            if(err != nil) {
+//                Yellr.println(err!.localizedDescription)
+//                let jsonStr = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//                Yellr.println("Error could not parse JSON: '\(jsonStr)'")
+//                postCompleted(succeeded: false, msg: "Error")
+//            }
+//        }
+//        
+//
+//    })
+//    
+//    task.resume()
 }
 
 /**
@@ -256,11 +377,11 @@ func post(params : Dictionary<String, String>, method : String, latitude:String,
  */
 func buildUrl(method: String , latitude: String, longitude: String) -> String {
     
-    var lang:String = NSLocale.preferredLanguages()[0] as! String
+    let lang:String = NSLocale.preferredLanguages()[0]
     
     var url = YellrConstants.API.endPoint + "/" + method
     url = url + "?cuid=" + getCUID()
-    url = url + "&language_code=" + lang
+    url = url + "&language_code=" + lang.stringByReplacingOccurrencesOfString("-US", withString: "")
     
     if (latitude == "NIL" && longitude == "NIL") {
         //rochester
@@ -301,7 +422,7 @@ func getCUID() -> String {
  */
 func resetCUID() -> String {
     let preferences = NSUserDefaults.standardUserDefaults()
-    var cuid = NSUUID().UUIDString.lowercaseString
+    let cuid = NSUUID().UUIDString.lowercaseString
     let cuidKey = "ycuid"
     preferences.setValue(cuid, forKey: cuidKey)
     //  Save to disk
@@ -312,7 +433,7 @@ func resetCUID() -> String {
 }
 
 //function to fetch background data and show notification
-func fetchBackgroundDataAndShowNotification() -> Void{
+func fetchBackgroundDataAndShowNotification() -> Bool{
     
     //using sendSynchronousRequest instead of sendAsynchronousRequest
     //as async is not working in background for iOS7
@@ -338,95 +459,110 @@ func fetchBackgroundDataAndShowNotification() -> Void{
     } else {}
     
     if let ystoredstoriescount = defaults.stringForKey(YellrConstants.Keys.StoredStoriesCount) {
-        storedStoriesCount = ystoredstoriescount.toInt()!
+        storedStoriesCount = Int(ystoredstoriescount)!
         Yellr.println(storedStoriesCount)
     } else {}
     
     if let ystoredassignmentscount = defaults.stringForKey(YellrConstants.Keys.StoredAssignmentsCount) {
-        storedAssignmentsCount = ystoredassignmentscount.toInt()!
+        storedAssignmentsCount = Int(ystoredassignmentscount)!
     } else {}
     
     
     //for iOS7
     //count new stories if any
     
-    var request = NSURLRequest(URL: NSURL(string: buildUrl("get_stories.json", latitude, longitude))!);
+    var request = NSURLRequest(URL: NSURL(string: buildUrl("get_stories.json", latitude: latitude, longitude: longitude))!);
     
     //NSURLConnection.se
     var response: NSURLResponse?
     var error: NSError?
     
-    if let urlData = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error) as NSData? {
-        
-        if let httpResponse = response as? NSHTTPURLResponse {
+    do {
+        if let urlData = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response) as NSData? {
             
-            
-            //Yellr.println()
-            
-            if let jsonResult = NSJSONSerialization.JSONObjectWithData(urlData, options: .MutableContainers, error: nil) as? NSDictionary {
+            if let httpResponse = response as? NSHTTPURLResponse {
                 
-                var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
                 
-                for itemDict in rawStoryItems {
+                //Yellr.println()
+                
+                if let jsonResult = (try? NSJSONSerialization.JSONObjectWithData(urlData, options: .MutableContainers)) as? NSDictionary {
                     
-                    storiesCount++
+                    var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
+                    
+                    for itemDict in rawStoryItems {
+                        
+                        storiesCount++
+                    }
+                    
+                } else {
+                    
+                }
+                
+                if (storiesCount > storedStoriesCount) {
+                    hasNewStories = true
+                    hasNewStoriesCount = storiesCount - storedStoriesCount
+                    
+                    //store the new stories count in userprefs
+                    defaults.setObject(String(storiesCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+                    defaults.synchronize()
+                }
+                
+                
+            }
+        
+        }
+    } catch _ {
+        
+    }
+    
+    //count new assignments if any
+    request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude:latitude, longitude:longitude))!);
+    
+    do {
+    
+        if let urlData = try NSURLConnection.sendSynchronousRequest(request, returningResponse: &response) as NSData? {
+            
+            if let jsonResult = (try? NSJSONSerialization.JSONObjectWithData(urlData, options: [])) as? NSDictionary {
+                
+                let rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
+                
+                for itemDict in rawAssignmentItems {
+                    
+                    //get seenAssignments list and compare it to the array
+                    //and then increment it
+                    assignmentsCount++
+                    
                 }
                 
             } else {
                 
             }
             
-            if (storiesCount > storedStoriesCount) {
-                hasNewStories = true
-                hasNewStoriesCount = storiesCount - storedStoriesCount
+            if (assignmentsCount > storedAssignmentsCount) {
+                hasNewAssignments = true
+                hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
                 
-                //store the new stories count in userprefs
-                defaults.setObject(String(storiesCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+                //store the new assignments count in userprefs
+                defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
                 defaults.synchronize()
             }
             
-            
-        }
-    
-    }
-    
-    //count new assignments if any
-    request = NSURLRequest(URL: NSURL(string: buildUrl("get_assignments.json", latitude, longitude))!);
-    
-    if let urlData = NSURLConnection.sendSynchronousRequest(request, returningResponse: &response, error: &error) as NSData? {
-        
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(urlData, options: nil, error: nil) as? NSDictionary {
-            
-            var rawAssignmentItems = jsonResult["assignments"] as! Array<Dictionary<String,AnyObject>>
-            
-            for itemDict in rawAssignmentItems {
-                
-                assignmentsCount++
-            }
-            
-        } else {
-            
         }
         
-        if (assignmentsCount > storedAssignmentsCount) {
-            hasNewAssignments = true
-            hasNewAssignmentsCount = assignmentsCount - storedAssignmentsCount
-            
-            //store the new assignments count in userprefs
-            defaults.setObject(String(assignmentsCount), forKey: YellrConstants.Keys.StoredAssignmentsCount)
-            defaults.synchronize()
-        }
+    } catch _ {
         
     }
     
     //setup notifications
-    var localNotification:UILocalNotification = UILocalNotification()
+    let localNotification:UILocalNotification = UILocalNotification()
     var screenToShow = "assignments"
+    var scheduleNotifications = false
     //localNotification.alertAction = "New notifications on Yellr"
     
     //TODO: Localization
     if (hasNewAssignments && hasNewStories) {
         localNotification.alertBody = "You have new stories and assignments."
+        scheduleNotifications = true
     } else if (hasNewAssignments && !hasNewStories) {
         if (hasNewAssignmentsCount > 1) {
             //localNotification.alertBody = "You have \(hasNewAssignmentsCount) new assignments"
@@ -434,6 +570,7 @@ func fetchBackgroundDataAndShowNotification() -> Void{
         } else {
             localNotification.alertBody = "You have a new assignment to view"
         }
+        scheduleNotifications = true
     } else if (!hasNewAssignments && hasNewStories) {
         if (hasNewAssignmentsCount > 1) {
             localNotification.alertBody = "You have new stories to view"
@@ -441,10 +578,19 @@ func fetchBackgroundDataAndShowNotification() -> Void{
             localNotification.alertBody = "You have a new story to view"
         }
         screenToShow = "stories"
+        scheduleNotifications = true
     }
-    localNotification.userInfo = ["screen" : screenToShow]
-    localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
-    UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+    
+    //schedule a notification only if it is apt to show
+    if (scheduleNotifications) {
+        //localNotification.alertBody = "You have new stories and assignments."
+        localNotification.userInfo = ["screen" : screenToShow]
+        localNotification.fireDate = NSDate(timeIntervalSinceNow: 1)
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+        return true
+    }
+
+    return false
     
     //for iOS8
     

@@ -59,12 +59,12 @@ class PollViewController : UIViewController, UIScrollViewDelegate {
             
         } else {
         
-            post(["media_type":"text", "media_file":"text", "media_text":String(pollOptionSelectedTag - 100200)], "upload_media", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+            post(["media_type":"text", "media_file":"text", "media_text":String(pollOptionSelectedTag - 100200)], method: "upload_media", latitude: self.latitude, longitude: self.longitude) { (succeeded: Bool, msg: String) -> () in
                 Yellr.println("Media Uploaded : " + msg)
                 
                 if (msg != "NOTHING" && msg != "Error") {
                     
-                    post(["assignment_id":String(self.pollId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                    post(["assignment_id":String(self.pollId), "media_objects":"[\""+msg+"\"]"], method:"publish_post", latitude:self.latitude, longitude:self.longitude) { (succeeded: Bool, msg: String) -> () in
                         Yellr.println("Post Added : " + msg)
                         if (msg != "NOTHING") {
                             
@@ -107,7 +107,7 @@ class PollViewController : UIViewController, UIScrollViewDelegate {
     func setupPoll() {
         var button: UIButton!
         var buttonPaddingTop: CGFloat
-        var buttonWidth: CGFloat = UIScreen.mainScreen().bounds.size.width - 35.0
+        let buttonWidth: CGFloat = UIScreen.mainScreen().bounds.size.width - 35.0
         Yellr.println(buttonWidth)
         
         self.pollQuestionLabel.text = self.pollQuestion
@@ -118,7 +118,7 @@ class PollViewController : UIViewController, UIScrollViewDelegate {
         var i = 0;
         for po in pollOptions {
             buttonPaddingTop = 50.0 * CGFloat(i)
-            button = UIButton.buttonWithType(UIButtonType.System) as! UIButton
+            button = UIButton(type: UIButtonType.System)
             button.setTitle(po, forState: UIControlState.Normal)
             button.frame = CGRectMake(0.0, buttonPaddingTop, buttonWidth, 40.0)
             button.addTarget(self, action: Selector("pollButtonTouched:"), forControlEvents: UIControlEvents.TouchUpInside)
@@ -139,10 +139,11 @@ class PollViewController : UIViewController, UIScrollViewDelegate {
     
     func pollButtonTouched(sender: UIButton!) {
         for (tag,status) in pollOptionsTrack {
-            var tmpButton = self.view.viewWithTag(tag) as? UIButton
+            let tmpButton = self.view.viewWithTag(tag) as? UIButton
             tmpButton!.backgroundColor = UIColorFromRGB(YellrConstants.Colors.very_light_yellow)
             tmpButton!.layer.borderColor = UIColorFromRGB(YellrConstants.Colors.very_light_yellow).CGColor
             pollOptionsTrack[tag] = false
+            Yellr.println("\(status)")
         }
         pollOptionSelectedTag = sender.tag
         pollOptionsTrack[sender.tag] = true

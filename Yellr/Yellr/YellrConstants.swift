@@ -16,13 +16,13 @@ struct YellrConstants {
     
     struct AppInfo {
         static let Name = "Yellr"
-        static let version = "0.1.8"
+        static let version = "0.1.9"
         static let DevMode = true
     }
     
     struct API {
-        //static let endPoint = "https://yellr.net"
-        static let endPoint = "http://yellr.mycodespace.net"
+        static let endPoint = "https://yellr.net"
+        //static let endPoint = "http://yellr.mycodespace.net"
     }
     
     struct Direction {

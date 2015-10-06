@@ -61,7 +61,7 @@ class AssignmentsDataModel: NSObject {
 //    }
     
     
-    init( var as_question_text : AnyObject?, var as_description : AnyObject?, var as_organization : AnyObject?, var as_post_count : AnyObject?, var as_post_ID : AnyObject?, var as_question_type_id : AnyObject?, var has_responded : AnyObject?, var answer0 : AnyObject?, var answer1 : AnyObject?, var answer2 : AnyObject?, var answer3 : AnyObject?, var answer4 : AnyObject?, var answer5 : AnyObject?, var answer6 : AnyObject?, var answer7 : AnyObject?, var answer8 : AnyObject?, var answer9 : AnyObject?) {
+    init( as_question_text : AnyObject?, as_description : AnyObject?, as_organization : AnyObject?, as_post_count : AnyObject?, as_post_ID : AnyObject?, as_question_type_id : AnyObject?, has_responded : AnyObject?, answer0 : AnyObject?, answer1 : AnyObject?, answer2 : AnyObject?, answer3 : AnyObject?, answer4 : AnyObject?, answer5 : AnyObject?, answer6 : AnyObject?, answer7 : AnyObject?, answer8 : AnyObject?, answer9 : AnyObject?) {
         self.as_question_text = as_question_text
         self.as_description = as_description
         self.as_organization = as_organization

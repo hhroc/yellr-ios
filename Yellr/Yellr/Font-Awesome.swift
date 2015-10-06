@@ -85,7 +85,7 @@ class FontAwesome {
             if let font = CGFontCreateWithDataProvider(provider) {
                 var error: Unmanaged<CFError>?
                 if !CTFontManagerRegisterGraphicsFont(font, &error) {
-                    println(error)
+                    print(error)
                 }
             }
         }
@@ -95,7 +95,7 @@ class FontAwesome {
 // Use Font Awesome
 
 extension UIFont {
-    class func fontAwesome(#size: CGFloat) -> UIFont {
+    class func fontAwesome(size size: CGFloat) -> UIFont {
         FontAwesome.load()
         
         if let font = UIFont(name: "FontAwesome", size: size) {
@@ -115,13 +115,13 @@ extension String {
 
 extension UIImageView {
     
-    func fontAwesome(#fontAwesome: UnicodeLiteralConvertible) {
+    func fontAwesome(fontAwesome fontAwesome: UnicodeLiteralConvertible) {
         let _image = _fontAwesome(fontAwesome: fontAwesome)
         
         image = _image
     }
     
-    private func _fontAwesome(#fontAwesome: UnicodeLiteralConvertible, color: UIColor = UIColor.blackColor()) -> UIImage {
+    private func _fontAwesome(fontAwesome fontAwesome: UnicodeLiteralConvertible, color: UIColor = UIColor.blackColor()) -> UIImage {
         let unicode = fontAwesome.convertToUnicode()
         let font = UIFont.fontAwesome(size: frame.height)
         
@@ -149,7 +149,7 @@ extension UIImageView {
 
 extension UIButton {
     
-    func setFontAwesome(#fontAwesome: UnicodeLiteralConvertible, forState state: UIControlState) {
+    func setFontAwesome(fontAwesome fontAwesome: UnicodeLiteralConvertible, forState state: UIControlState) {
         let title = fontAwesome.convertToUnicode()
         setTitle(title, forState: state)
         let font = UIFont.fontAwesome(size: frame.height - 4) // use 2point to padding
