@@ -81,6 +81,7 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
             //sets bottom padding for tab items
             //item.setTitlePositionAdjustment = UIOffsetMake(0, -20)
             //item.s
+            item.titlePositionAdjustment = UIOffsetMake(0, -20)
             
             
         }

@@ -275,7 +275,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_text as? String
-                textView.font = UIFont(name: "ArialMT", size: 17.0)
+                textView.font = UIFont.systemFontOfSize(17.0) //UIFont(name: "ArialMT", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false
@@ -294,7 +294,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 
                 let textView = UITextView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width - 75.0, cell.mediaContainer.frame.height))
                 textView.text = localPostItem.lp_media_caption as? String
-                textView.font = UIFont(name: "ArialMT", size: 17.0)
+                textView.font = UIFont.systemFontOfSize(17.0)//UIFont(name: "ArialMT", size: 17.0)
                 textView.hidden = false
                 textView.sizeToFit()
                 textView.scrollEnabled = false
