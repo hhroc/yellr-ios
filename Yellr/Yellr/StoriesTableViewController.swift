@@ -28,14 +28,14 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         //self.loadStoriesTableView()
         
         //right side bar button items
-        var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
-        var fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        let profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         fixedSpace.width = 30.0
-        var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
+        let addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
+        let yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
         //application is becoming active again
@@ -66,7 +66,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         
         //this check is needed to add the additional
         //location methods for ios8
-        if iOS8 {
+        if #available(iOS 8.0 ,*) {
             locationManager.requestWhenInUseAuthorization()
         } else {
             
@@ -93,8 +93,8 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
         if (segue.identifier == "StoryDetailSegue") {
             
-            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
-            var viewController = segue.destinationViewController as! StoryDetailViewController
+            let indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow!
+            let viewController = segue.destinationViewController as! StoryDetailViewController
             viewController.story = self.dataSource[indexPath.row].stitle;
             viewController.lname = self.dataSource[indexPath.row].lname;
             viewController.fname = self.dataSource[indexPath.row].fname;
@@ -134,7 +134,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
             longitude = ylongitude
         } else {}
         
-        var storiesUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
+        var storiesUrlEndpoint = buildUrl("get_stories.json", latitude: latitude, longitude: longitude)
         
         return storiesCount
     }
@@ -145,7 +145,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         
         self.initWebActivityIndicator()
         
-        self.storiesUrlEndpoint = buildUrl("get_stories.json", latitude, longitude)
+        self.storiesUrlEndpoint = buildUrl("get_stories.json", latitude: latitude, longitude: longitude)
         self.requestStories(self.storiesUrlEndpoint, responseHandler: { (error, items) -> () in
             
             self.dataSource = items!
@@ -160,17 +160,17 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     
     func configureCell(cell:StoriesTableViewCell, atIndexPath indexPath:NSIndexPath) {
         
-        var storyItem : StoriesDataModel = self.dataSource[indexPath.row]
+        let storyItem : StoriesDataModel = self.dataSource[indexPath.row]
         
         cell.story.text = storyItem.st_title as? String
         
-        var postedByF:String = (storyItem.st_author_first_name as? String)!
-        var postedByL:String = (storyItem.st_author_last_name as? String)!
+        let postedByF:String = (storyItem.st_author_first_name as? String)!
+        let postedByL:String = (storyItem.st_author_last_name as? String)!
         cell.postedBy?.font = UIFont.fontAwesome(size: 13)
         cell.postedBy?.text =  "\(String.fontAwesome(unicode: 0xf007)) " + postedByF + " " + postedByL
         
         //number of comments - variable name is bad, i know
-        var postedOn:String = (storyItem.st_publish_datetime_ago as? String)!
+        let postedOn:String = (storyItem.st_publish_datetime_ago as? String)!
         cell.postedOn?.font = UIFont.fontAwesome(size: 13)
         cell.postedOn?.text =  "\(String.fontAwesome(unicode: 0xf086)) " + postedOn
         
@@ -183,7 +183,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
             if (error == nil) {
-                responseHandler( error: nil, items: self.storyItems(data))
+                responseHandler( error: nil, items: self.storyItems(data!))
             } else {
                 Yellr.println(error)
             }
@@ -196,29 +196,35 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         var refinedStoryItems : Array<StoriesDataModel> = []
         var storiesCount = 0
         
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
+        do {
+        
+            if let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
 
-            var rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
-            
-            for itemDict in rawStoryItems {
+                let rawStoryItems = jsonResult["stories"] as! Array<Dictionary<String,AnyObject>>
                 
-                var item : StoriesDataModel = StoriesDataModel(st_author_first_name: itemDict["author_first_name"],
-                    st_title : itemDict["title"],
-                    st_publish_datetime_ago : itemDict["publish_datetime_ago"],
-                    st_author_last_name : itemDict["author_last_name"],
-                    st_contents_rendered : itemDict["contents_rendered"]
-                )
+                for itemDict in rawStoryItems {
+                    
+                    let item : StoriesDataModel = StoriesDataModel(st_author_first_name: itemDict["author_first_name"],
+                        st_title : itemDict["title"],
+                        st_publish_datetime_ago : itemDict["publish_datetime_ago"],
+                        st_author_last_name : itemDict["author_last_name"],
+                        st_contents_rendered : itemDict["contents_rendered"]
+                    )
+                    
+                    storiesCount++
+                    refinedStoryItems.append(item)
+                }
                 
-                storiesCount++
-                refinedStoryItems.append(item)
+                //save stories count
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.setObject(String(storiesCount), forKey: YellrConstants.Keys.StoredStoriesCount)
+                defaults.synchronize()
+                
+            } else {
+                
             }
             
-            //save stories count
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.setObject(String(storiesCount), forKey: YellrConstants.Keys.StoredStoriesCount)
-            defaults.synchronize()
-            
-        } else {
+        } catch _ {
             
         }
 
@@ -233,11 +239,11 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
     }
     
     //MARK: Location Delegate functions
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var latestLocation: AnyObject = locations[locations.count - 1]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
         
-        var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
-        var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        let latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
+        let longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
         
         //store lat long in prefs
         let defaults = NSUserDefaults.standardUserDefaults()
@@ -249,7 +255,7 @@ class StoriesTableViewController: UITableViewController, CLLocationManagerDelega
         locationManager.stopUpdatingLocation()
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")

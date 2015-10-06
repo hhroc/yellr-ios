@@ -49,7 +49,6 @@
 		26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */; };
 		26CA8D451B1D05980094BFC3 /* YellrTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */; };
 		26CDFD291B388792005997D5 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 26CDFD281B388792005997D5 /* Images-2.xcassets */; };
-		26F72A1C1B802124004D21CB /* HttpDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F72A1B1B802124004D21CB /* HttpDownloader.swift */; };
 		26F72A1E1B802EA5004D21CB /* VideoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26F72A1D1B802EA5004D21CB /* VideoUtils.swift */; };
 /* End PBXBuildFile section */
 
@@ -120,7 +119,6 @@
 		26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrHelperFunc.swift; sourceTree = "<group>"; };
 		26CA8D441B1D05980094BFC3 /* YellrTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YellrTabBarController.swift; sourceTree = "<group>"; };
 		26CDFD281B388792005997D5 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
-		26F72A1B1B802124004D21CB /* HttpDownloader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HttpDownloader.swift; sourceTree = "<group>"; };
 		26F72A1D1B802EA5004D21CB /* VideoUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoUtils.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -201,7 +199,6 @@
 				26CA8D421B1CFA6D0094BFC3 /* YellrHelperFunc.swift */,
 				263E1B691B18D36A0063E9C6 /* Info.plist */,
 				267964B71B31C19100735925 /* YellrDeviceDetect.swift */,
-				26F72A1B1B802124004D21CB /* HttpDownloader.swift */,
 				26F72A1D1B802EA5004D21CB /* VideoUtils.swift */,
 				263546D71B87E30000B4E6D4 /* RegexString.swift */,
 			);
@@ -341,6 +338,7 @@
 		263E1B5D1B18D36A0063E9C6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
 				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = wxxi;
@@ -425,7 +423,6 @@
 				2661C8851B2874FC00CC681F /* LocalPostDetailViewController.swift in Sources */,
 				2645437D1B24CC4D00B8EA79 /* AssignmentsDataModel.swift in Sources */,
 				269A10D41B1CC4360001577D /* YellrConstants.swift in Sources */,
-				26F72A1C1B802124004D21CB /* HttpDownloader.swift in Sources */,
 				26CA8D431B1CFA6D0094BFC3 /* YellrHelperFunc.swift in Sources */,
 				2604889E1B1E541900D781FE /* AddPostViewController.swift in Sources */,
 				2661C87F1B27530500CC681F /* VoteButton.swift in Sources */,

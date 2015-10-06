@@ -66,7 +66,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         self.postsViewedLabel.text = NSLocalizedString(YellrConstants.Profile.PostsViewedLabel, comment: "Profile Screen Posts Viewed")
         self.postsUsedLabel.text = NSLocalizedString(YellrConstants.Profile.PostsUsedLabel, comment: "Profile Screen Posts Used")
         
-        var resetCuidBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f084", target: self, action: "resetCuidTapped:")
+        let resetCuidBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f084", target: self, action: "resetCuidTapped:")
         self.navigationItem.setRightBarButtonItems([resetCuidBarButtonItem], animated: true)
         
     }
@@ -81,7 +81,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         
         //this check is needed to add the additional
         //location methods for ios8
-        if iOS8 {
+        if #available(iOS 8.0, *) {
             locationManager.requestWhenInUseAuthorization()
         } else {
             
@@ -119,7 +119,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
             //Yellr.println(error)
             
             if (error == nil) {
-                self.profileItems(data)
+                self.profileItems(data!)
                 responseHandler( error: nil, items: nil)
             } else {
                 Yellr.println(error)
@@ -135,41 +135,45 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
     }
     
     func profileItems(data: NSData) -> Void {
-        var jsonParseError: NSError?
+        //var jsonParseError: NSError?
 
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
-            
-            //var pr_first_name = jsonResult["first_name"] as! String
-            //var pr_last_name = jsonResult["last_name"] as! String
-            var pr_verified = jsonResult["verified"] as! Bool
-            var pr_success = jsonResult["success"] as! Bool
-            var pr_post_count = jsonResult["post_count"] as! Int
-            var pr_post_view_count = jsonResult["post_view_count"] as! Int
-            var pr_organization = jsonResult["organization"] as! String
-            var pr_post_used_count = jsonResult["post_used_count"] as! Int
-            //var pr_email = jsonResult["email"] as! String
-            
-            dispatch_async(dispatch_get_main_queue()!, { () -> Void in
-                self.postsCount.text = String(pr_post_count)
-                self.postsUsedCount.text = String(pr_post_used_count)
-                self.postsViewedCount.text = String(pr_post_view_count)
-                if (pr_verified) {
-                    //self.tapToVerify.hidden = true
-                } else {
-                    //self.tapToVerify.hidden = false
-                }
-            })
-            
-            
-        } else {
+        do {
+            if let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+                
+                //var pr_first_name = jsonResult["first_name"] as! String
+                //var pr_last_name = jsonResult["last_name"] as! String
+                let pr_verified = jsonResult["verified"] as! Bool
+                //var pr_success = jsonResult["success"] as! Bool
+                let pr_post_count = jsonResult["post_count"] as! Int
+                let pr_post_view_count = jsonResult["post_view_count"] as! Int
+                //var pr_organization = jsonResult["organization"] as! String
+                let pr_post_used_count = jsonResult["post_used_count"] as! Int
+                //var pr_email = jsonResult["email"] as! String
+                
+                dispatch_async(dispatch_get_main_queue()!, { () -> Void in
+                    self.postsCount.text = String(pr_post_count)
+                    self.postsUsedCount.text = String(pr_post_used_count)
+                    self.postsViewedCount.text = String(pr_post_view_count)
+                    if (pr_verified) {
+                        //self.tapToVerify.hidden = true
+                    } else {
+                        //self.tapToVerify.hidden = false
+                    }
+                })
+                
+                
+            } else {
+                
+            }
+        } catch _ {
             
         }
 
     }
     
     //MARK: Location Delegate functions
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var latestLocation: AnyObject = locations[locations.count - 1]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
         
         self.latitude = String(format: "%.2f", latestLocation.coordinate.latitude)
         self.longitude = String(format: "%.2f", latestLocation.coordinate.longitude)
@@ -180,7 +184,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         defaults.setObject(self.longitude, forKey: YellrConstants.Direction.Longitude)
         defaults.synchronize()
         
-        self.profileUrlEndpoint = buildUrl("get_profile.json", self.latitude, self.longitude)
+        self.profileUrlEndpoint = buildUrl("get_profile.json", latitude: self.latitude, longitude: self.longitude)
         self.requestProfile(self.profileUrlEndpoint, responseHandler: { (error, items) -> () in
             //TODO: update UI code here
             //Yellr.println("1")
@@ -191,7 +195,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
         
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
@@ -211,7 +215,7 @@ class ProfileViewController: UIViewController, CLLocationManagerDelegate  {
                 
                 case 0:
                     //reset the cuid
-                    var cuid = resetCUID()
+                    let cuid = resetCUID()
                     dispatch_async(dispatch_get_main_queue()){
                         self.cuidValue.text = "CUID: " + cuid
                         self.postsCount.text = String("0")

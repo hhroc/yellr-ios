@@ -150,7 +150,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         //this check is needed to add the additional
         //location methods for ios8
-        if iOS8 {
+        if #available(iOS 8.0, *) {
             locationManager.requestWhenInUseAuthorization()
         } else {
             
@@ -249,10 +249,13 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             abRecord.setTitle("Record", forState:.Normal)
             let session:AVAudioSession = AVAudioSession.sharedInstance()
             var error: NSError?
-            if !session.setActive(false, error: &error) {
-                println("could not make session inactive")
+            do {
+                try session.setActive(false)
+            } catch let error1 as NSError {
+                error = error1
+                print("could not make session inactive")
                 if let e = error {
-                    println(e.localizedDescription)
+                    print(e.localizedDescription)
                     return
                 }
             }
@@ -268,17 +271,27 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             var error: NSError?
             
             if let r = recorder {
-                self.player = AVAudioPlayer(contentsOfURL: r.url, error: &error)
+                do {
+                    self.player = try AVAudioPlayer(contentsOfURL: r.url)
+                } catch let error1 as NSError {
+                    error = error1
+                    self.player = nil
+                }
                 if self.player == nil {
                     if let e = error {
-                        println(e.localizedDescription)
+                        print(e.localizedDescription)
                     }
                 }
             } else {
-                self.player = AVAudioPlayer(contentsOfURL: soundFileURL!, error: &error)
+                do {
+                    self.player = try AVAudioPlayer(contentsOfURL: soundFileURL!)
+                } catch let error1 as NSError {
+                    error = error1
+                    self.player = nil
+                }
                 if player == nil {
                     if let e = error {
-                        println(e.localizedDescription)
+                        print(e.localizedDescription)
                     }
                 }
             }
@@ -295,37 +308,38 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     @IBAction func takeVideo(sender: UIButton) {
         
-        if (iOS8) {
-            var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitleVideo, comment: "Choose Video Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
-            
-            var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.openCamera(true)
+            if #available(iOS 8.0, *) {
+                let alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitleVideo, comment: "Choose Video Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
                 
-            }
-            var galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
-                UIAlertAction in
-                self.openGallery(true)
-            }
-            var cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
-                UIAlertAction in
+                let cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.openCamera(true)
+                    
+                }
+                let galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
+                    UIAlertAction in
+                    self.openGallery(true)
+                }
+                let cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
+                    UIAlertAction in
+                    
+                }
                 
-            }
-            
-            // Add options
-            alert.addAction(cameraAction)
-            alert.addAction(galleryAction)
-            alert.addAction(cancelAction)
-            
-            // Present the actionsheet - bottom pop menu
-            if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-                self.presentViewController(alert, animated: true, completion: nil)
+                // Add options
+                alert.addAction(cameraAction)
+                alert.addAction(galleryAction)
+                alert.addAction(cancelAction)
+                
+                // Present the actionsheet - bottom pop menu
+                if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
+                    self.presentViewController(alert, animated: true, completion: nil)
+                } else {
+                    //for iPad - when we support in the future
+                    popover=UIPopoverController(contentViewController: alert)
+                    popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
+                }
+                
             } else {
-                //for iPad - when we support in the future
-                popover=UIPopoverController(contentViewController: alert)
-                popover!.presentPopoverFromRect(photoBtn.frame, inView: self.view, permittedArrowDirections: UIPopoverArrowDirection.Any, animated: true)
-            }
-        } else {
             
             //for iOS7
 //            let videoActionSheet = UIActionSheet()
@@ -354,20 +368,20 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     @IBAction func takePhoto(sender: UIButton) {
         
-        if (iOS8) {
+        if #available(iOS 8.0, *) {
         
-            var alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+            let alert:UIAlertController=UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.PopMenuTitle, comment: "Choose Image Menu"), message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
             
-            var cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
+            let cameraAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCamera, comment: "Choose Camera"), style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     self.openCamera(false)
                     
             }
-            var galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
+            let galleryAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuGallery, comment: "Choose Gallery"), style: UIAlertActionStyle.Default) {
                     UIAlertAction in
                     self.openGallery(false)
             }
-            var cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
+            let cancelAction = UIAlertAction(title: NSLocalizedString(YellrConstants.AddPost.PopMenuCancel, comment: "Cancel"), style: UIAlertActionStyle.Cancel) {
                     UIAlertAction in
                     
             }
@@ -422,7 +436,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             self.chosenMediaType = 0
             if (videoCamera) {
                 self.chosenMediaType = 1
-                picker.mediaTypes = [kUTTypeMovie!]
+                picker.mediaTypes = [kUTTypeMovie as String]
                 picker.videoQuality = UIImagePickerControllerQualityType.TypeLow
             }
             picker.showsCameraControls = true
@@ -440,10 +454,10 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             //what to show in gallery - photo or video
             if (videoCamera) {
                 self.chosenMediaType = 1
-                picker.mediaTypes = [kUTTypeMovie!]
+                picker.mediaTypes = [kUTTypeMovie as String]
             } else {
                 self.chosenMediaType = 0
-                picker.mediaTypes = [kUTTypeImage!]
+                picker.mediaTypes = [kUTTypeImage as String]
             }
             self.presentViewController(picker, animated: true, completion: nil)
         } else {
@@ -484,14 +498,14 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     if let imagePick = self.contentView.viewWithTag(YellrConstants.TagIds.AddPostImageView) as? UIImageView {
                         
                         
-                        let imageData:NSData = NSData(data: UIImageJPEGRepresentation(imagePick.image, 1.0))
+                        let imageData:NSData = NSData(data: UIImageJPEGRepresentation(imagePick.image!, 1.0)!)
                         
-                        postImage(["media_type":"image", "media_caption":postCont], imageData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                        postImage(["media_type":"image", "media_caption":postCont], image: imageData, latitude: self.latitude, longitude: self.longitude){ (succeeded: Bool, msg: String) -> () in
                             Yellr.println("Image Uploaded : " + msg)
                             
                             if (msg != "NOTHING" && msg != "Error") {
                                 
-                                post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                                post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], method:"publish_post", latitude:self.latitude, longitude:self.longitude) { (succeeded: Bool, msg: String) -> () in
                                     Yellr.println("Post Added : " + msg)
                                     if (msg != "NOTHING") {
                                         
@@ -522,12 +536,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     
                     //video data type
                     let videoData:NSData = NSData(contentsOfMappedFile: self.videoPathString)!
-                    postImage(["media_type":"video", "media_caption":postCont], videoData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                    postImage(["media_type":"video", "media_caption":postCont], image: videoData, latitude: self.latitude, longitude: self.longitude){ (succeeded: Bool, msg: String) -> () in
                         Yellr.println("Video Uploaded : " + msg)
                         
                         if (msg != "NOTHING" && msg != "Error") {
                             
-                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], method:"publish_post", latitude:self.latitude, longitude:self.longitude) { (succeeded: Bool, msg: String) -> () in
                                 Yellr.println("Post Added : " + msg)
                                 if (msg != "NOTHING") {
                                     
@@ -557,12 +571,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     //audio data type
                     Yellr.println(soundFileURL)
                     let audioData:NSData = NSData(contentsOfURL: self.soundFileURL!)!
-                    postImage(["media_type":"audio", "media_caption":postCont], audioData, self.latitude, self.longitude){ (succeeded: Bool, msg: String) -> () in
+                    postImage(["media_type":"audio", "media_caption":postCont], image: audioData, latitude: self.latitude, longitude: self.longitude){ (succeeded: Bool, msg: String) -> () in
                         Yellr.println("Audio Uploaded : " + msg)
                         
                         if (msg != "NOTHING" && msg != "Error") {
                             
-                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], method:"publish_post", latitude:self.latitude, longitude:self.longitude) { (succeeded: Bool, msg: String) -> () in
                                 Yellr.println("Post Added : " + msg)
                                 if (msg != "NOTHING") {
                                     
@@ -589,12 +603,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
                     
                 } else {
                     
-                    post(["media_type":"text", "media_file":"text", "media_text":postCont], "upload_media", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                    post(["media_type":"text", "media_file":"text", "media_text":postCont], method: "upload_media", latitude: self.latitude, longitude: self.longitude) { (succeeded: Bool, msg: String) -> () in
                         Yellr.println("Media Uploaded : " + msg)
                         
                         if (msg != "NOTHING" && msg != "Error") {
                             
-                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], "publish_post", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+                            post(["assignment_id":String(self.postId), "media_objects":"[\""+msg+"\"]"], method: "publish_post", latitude:self.latitude, longitude:self.longitude) { (succeeded: Bool, msg: String) -> () in
                                 Yellr.println("Post Added : " + msg)
                                 if (msg != "NOTHING") {
                                     
@@ -716,7 +730,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             //hide the active HUDs
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
             
-            if(iOS8) {
+            if #available(iOS 8.0, *) {
                 
                 let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.AddPost.FirstTimeTitle, comment: "Add Post Screen - Succesfully Posted"), message:
                     NSLocalizedString(YellrConstants.AddPost.FirstTimeMessage, comment: "Add Post Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)
@@ -858,12 +872,12 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     
     //MARK: Delegates
     //on chosing image - do what
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         Yellr.println(self.chosenMediaType)
         if (self.chosenMediaType == 0) {
             Yellr.println("Here")
-            var chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
-            var pickedImage : UIImageView = UIImageView()
+            let chosenImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let pickedImage : UIImageView = UIImageView()
             pickedImage.frame = CGRect(x: 0, y: 0, width: contentView.frame.width, height: contentView.frame.height)
             pickedImage.contentMode = .ScaleAspectFit
             pickedImage.image = chosenImage
@@ -887,8 +901,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     }
     
     //MARK: Location Delegate functions
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var latestLocation: AnyObject = locations[locations.count - 1]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
         
         self.latitude = String(format: "%.2f", latestLocation.coordinate.latitude)
         self.longitude = String(format: "%.2f", latestLocation.coordinate.longitude)
@@ -904,7 +918,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
@@ -956,7 +970,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         
         if let player = moviePlayer{
             NSNotificationCenter.defaultCenter().removeObserver(self)
-            //player.stop()
+            player.stop()
             //player.view.removeFromSuperview()
         }
         
@@ -1021,7 +1035,7 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
         var format = NSDateFormatter()
         format.dateFormat="yyyy-MM-dd-HH-mm-ss"
         var currentFileName = "recording-\(format.stringFromDate(NSDate())).m4a"
-        println(currentFileName)
+        print(currentFileName)
         
         var dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)
         var docsDir: AnyObject = dirPaths[0]
@@ -1033,15 +1047,27 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             Yellr.println("sound exists")
         }
         
-        var recordSettings:[NSObject: AnyObject] = [
-            AVFormatIDKey: kAudioFormatAppleLossless,
-            AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
-            AVEncoderBitRateKey : 320000,
-            AVNumberOfChannelsKey: 2,
-            AVSampleRateKey : 44100.0
-        ]
+//        var recordSettings = [
+//            AVFormatIDKey: kAudioFormatAppleLossless,
+//            AVEncoderAudioQualityKey : AVAudioQuality.Max.rawValue,
+//            AVEncoderBitRateKey : 320000,
+//            AVNumberOfChannelsKey: 2,
+//            AVSampleRateKey : 44100.0
+//        ]
+        
+        let recordSettings = [AVSampleRateKey : NSNumber(float: Float(44100.0)),
+            AVFormatIDKey : NSNumber(int: Int32(kAudioFormatAppleLossless)),
+            AVNumberOfChannelsKey : NSNumber(int: 1),
+            AVEncoderAudioQualityKey : NSNumber(int: Int32(AVAudioQuality.Medium.rawValue)),
+            AVEncoderBitRateKey : NSNumber(int: Int32(320000))]
+        
         var error: NSError?
-        recorder = AVAudioRecorder(URL: soundFileURL!, settings: recordSettings, error: &error)
+        do {
+            recorder = try AVAudioRecorder(URL: soundFileURL!, settings: recordSettings)
+        } catch var error1 as NSError {
+            error = error1
+            recorder = nil
+        }
         if let e = error {
             Yellr.println(e.localizedDescription)
         } else {
@@ -1060,8 +1086,8 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
             recordStatusLabel.text = s
             recorder.updateMeters()
             // if you want to draw some graphics...
-            var apc0 = recorder.averagePowerForChannel(0)
-            var peak0 = recorder.peakPowerForChannel(0)
+            //var apc0 = recorder.averagePowerForChannel(0)
+            //var peak0 = recorder.peakPowerForChannel(0)
         }
     }
     
@@ -1094,14 +1120,20 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     func setSessionPlayback() {
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         var error: NSError?
-        if !session.setCategory(AVAudioSessionCategoryPlayback, error:&error) {
-            println("could not set session category")
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayback)
+        } catch let error1 as NSError {
+            error = error1
+            print("could not set session category")
             if let e = error {
                 Yellr.println(e.localizedDescription)
             }
         }
-        if !session.setActive(true, error: &error) {
-            println("could not make session active")
+        do {
+            try session.setActive(true)
+        } catch let error1 as NSError {
+            error = error1
+            print("could not make session active")
             if let e = error {
                 Yellr.println(e.localizedDescription)
             }
@@ -1111,14 +1143,20 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
     func setSessionPlayAndRecord() {
         let session:AVAudioSession = AVAudioSession.sharedInstance()
         var error: NSError?
-        if !session.setCategory(AVAudioSessionCategoryPlayAndRecord, error:&error) {
-            println("could not set session category")
+        do {
+            try session.setCategory(AVAudioSessionCategoryPlayAndRecord)
+        } catch let error1 as NSError {
+            error = error1
+            print("could not set session category")
             if let e = error {
                 Yellr.println(e.localizedDescription)
             }
         }
-        if !session.setActive(true, error: &error) {
-            println("could not make session active")
+        do {
+            try session.setActive(true)
+        } catch let error1 as NSError {
+            error = error1
+            print("could not make session active")
             if let e = error {
                 Yellr.println(e.localizedDescription)
             }
@@ -1150,43 +1188,46 @@ class AddPostViewController: UIViewController, UINavigationControllerDelegate, U
 // MARK: AVAudioRecorderDelegate
 extension AddPostViewController : AVAudioRecorderDelegate {
     
-    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder!,
+    func audioRecorderDidFinishRecording(recorder: AVAudioRecorder,
         successfully flag: Bool) {
-            println("finished recording \(flag)")
+            print("finished recording \(flag)")
             abStop.enabled = false
             abPlay.enabled = true
             abRecord.setTitle("Record", forState:.Normal)
             
             // iOS8 and later
-            var alert = UIAlertController(title: "Recorder",
-                message: "Finished Recording",
-                preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "Keep", style: .Default, handler: {action in
-                println("keep was tapped")
-            }))
-            alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {action in
-                println("delete was tapped")
-                self.recorder.deleteRecording()
-            }))
-            self.presentViewController(alert, animated:true, completion:nil)
+            if #available(iOS 8.0, *) {
+                let alert = UIAlertController(title: "Recorder",
+                    message: "Finished Recording",
+                    preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Keep", style: .Default, handler: {action in
+                    print("keep was tapped")
+                }))
+                alert.addAction(UIAlertAction(title: "Delete", style: .Default, handler: {action in
+                    print("delete was tapped")
+                    self.recorder.deleteRecording()
+                }))
+                self.presentViewController(alert, animated:true, completion:nil)
+            }
+
     }
     
-    func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder!,
-        error: NSError!) {
-            println("\(error.localizedDescription)")
+    func audioRecorderEncodeErrorDidOccur(recorder: AVAudioRecorder,
+        error: NSError?) {
+            print("\(error!.localizedDescription)")
     }
     
 }
 
 // MARK: AVAudioPlayerDelegate
 extension AddPostViewController : AVAudioPlayerDelegate {
-    func audioPlayerDidFinishPlaying(player: AVAudioPlayer!, successfully flag: Bool) {
+    func audioPlayerDidFinishPlaying(player: AVAudioPlayer, successfully flag: Bool) {
         Yellr.println("finished playing \(flag)")
         abRecord.enabled = true
         abStop.enabled = false
     }
     
-    func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer!, error: NSError!) {
-        Yellr.println("\(error.localizedDescription)")
+    func audioPlayerDecodeErrorDidOccur(player: AVAudioPlayer, error: NSError?) {
+        Yellr.println("\(error?.localizedDescription)")
     }
 }

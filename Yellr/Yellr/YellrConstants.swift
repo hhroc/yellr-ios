@@ -17,7 +17,7 @@ struct YellrConstants {
     struct AppInfo {
         static let Name = "Yellr"
         static let version = "0.1.9"
-        static let DevMode = false
+        static let DevMode = true
     }
     
     struct API {

@@ -36,14 +36,14 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         self.initWebActivityIndicator()
         
         //right side bar button items
-        var profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
-        var fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        let profileBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f007", target: self, action: "profileTapped:")
+        let fixedSpace:UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         fixedSpace.width = 30.0
-        var addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
+        let addPostBarButtonItem:UIBarButtonItem = UIBarButtonItem(fontAwesome: "f044", target: self, action: "addPostTapped:")
         self.navigationItem.setRightBarButtonItems([addPostBarButtonItem, fixedSpace, profileBarButtonItem], animated: true)
         
         //left barbutton item
-        var yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
+        let yellrBarButtonItem:UIBarButtonItem = UIBarButtonItem(title: YellrConstants.AppInfo.Name, style: UIBarButtonItemStyle.Plain, target: self, action: "yellrTapped:")
         self.navigationItem.setLeftBarButtonItems([yellrBarButtonItem], animated: true)
         
         //show message to first time user
@@ -71,7 +71,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         //this check is needed to add the additional
         //location methods for ios8
-        if iOS8 {
+        if #available(iOS 8.0, *) {
             locationManager.requestWhenInUseAuthorization()
         } else {
             
@@ -112,23 +112,23 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
         //TODO: Implement Cache
         
-        var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        let localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         var height:CGFloat = 120.0
-        var calculationView : UITextView = UITextView()
+        let calculationView : UITextView = UITextView()
         
         if let text = localPostItem.lp_media_text as? String {
-            if (count(text) == 0) {
+            if (text.characters.count == 0) {
                 //this is an image so check for caption
                 
                 if let mediaCaption = localPostItem.lp_media_caption as? String {
-                    if (count(mediaCaption) == 0) {
+                    if (mediaCaption.characters.count == 0) {
                         //there is no caption
                         height += 140.0
                     } else {
                         //there is a caption
-                        var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                        let attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
                         calculationView.attributedText = NSAttributedString(string: mediaCaption, attributes: attrs)
-                        var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                        let size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                         
                         height += size.height
                         
@@ -137,10 +137,10 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 }
             } else {
 
-                var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                let attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
                 calculationView.attributedText = NSAttributedString(string: text, attributes: attrs)
                 calculationView.sizeToFit()
-                var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                let size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                 height += size.height
             }
             
@@ -172,7 +172,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     //api call and then populate
     func loadLocalPostsTableView(latitude : String, longitude : String) {
         
-        self.localPostsUrlEndpoint = buildUrl("get_local_posts.json", latitude, longitude)
+        self.localPostsUrlEndpoint = buildUrl("get_local_posts.json", latitude: latitude, longitude: longitude)
         self.requestLocalPosts(self.localPostsUrlEndpoint, responseHandler: { (error, items) -> () in
             
             self.dataSource = items!
@@ -200,7 +200,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     
     func configureCell(cell:LocalTableViewCell, atIndexPath indexPath:NSIndexPath) {
         
-        var localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
+        let localPostItem : LocalPostDataModel = self.dataSource[indexPath.row]
         
         //remove media container image view
         for view in cell.mediaContainer.subviews{
@@ -215,7 +215,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         cell.downVoteBtn.addTarget(self, action: "downVoteClicked:", forControlEvents: .TouchUpInside)
         
         //for the questionmark
-        var attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
+        let attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
         var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
         
         if let postTitle = localPostItem.lp_question_text as? String {
@@ -236,13 +236,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             cell.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) " + NSLocalizedString(YellrConstants.LocalPosts.AnonymousUser, comment: "Anonymous User")
         }
         
-        var postedOn:String = (localPostItem.lp_post_datetime as? String)!
+        let postedOn:String = (localPostItem.lp_post_datetime as? String)!
         cell.postedOn?.font = UIFont.fontAwesome(size: 13)
         cell.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
         
         cell.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
         //add - (negative to downvote counts)
-        var downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
+        let downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
         var downVoteCountString = NSString(format:"%d", (stringInterpolationSegment: downVoteCount)) as String
         if (downVoteCount != 0) {
             downVoteCountString = "-" + downVoteCountString
@@ -252,7 +252,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         //set vote count colors based on whether or not user has voted
         if let hasVoted = localPostItem.lp_has_voted as? Bool {
             if (hasVoted) {
-                var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                let isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
                 if (isUpVote) {
                     cell.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
                    cell.upVoteBtn.setTitleColor(UIColorFromRGB(YellrConstants.Colors.up_vote_green), forState: .Normal)
@@ -319,10 +319,10 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 //MARK: Version 2 - With Image Cache
                 
                 //to get the height of the text view holding the caption
-                var calculationView : UITextView = UITextView()
-                var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                let calculationView : UITextView = UITextView()
+                let attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
                 calculationView.attributedText = NSAttributedString(string: textView.text, attributes: attrs)
-                var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                let size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                 
                 if self.imageCache.objectForKey(urlString) != nil {
                     let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
@@ -338,7 +338,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 else {
                     
                     //start a loader animation
-                    var loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+                    let loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
                     loadIndicator.color = UIColor.lightGrayColor()
                     loadIndicator.startAnimating()
                     cell.mediaContainer.addSubview(loadIndicator)
@@ -349,15 +349,23 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     dispatch_async(self.backgroundQueue, { () -> Void in
         
                         let url = NSURL(string: urlString)!
-                        var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                        let capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
                         var err : NSError?
-                        var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+                        var imageData : NSData?
+                        do {
+                            imageData = try NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                        } catch let error as NSError {
+                            err = error
+                            imageData = nil
+                        } catch {
+                            fatalError()
+                        }
         
                         if err == nil {
         
                             dispatch_sync(dispatch_get_main_queue(), { () -> Void in
         
-                                var itemImage = UIImage(data:imageData!)
+                                let itemImage = UIImage(data:imageData!)
                                 //itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: cell.mediaContainer.frame.height))
                                 
                                 Yellr.println(itemImage!.size.width)
@@ -444,7 +452,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         //api needs string postID
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
-        post(["post_id":postId, "is_up_vote":"1"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":postId, "is_up_vote":"1"], method: "register_vote", latitude: self.lat, longitude: self.long) { (succeeded: Bool, msg: String) -> () in
             Yellr.println(msg)
             //TODO: apply response results to button pressess
             //currently we are changing UI feedback assuming that
@@ -467,7 +475,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     localPostItem.lp_has_voted = 0
                     
                     //update vote count
-                    var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                    var getCurrentUpvoteCount = Int(cell.upVoteCount.text!)
                     cell.upVoteCount?.text = String(getCurrentUpvoteCount! - 1)
                     
                 } else {
@@ -481,11 +489,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     localPostItem.lp_is_up_vote = 1
                     
                     // update up vote count
-                    var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                    var getCurrentUpvoteCount = Int(cell.upVoteCount.text!)
                     cell.upVoteCount?.text = String(getCurrentUpvoteCount! + 1)
                     
                     // update down vote count
-                    var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                    var getCurrentDownvoteCount = Int(cell.downVoteCount.text!)
                     cell.downVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                     
                 }
@@ -501,7 +509,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 localPostItem.lp_is_up_vote = 1
                 
                 //update vote count
-                var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                var getCurrentUpvoteCount = Int(cell.upVoteCount.text!)
                 cell.upVoteCount?.text = String(getCurrentUpvoteCount! + 1)
                 
             }
@@ -521,7 +529,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         //api needs string postID
         var postId = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_post_id as? Int)!)) as String
         //send to api
-        post(["post_id":postId, "is_up_vote":"0"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":postId, "is_up_vote":"0"], method: "register_vote", latitude: self.lat, longitude: self.long) { (succeeded: Bool, msg: String) -> () in
             Yellr.println(msg)
         }
         
@@ -541,7 +549,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     localPostItem.lp_has_voted = 0
                     
                     //update downvote count
-                    var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                    var getCurrentDownvoteCount = Int(cell.downVoteCount.text!)
                     cell.upVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                     
                 } else {
@@ -555,11 +563,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     localPostItem.lp_is_up_vote = 0
                     
                     // update up vote count
-                    var getCurrentUpvoteCount = cell.upVoteCount?.text?.toInt()
+                    var getCurrentUpvoteCount = Int(cell.upVoteCount.text!)
                     cell.upVoteCount?.text = String(getCurrentUpvoteCount! - 1)
                     
                     // update down vote count
-                    var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                    var getCurrentDownvoteCount = Int(cell.downVoteCount.text!)
                     cell.downVoteCount?.text = String(getCurrentDownvoteCount! + 1)
                     
                 }
@@ -574,7 +582,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 localPostItem.lp_is_up_vote = 0
                 
                 //update down vote count
-                var getCurrentDownvoteCount = cell.downVoteCount?.text?.toInt()
+                var getCurrentDownvoteCount = Int(cell.downVoteCount.text!)
                 cell.downVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                 
             }
@@ -588,9 +596,9 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?){
         if (segue.identifier == "LocalPostDetailSegue") {
             
-            var indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow()!
-            var localPostItem:LocalPostDataModel = self.dataSource[indexPath.row]
-            var viewController = segue.destinationViewController as! LocalPostDetailViewController
+            let indexPath:NSIndexPath = self.tableView.indexPathForSelectedRow!
+            let localPostItem:LocalPostDataModel = self.dataSource[indexPath.row]
+            let viewController = segue.destinationViewController as! LocalPostDetailViewController
             viewController.localPostItem = localPostItem
             viewController.title = localPostItem.lp_media_text as? String
             viewController.storyId = localPostItem.lp_post_id as? Int
@@ -599,8 +607,8 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
             
             dispatch_async(dispatch_get_main_queue()!, { () -> Void in
                 //for the questionmark
-                var attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
-                var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
+                let attrs = [NSFontAttributeName : UIFont.fontAwesome(size: 13)]
+                //var qmString = NSMutableAttributedString(string:"\(String.fontAwesome(unicode: 0xf059)) ", attributes:attrs)
                 
                 if let postTitle = localPostItem.lp_question_text as? String {
                     
@@ -620,13 +628,13 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                     viewController.postedBy?.text = "\(String.fontAwesome(unicode: 0xf007)) " + NSLocalizedString(YellrConstants.LocalPosts.AnonymousUser, comment: "Anonymous User")
                 }
                 
-                var postedOn:String = (localPostItem.lp_post_datetime as? String)!
+                let postedOn:String = (localPostItem.lp_post_datetime as? String)!
                 viewController.postedOn?.font = UIFont.fontAwesome(size: 13)
                 viewController.postedOn?.text = "\(String.fontAwesome(unicode: 0xf040)) " + postedOn
                 
                 viewController.upVoteCount?.text = NSString(format:"%d", (stringInterpolationSegment: (localPostItem.lp_up_vote_count as? Int)!)) as String
                 //add - (negative to downvote counts)
-                var downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
+                let downVoteCount = (localPostItem.lp_down_vote_count as? Int)!
                 var downVoteCountString = NSString(format:"%d", (stringInterpolationSegment: downVoteCount)) as String
                 if (downVoteCount != 0) {
                     downVoteCountString = "-" + downVoteCountString
@@ -636,7 +644,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                 //set vote count colors based on whether or not user has voted
                 if let hasVoted = localPostItem.lp_has_voted as? Bool {
                     if (hasVoted) {
-                        var isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
+                        let isUpVote : Bool = (localPostItem.lp_is_up_vote as? Bool)!
                         viewController.hasVoted = "Yes"
                         if (isUpVote) {
                             viewController.upVoteCount.textColor = UIColorFromRGB(YellrConstants.Colors.up_vote_green)
@@ -692,7 +700,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         var urlString = localPostItem.lp_file_name as! String
                         urlString = YellrConstants.API.endPoint + "/media/" + urlString
                         
-                        var url:NSURL = NSURL(string: urlString)!
+                        let url:NSURL = NSURL(string: urlString)!
                         Yellr.println(urlString)
                         
                         self.moviePlayer = MPMoviePlayerController(contentURL: url)
@@ -722,7 +730,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         var urlString = localPostItem.lp_file_name as! String
                         urlString = YellrConstants.API.endPoint + "/media/" + urlString
                         
-                        var url:NSURL = NSURL(string: urlString)!
+                        let url:NSURL = NSURL(string: urlString)!
                         Yellr.println(urlString)
                         
                         self.moviePlayer = MPMoviePlayerController(contentURL: url)
@@ -764,10 +772,10 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         //MARK: Version 2 - With Image Cache
                         
                         //to get the height of the text view holding the caption
-                        var calculationView : UITextView = UITextView()
-                        var attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+                        let calculationView : UITextView = UITextView()
+                        let attrs = [NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
                         calculationView.attributedText = NSAttributedString(string: textView.text, attributes: attrs)
-                        var size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
+                        let size : CGSize = calculationView.sizeThatFits(CGSizeMake(UIScreen.mainScreen().bounds.size.width - 75.0, 3.40282347E+38))
                         
                         if self.imageCache.objectForKey(urlString) != nil {
                             let itemImage = self.imageCache.objectForKey(urlString) as? UIImage
@@ -783,7 +791,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                         else {
                             
                             //start a loader animation
-                            var loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+                            let loadIndicator : UIActivityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
                             loadIndicator.color = UIColor.lightGrayColor()
                             loadIndicator.startAnimating()
                             viewController.mediaContainer.addSubview(loadIndicator)
@@ -794,15 +802,23 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
                             dispatch_async(self.backgroundQueue, { () -> Void in
                                 
                                 let url = NSURL(string: urlString)!
-                                var capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
+                                let capturedIndex : NSIndexPath? = indexPath.copy() as? NSIndexPath
                                 var err : NSError?
-                                var imageData : NSData? = NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe, error: &err)
+                                var imageData : NSData?
+                                do {
+                                    imageData = try NSData(contentsOfURL: url, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+                                } catch let error as NSError {
+                                    err = error
+                                    imageData = nil
+                                } catch {
+                                    fatalError()
+                                }
                                 
                                 if err == nil {
                                     
                                     dispatch_sync(dispatch_get_main_queue(), { () -> Void in
                                         
-                                        var itemImage = UIImage(data:imageData!)
+                                        let itemImage = UIImage(data:imageData!)
                                         //itemImage = ResizeImage(itemImage!, CGSize(width: UIScreen.mainScreen().bounds.size.width - 75.0, height: viewController.mediaContainer.frame.height))
                                         
                                         Yellr.println(itemImage!.size.width)
@@ -867,11 +883,11 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         let url:NSURL = NSURL(string: endPointURL)!
         let task = self.urlSession.dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
             
-            //Yellr.println(response)
-            //Yellr.println(error)
+            Yellr.println(response)
+            Yellr.println(error)
             
             if (error == nil) {
-                responseHandler( error: nil, items: self.localPostItems(data))
+                responseHandler( error: nil, items: self.localPostItems(data!))
             } else {
                 Yellr.println(error)
             }
@@ -885,62 +901,68 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         var refinedLocalPostItems : Array<LocalPostDataModel> = []
         var postListString : String
         
-        if let jsonResult = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &jsonParseError) as? NSDictionary {
-         
-            var rawLocalPostItems = jsonResult["posts"] as! Array<Dictionary<String,AnyObject>>
-            
-            for itemDict in rawLocalPostItems {
-                var lpfname : String = ""
-                var lpmtext : String = ""
-                var lpmtname : String = ""
-                var lppfname : String = ""
-                var lpmdcpt : String = ""
-                var mediaItems = itemDict["media_objects"] as! Array<Dictionary<String,String>>
+        do {
+            if let jsonResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers) as? NSDictionary {
+             
+                let rawLocalPostItems = jsonResult["posts"] as! Array<Dictionary<String,AnyObject>>
                 
-                for itemDictMedia in mediaItems {
-                    lpfname = itemDictMedia["file_name"]!
-                    lpmtext = itemDictMedia["media_text"]!
-                    lpmtname = itemDictMedia["media_type_name"]!
-                    lppfname = itemDictMedia["preview_file_name"]!
-                    lpmdcpt = itemDictMedia["caption"]!
+                Yellr.println(jsonResult["posts"])
+                
+                for itemDict in rawLocalPostItems {
+                    var lpfname : String = ""
+                    var lpmtext : String = ""
+                    var lpmtname : String = ""
+                    var lppfname : String = ""
+                    var lpmdcpt : String = ""
+                    let mediaItems = itemDict["media_objects"] as! Array<Dictionary<String,String>>
+                    
+                    for itemDictMedia in mediaItems {
+                        lpfname = itemDictMedia["file_name"]!
+                        lpmtext = itemDictMedia["media_text"]!
+                        lpmtname = itemDictMedia["media_type_name"]!
+                        lppfname = itemDictMedia["preview_file_name"]!
+                        lpmdcpt = itemDictMedia["caption"]!
+                    }
+                    
+                    let item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
+                        lp_language_code : itemDict["last_name"],
+                        lp_post_id : itemDict["post_id"],
+                        lp_verified_user : itemDict["verified_user"],
+                        lp_post_datetime : itemDict["post_datetime_ago"],
+                        
+                        lp_file_name : lpfname,
+                        lp_media_text : lpmtext,
+                        lp_media_type_name : lpmtname,
+                        lp_preview_file_name : lppfname,
+                        lp_media_caption : lpmdcpt,
+                        
+                        lp_first_name : itemDict["first_name"],
+                        lp_question_text : itemDict["question_text"],
+                        lp_is_up_vote : itemDict["is_up_vote"],
+                        lp_down_vote_count : itemDict["down_vote_count"],
+                        lp_has_voted : itemDict["has_voted"],
+                        lp_language_name : itemDict["language_name"],
+                        lp_up_vote_count : itemDict["up_vote_count"] )
+                    
+                    refinedLocalPostItems.append(item)
+                    //postListString = "[" + (itemDict["post_id"] as? String)! + "]"
                 }
                 
-                var item : LocalPostDataModel = LocalPostDataModel(lp_last_name: itemDict["last_name"],
-                    lp_language_code : itemDict["last_name"],
-                    lp_post_id : itemDict["post_id"],
-                    lp_verified_user : itemDict["verified_user"],
-                    lp_post_datetime : itemDict["post_datetime_ago"],
-                    
-                    lp_file_name : lpfname,
-                    lp_media_text : lpmtext,
-                    lp_media_type_name : lpmtname,
-                    lp_preview_file_name : lppfname,
-                    lp_media_caption : lpmdcpt,
-                    
-                    lp_first_name : itemDict["first_name"],
-                    lp_question_text : itemDict["question_text"],
-                    lp_is_up_vote : itemDict["is_up_vote"],
-                    lp_down_vote_count : itemDict["down_vote_count"],
-                    lp_has_voted : itemDict["has_voted"],
-                    lp_language_name : itemDict["language_name"],
-                    lp_up_vote_count : itemDict["up_vote_count"] )
+            } else {
                 
-                refinedLocalPostItems.append(item)
-                //postListString = "[" + (itemDict["post_id"] as? String)! + "]"
             }
-            
-        } else {
-            
+        } catch _ {
+        
         }
         return refinedLocalPostItems
     }
     
     //MARK: Location Delegate functions
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var latestLocation: AnyObject = locations[locations.count - 1]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
         
-        var latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
-        var longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
+        let latitude : String = String(format: "%.2f", latestLocation.coordinate.latitude)
+        let longitude : String = String(format: "%.2f", latestLocation.coordinate.longitude)
         
         self.lat = latitude
         self.long = longitude
@@ -960,7 +982,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")
@@ -980,7 +1002,7 @@ class LocalTableViewController: UITableViewController, CLLocationManagerDelegate
         } else {
             
             //first time user of the app
-            if(iOS8) {
+            if #available(iOS 8.0, *) {
                 
                 let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.LocalPosts.FirstTimeTitle, comment: "LocalPosts Screen - Succesfully Posted"), message:
                     NSLocalizedString(YellrConstants.LocalPosts.FirstTimeMessage, comment: "LocalPosts Screen Message Succesful"), preferredStyle: UIAlertControllerStyle.Alert)

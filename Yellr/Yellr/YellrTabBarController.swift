@@ -29,9 +29,9 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         //tabBar.addSubview(topSeparator)
         
-        let item1 = tabBar.items?[0] as! UITabBarItem
-        let item2 = tabBar.items?[1] as! UITabBarItem
-        let item3 = tabBar.items?[2] as! UITabBarItem
+        //let item1 = tabBar.items?[0] as! UITabBarItem
+        //let item2 = tabBar.items?[1] as! UITabBarItem
+        //let item3 = tabBar.items?[2] as! UITabBarItem
         
         let itemWidth = tabBar.frame.width / 3
         
@@ -57,7 +57,7 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
         
         //Yellr.println(tabBarController?.selectedIndex)
         
-        for item in tabBar.items as! [UITabBarItem] {
+        for item in tabBar.items as [UITabBarItem]! {
             
             //item.selectedImage = UIImage(named: "ab_transparent_yellr.9.png")
             
@@ -79,7 +79,8 @@ class YellrTabBarController: UITabBarController, UITabBarControllerDelegate {
             )
             
             //sets bottom padding for tab items
-            item.setTitlePositionAdjustment(UIOffsetMake(0, -20))
+            //item.setTitlePositionAdjustment = UIOffsetMake(0, -20)
+            //item.s
             
             
         }

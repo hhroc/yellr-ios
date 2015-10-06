@@ -45,7 +45,7 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
         
         //this check is needed to add the additional
         //location methods for ios8
-        if iOS8 {
+        if #available(iOS 8.0, *) {
             locationManager.requestWhenInUseAuthorization()
         } else {
             
@@ -59,7 +59,7 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
     //submit button pressed
     @IBAction func submitPressed(sender: UIButton) {
         if (pv_fname != "" && pv_lname != "" && pv_pwd != "" && pv_uname != "") {
-            post(["username":pv_uname.text, "password":pv_pwd.text, "first_name":pv_fname.text, "last_name":pv_lname.text, "email":pv_email.text], "verify_user", self.latitude, self.longitude) { (succeeded: Bool, msg: String) -> () in
+            post(["username":pv_uname.text, "password":pv_pwd.text, "first_name":pv_fname.text, "last_name":pv_lname.text, "email":pv_email.text], method: "verify_user", latitude: self.latitude, longitude: self.longitude) { (succeeded: Bool, msg: String) -> () in
                 Yellr.println("Profile Verification: " + msg)
                 
                 if (msg != "NOTHING" && msg != "Error") {
@@ -75,8 +75,8 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
     }
     
     //MARK: Location Delegate functions
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        var latestLocation: AnyObject = locations[locations.count - 1]
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let latestLocation: AnyObject = locations[locations.count - 1]
         
         self.latitude = String(format: "%.2f", latestLocation.coordinate.latitude)
         self.longitude = String(format: "%.2f", latestLocation.coordinate.longitude)
@@ -91,7 +91,7 @@ class VerifyUserViewController: UIViewController, CLLocationManagerDelegate  {
         
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         Yellr.println(error)
         let alert = UIAlertView()
         alert.title = NSLocalizedString(YellrConstants.Location.Title, comment: "Location Error Title")

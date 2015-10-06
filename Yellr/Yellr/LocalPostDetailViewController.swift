@@ -35,11 +35,11 @@ class LocalPostDetailViewController: UIViewController {
     @IBOutlet weak var reportPost: UIButton!
     
     @IBAction func reportPost(sender: AnyObject) {
-        post(["post_id":String(storyId)], "flag_post", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":String(storyId)], method: "flag_post", latitude: self.lat, longitude: self.long) { (succeeded: Bool, msg: String) -> () in
             Yellr.println(msg)
             
         }
-        if(iOS8) {
+        if #available(iOS 8, *) {
             
             let alertController = UIAlertController(title: NSLocalizedString(YellrConstants.LocalPostDetail.ReportTitle, comment: "Local post detail Screen - alert title"), message:
                 NSLocalizedString(YellrConstants.LocalPostDetail.ReportMessage, comment: "Local post detail Screen - alert message"), preferredStyle: UIAlertControllerStyle.Alert)
@@ -68,7 +68,7 @@ class LocalPostDetailViewController: UIViewController {
     @IBAction func upVoteClicked(sender: UIButton) {
 
         //send to api
-        post(["post_id":String(storyId), "is_up_vote":"1"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":String(storyId), "is_up_vote":"1"], method: "register_vote", latitude: self.lat, longitude: self.long) { (succeeded: Bool, msg: String) -> () in
             Yellr.println(msg)
             //TODO: apply response results to button pressess
             //currently we are changing UI feedback assuming that
@@ -88,7 +88,7 @@ class LocalPostDetailViewController: UIViewController {
                     hasVoted = "No"
                     
                     //update vote count
-                    var getCurrentUpvoteCount = upVoteCount?.text?.toInt()
+                    let getCurrentUpvoteCount = Int((upVoteCount?.text)!)
                     upVoteCount?.text = String(getCurrentUpvoteCount! - 1)
                     
                 } else {
@@ -102,11 +102,11 @@ class LocalPostDetailViewController: UIViewController {
                     isUpVote = "Yes"
                     
                     // update up vote count
-                    var getCurrentUpvoteCount = upVoteCount?.text?.toInt()
+                    let getCurrentUpvoteCount = Int((upVoteCount?.text)!)
                     upVoteCount?.text = String(getCurrentUpvoteCount! + 1)
                     
                     // update down vote count
-                    var getCurrentDownvoteCount = downVoteCount?.text?.toInt()
+                    let getCurrentDownvoteCount = Int((downVoteCount?.text)!)
                     downVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                     
                 }
@@ -122,7 +122,7 @@ class LocalPostDetailViewController: UIViewController {
                 isUpVote = "Yes"
                 
                 //update vote count
-                var getCurrentUpvoteCount = upVoteCount?.text?.toInt()
+                let getCurrentUpvoteCount = Int((upVoteCount?.text)!)
                 upVoteCount?.text = String(getCurrentUpvoteCount! + 1)
                 
             }
@@ -133,7 +133,7 @@ class LocalPostDetailViewController: UIViewController {
     @IBAction func downVoteClicked(sender: UIButton) {
 
         //send to api
-        post(["post_id":String(storyId), "is_up_vote":"0"], "register_vote", self.lat, self.long) { (succeeded: Bool, msg: String) -> () in
+        post(["post_id":String(storyId), "is_up_vote":"0"], method: "register_vote", latitude: self.lat, longitude: self.long) { (succeeded: Bool, msg: String) -> () in
             Yellr.println(msg)
         }
             
@@ -149,7 +149,7 @@ class LocalPostDetailViewController: UIViewController {
                     hasVoted = "No"
                     
                     //update downvote count
-                    var getCurrentDownvoteCount = downVoteCount?.text?.toInt()
+                    let getCurrentDownvoteCount = Int((downVoteCount?.text)!)
                     upVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                     
                 } else {
@@ -163,11 +163,11 @@ class LocalPostDetailViewController: UIViewController {
                     isUpVote = "No"
                     
                     // update up vote count
-                    var getCurrentUpvoteCount = upVoteCount?.text?.toInt()
+                    let getCurrentUpvoteCount = Int((upVoteCount?.text)!)
                     upVoteCount?.text = String(getCurrentUpvoteCount! - 1)
                     
                     // update down vote count
-                    var getCurrentDownvoteCount = downVoteCount?.text?.toInt()
+                    let getCurrentDownvoteCount = Int((downVoteCount?.text)!)
                     downVoteCount?.text = String(getCurrentDownvoteCount! + 1)
                     
                 }
@@ -182,7 +182,7 @@ class LocalPostDetailViewController: UIViewController {
                 isUpVote = "No"
                 
                 //update down vote count
-                var getCurrentDownvoteCount = downVoteCount?.text?.toInt()
+                let getCurrentDownvoteCount = Int((downVoteCount?.text)!)
                 downVoteCount?.text = String(getCurrentDownvoteCount! - 1)
                 
             }
@@ -191,7 +191,7 @@ class LocalPostDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        initVoteButtons(downVoteBtn, upVoteBtn)
+        initVoteButtons(downVoteBtn, upVoteBtn: upVoteBtn)
     }
     
     override func viewDidAppear(animated: Bool) {

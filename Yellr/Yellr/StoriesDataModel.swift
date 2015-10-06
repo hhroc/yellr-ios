@@ -47,7 +47,7 @@ class StoriesDataModel: NSObject {
         }
     }
     
-    init(var st_author_first_name : AnyObject?, var st_title : AnyObject?, var st_publish_datetime_ago : AnyObject?, var st_author_last_name : AnyObject?, var st_contents_rendered : AnyObject?) {
+    init(st_author_first_name : AnyObject?, st_title : AnyObject?, st_publish_datetime_ago : AnyObject?, st_author_last_name : AnyObject?, st_contents_rendered : AnyObject?) {
         self.st_author_first_name = st_author_first_name
         self.st_title = st_title
         self.st_publish_datetime_ago = st_publish_datetime_ago
